@@ -1,0 +1,314 @@
+% !TeX root = ../main.tex
+
+\chapter{Development of Electronic Structure Theory}
+Electronic structure usually refers to the quantum state of electrons in electromagnetic field produced by nuclei and the electrons themselves.\cite{elecstruc}
+In principle, state of electrons and nuclei must be determined simultaneously by many-body Schrodinger equation.
+However, the fact that nuclei are much heavier than electrons make the treatment of nuclei as stationary point charge a good approximation for ground state calculation of most quantum systems, which is the well-known Born-Oppenheimer approximation.\cite{sakurai}
+The many-body Hamiltonian of electrons under Born-Oppenheimer approximation is
+$$
+H=\sum_{i=1}^{N}\left(\frac{\boldsymbol{p}_{i}^{2}}{2 m}-\frac{Z e^{2}}{r_{i}}\right)+\sum_{i>j} \frac{e^{2}}{\left|\boldsymbol{x}_{i}-\boldsymbol{x}_{j}\right|}
+$$
+which contains a one-body part and a two-body part.
+The two-body part couples all the electrons and make the exact solution of Schrodinger equation very difficult and almost impossible.
+Thus, appropriate approximation are needed.
+
+
+\section{Hartree-Fock Method}
+The most basic and famous approximation among all of them is Hartree-Fock method.\cite{hartree}
+Hartree-Fock method approximates the many-body wavefuntion as a single Slater determinant in which each row represents a molecular orbital. 
+Usually the molecular orbitals are linear combinations of atomic orbitals. 
+Then the coefficients are chosen to make the energy of the whole system as low as possible, which results in the following nonlinear Hartree-Fock Equation:
+$$
+\mathbf{F} \mathbf{C}=\mathbf{S} \mathbf{C} \epsilon
+$$
+where
+$$
+\hat{F}(i)=\hat{h}(i)+\sum_{j=1}^{n / 2}\left[2 \hat{J}_{j}(i)-\hat{K}_{j}(i)\right]
+$$
+is Fock matrix, 
+$$
+\mathbf{S}_{j k}=\left\langle b_{j} | b_{k}\right\rangle=\int \Psi_{j}^{*} \Psi_{k} d \tau
+$$
+is Overlap matrix,
+$\mathbf{C}$ is decomposition coefficients of molecular orbitals on atomic orbitals,
+$\epsilon$ is energies of molecular orbitals.
+
+The fact that $\mathbf{C}$ is implicitly contained in $\mathbf{F}$ make the Hartree-Fock Equation nonlinear and usually solved by Self-Consistent Field (SCF) method.
+
+Essentially, Hartree-Fock is a mean-field theory which appropriate the electron-electron repulsion potential by averaging over the molecular orbitals.
+Thus, instantaneous interactions between electrons are neglected, which make the decoupling between electrons possible.
+All the effects arisen from deviations from the mean-field approximation are collectively used as a definition of electron correlation.
+
+Under non-relativity and Born-Oppenheimer approximation, electron correlation is always the center topic of electronic structure.
+Huge amount of efforts have been put on different methods of treatment of electron correlation,
+including various Post-Hartree-Fock methods, Density Functional Theory and other less known methods like reduced density matrix \cite{reduceddm} and density matrix renormalization group. \cite{dmrg}
+
+\section{Post-Hartree-Fock Methods}
+Post-Hartree-Fock methods are the set of methods developed to improve on the Hartree-Fock method. They add at least part of electron correlation energy while Hartree-Fock neglects electron correlation completely.
+Here electron correlation energy is defined as the energy difference between true ground state and Hartree-Fock ground state. Since Hartree-Fock energy is the upper bound to the exact energy, electron correlation energy is always negative.
+Famous Post-Hartree-Fock methods includes Configuration Interaction (CI) \cite{mqc}, Coupled Cluster (CC) \cite{coupledcluster}, M{\o}ller–Plesset (MP) perturbation theory \cite{mp2}, and Algebraic Diagrammatic Construction (ADC).
+
+\subsection{Configuration Interaction}
+Among all the approaches to explore electron correlation energy, CI is conceptually the simplest, although not computationally the simplest.
+The basic idea is to diagonalize the N-electron Hamiltonian in a basis N-electron function.
+If all possible configuration in a particular basis set is used for linear combination, then CI reduces to full CI (FCI).
+However, the computational cost of FCI is very large, since there will be $C_{2K}^{N}$ different Slater orbitals, which increases exponentially with the size of the system.
+Thus, usually only part of the configurations are used in a CI calculation.
+
+The CI wavefunction is usually written as:
+$$
+\ket{\Psi_0}=t_0 \ket{\Phi_0} + \sum_{ia} t^{a}_{i}\ket{\Phi^{a}_{i}}+\sum_{ijab}t^{ab}_{ij}\ket{\Phi^{ab}_{ij}}+ \dots
+$$
+where $\ket{\Phi_0}$ is the Hartree-Fock ground state, and the following terms on right-hand side (RHS) of the equation are defined as single excitations, double excitations, etc.
+
+In a symbolic form, the CI wavefunction can also be written as
+\begin{equation} \label{CIexcite}
+	\ket{\Psi_0}=t_0\ket{\Phi_0}+t_S\ket{S}+t_D\ket{D}+t_T\ket{T}+t_Q\ket{Q}+\dots
+\end{equation}
+
+The following is the matrix structure of CI Hamiltonian.
+$$
+H=
+\left[ 
+\begin{array}{cccccc}
+	\langle\Phi_{0}|H| \Phi_{0} \rangle & & & & & \dots
+	\\ 
+	0 & \langle S|H| S\rangle & & & & \dots
+	\\
+	\langle D|H| \Phi_{0} \rangle & \langle D|H| S\rangle & \langle D|H| D\rangle & & & \dots
+	\\
+	0 & \langle T|H| S\rangle & \langle T|H| D\rangle & \langle T|H| T\rangle & & \dots
+	\\
+	0 & 0 & \langle Q|H| D\rangle & \langle Q|H| T\rangle & \langle Q|H| Q\rangle & \dots
+	\\
+	{\vdots} & {\vdots} & {\vdots} & {\vdots} & {\vdots} & {\vdots}
+\end{array}
+\right]
+$$
+
+\subsection{Discussion of Size Consistency}
+Size consistency is a concept relating to how the behaviour of quantum chemistry calculations changes with size. \cite{sizeconsistency}
+Let A and B be two non-interacting systems.
+If a given theory for the evaluation of the energy is size consistent, then the energy of the supersystem A+B, separated by a sufficiently large distance so there is essentially no shared electron density, is equal to the sum of the energy of A plus the energy of B taken by themselves ($E(A+B)=E(A)+E(B)$).
+Size consistency is a vital behaviour for any method to calculate some properties like obtaining dissociation curves.
+
+Unfortunately, standard CI is not size consistent, which is one of the main problems of CI.
+To better understand the size inconsistency of CI, we can think about CI single (CIS) method, in which only single excitation is taken into account.
+We further assume that both A and B are two-level systems.
+When A and B are considered separately, excitation is allowed in both A and B.
+However, when A and B is treated as a single system, excitation of A and B are not allowed to happen simultaneously, which will cause a difference in energy.
+
+Another example is non-interacting $\text{H}_2$ molecules, which is usually used to test the sizeconsistency of methods. \cite{h2problem}
+CI gives the result that the limiting behaviour of total energy $E$ as N $\rightarrow \infty$ is $E \sim N^{-\frac{1}{2}}$, which is completely unreasonable.
+
+In comparison, Coupled cluster and ADC are size consistent, thus are used much more than CI in calculations.
+
+\subsection{Coupled Cluster}
+The CI N-body wavefuntion \ref{CIexcite} can be rewritten as 
+$$
+\ket{\Psi_0}=(t_0+T_1+T_2+T_3 \dots)\ket{\Phi_0}
+$$
+where the $T$ here are convenient to be experssed as second quantization form:
+\begin{align*}
+	\hat{T}_{1} &=\sum_{i a} t_{i}^{a} \hat{c}_{a}^{\dagger} \hat{c}_{i}
+	\\
+	\hat{T}_{2} &=\frac{1}{4} \sum_{i j a b} t_{i j}^{a b} \hat{c}_{a}^{\dagger} \hat{c}_{b}^{\dagger} \hat{c}_{j} \hat{c}_{i}
+	\\
+	&\dots
+	\\
+	\hat{T}_{n}&=\left(\frac{1}{n !}\right)^{2} \sum_{i j \ldots a b \ldots}^{n} t_{i j \ldots}^{a b \ldots} \hat{c}_{a}^{\dagger} \hat{c}_{b}^{\dagger} \ldots \hat{c}_{j} \hat{c}_{i}
+\end{align*}
+with $\hat{c}^{\dagger}$ and $\hat{c}$ are creation operator and annihilation operation, respectively.
+
+We have seen this formulation will cause size inconsistency.
+Coupled cluster solves this problem by write N-body wavefuntion as
+$$
+\ket{\Psi_0}=e^{t_0+T_1+T_2+T_3 \dots}\ket{\Phi_0}
+$$
+or usually
+$$
+\ket{\Psi_0}=e^{T}\ket{\Phi_0}
+$$
+by defining
+$$
+T=t_0+T_1+T_2+T_3 \dots
+$$
+
+Schrodinger equation gives
+$$
+H | \Psi_{0} \rangle=H e^{T} | \Phi_{0} \rangle=E e^{T} | \Phi_{0} \rangle
+$$
+where the Hamiltonian can also be written as second quantization form
+$$
+\hat{H}=\hat{K}+\hat{V}=\sum k_{p q} c_{p}^{\dagger} c_{q}+\frac{1}{2} \sum V_{p q r s} c_{p}^{\dagger} c_{q}^{\dagger} c_{s} c_{r}
+$$
+where K instead of T is used as kinetic part to avoid mixing with the coefficients t.
+
+Thus
+$$
+\begin{array}{l}
+{\left\langle\Phi_{0}\left|e^{-T} H e^{T}\right| \Phi_{0}\right\rangle= E\left\langle\Phi_{0} | \Phi_{0}\right\rangle= E}
+\\
+{\left\langle\Phi^{*}\left|e^{-T} H e^{T}\right| \Phi_{0}\right\rangle= E\left\langle\Phi^{*} | \Phi_{0}\right\rangle= 0}
+\end{array}
+$$
+where $\ket{\Phi^{*}}$ is any single, double, etc Hartree-Fock excited state, which is orthogonal to the Hartree-Fock ground state.
+
+Then we truncate T to some order n, which is most usually chosen to 2, namely
+$$
+T=t_0+T_1+T_2+ \dots +T_n
+$$
+
+Then we need to determine all the coefficients $t$ in the expressions of $T$ in eq.
+Obviously, the required number of equations is equal to the number of variables $t$.
+Since the number of degree of freedom of $T_i$ is equal to that of $i$-tuple excited state, we can just choose these equations as loop $\ket{\Phi^{*}}$ through single to n-tuple Hartree-Fock excited states.
+
+Although the expansion of $e^T$ is infinite, only the first few terms have contribution to the final result of 
+$$
+\left\langle\Phi^{*}\left|e^{-T} H e^{T}\right| \Phi_{0}\right\rangle
+$$
+
+This is because all orders of $T$ remove occupied electrons and add virtual electrons.
+Thus, the summation of orders of all $T$ in expansion of $e^{-T} H e^{T}$ should be at most $i+2$ if the $\ket{\Phi^{*}}$ here is i-tuple excited state.
+The contribution of an additional 2 orders is from $c_{p}^{\dagger} c_{q}^{\dagger} c_{s} c_{r}$ in Hamiltonian.
+
+The resulting equations are a set of non-linear equations which are solved in an iterative manner. 
+Standard quantum chemistry packages (GAMESS (US), NWChem, ACES II, etc.) solve the CC equations using the Jacobi method and direct inversion of the iterative subspace (DIIS) extrapolation of the t-amplitudes to accelerate convergence.
+
+Unlike CI, CC is size consistent.
+To better understand it, we still use the previous two-level systems A and B, CIS doesn't allow the simultaneous excitation of A and B, but in CCS, it is allowed by writing the final wavefuntion as 
+\begin{align*}
+	\ket{\Psi_0}&=e^{T_A+T_B}\ket{\Phi_0}
+	\\
+	&=(1+T_A+T_B+\frac{1}{2}T_AT_B+\frac{1}{2}T_BT_A)\ket{\Phi_0}
+	\\
+	&=(1+T_A+T_B+T_AT_B)\ket{\Phi_0}
+\end{align*}
+where $T_A$ and $T_B$ commutes since there is no interaction between A and B.
+
+\subsection{M{\o}ller–Plesset Perturbation Theory}
+In quantum mechanics, a common way to describe complicated quantum system is perturbation theory approach.
+The idea is to start with a simple unperturbed Hamiltonian for which a mathematical solution is known, and add an additional perturbed Hamiltonian representing a weak disturbance to the system.
+
+The total Hamiltonian is
+$$
+H=H_{0}+\lambda V
+$$
+
+Our goal is to express $E_n$ and $\ket{n}$  in terms of the energy levels and eigenstates of the old Hamiltonian:
+\begin{align*}
+	E_{n}&=E_{n}^{(0)}+\lambda E_{n}^{(1)}+\lambda^{2} E_{n}^{(2)}+\cdots
+	\\
+	| n \rangle&=| n^{(0)} \rangle+\lambda | n^{(1)} \rangle+\lambda^{2} | n^{(2)} \rangle+\cdots
+\end{align*}
+where $H_0$ is the unperturbed Hamiltonian, while $V$ is the perturbed Hamiltonian.
+$\lambda$ is a dimensionless parameter that can take on values ranging continuously from 0 (no perturbation) to 1 (the full perturbation)
+
+In M{\o}ller–Plesset perturbation theory, the Hartree-Fock Hamiltonian is treated as unperturbed Hamiltonian while the rest part is treated as perturbed Hamiltonian:
+$$
+v=\frac{1}{2} \sum V_{p q r s} c_{p}^{\dagger} c_{q}^{\dagger} c_{s} c_{r}-\sum_{k} V_{r k[s k]} n_{k} c_{r}^{\dagger} c_{s}
+$$
+where $n_k=1$ when the orbital k is occupied and $n_k=0$ when unoccupied, and $V_{ab[cd]}=V_{abcd}-V_{abdc}$
+
+This kind of partition is called M{\o}ller–Plesset partition.
+
+Up to second order perturbation theory, the expressions for the energy is
+$$
+E_{n}(\lambda)=E_{n}^{(0)}+\lambda\left\langle n^{(0)}|v| n^{(0)}\right\rangle+\lambda^{2} \sum_{k \neq n} \frac{\left|\left\langle k^{(0)}|v| n^{(0)}\right\rangle\right|^{2}}{E_{n}^{(0)}-E_{k}^{(0)}}+O\left(\lambda^{3}\right)
+$$
+where the state $k$ and $n$ here are N-body state.
+
+In fact, the first order contribution is zero:
+$$
+\left\langle n^{(0)}|v| n^{(0)}\right\rangle=0
+$$
+which means Hartree-Fock energy is already accurate up to the first order, and MP2 is the leading term of the perturbation correction.
+
+By replacing N-body state by Hartree-Fock single states and taking the anticommutation of wavefunction into account, we obtain the expression of MP2:
+$$
+E_{\mathrm{MP} 2}=2 \sum_{i, j, a, b} \frac{\left\langle\varphi_{i} \varphi_{j}|\hat{v}| \varphi_{a} \varphi_{b}\right\rangle\left\langle\varphi_{a} \varphi_{b}|\hat{v}| \varphi_{i} \varphi_{j}\right\rangle}{\varepsilon_{i}+\varepsilon_{j}-\varepsilon_{a}-\varepsilon_{b}}-\sum_{i, j, a, b} \frac{\left\langle\varphi_{i} \varphi_{j}|\hat{v}| \varphi_{a} \varphi_{b}\right\rangle\left\langle\varphi_{a} \varphi_{b}|\hat{v}| \varphi_{j} \varphi_{i}\right\rangle}{\varepsilon_{i}+\varepsilon_{j}-\varepsilon_{a}-\varepsilon_{b}}
+$$
+
+Since both unperturbed and perturbed Hamiltonian have correct size scaling, MP2 is also a size consistent method.
+
+\section{Density Functional Theory}
+
+Unlike Post-Hartree-Fock methods, DFT does not start from Hartree-Fock result.
+Instead, it uses a totally different approach, starting from the Hohenberg-Kohn theorem. \cite{hktheorem}
+The theorem states that for a given ground state electron density distribution $\rho ({\vec{r}})$, the potential $V ({\vec{r})}$ is clearly defined and thus the ground state wave function $\Psi$.
+
+Proof:
+Assuming $\ket{\Psi_1}$ is the ground state of Hamiltonian $\hat{H}_1$ with external potential $V_1$, and $E_1$ is its energy.
+$$
+E_{1}=\left\langle\Psi_{1}\left|\hat{H}_{1}\right| \Psi_{1}\right\rangle=\int V_{1}(\vec{r}) \rho(\vec{r})(\vec{r}) \mathrm{d}^{3} r+\left\langle\Psi_{1}|(\hat{T}+\hat{U})| \Psi_{1}\right\rangle
+$$
+where $\hat{T}$ is kinetic energy operator while $\hat{U}$ is coulomb operator.
+
+If there is a different potential $V_2$ that leads to different ground state $\ket{\Psi_2}$:
+$$
+E_{1}<\left\langle\Psi_{2}\left|\hat{H}_{1}\right| \Psi_{2}\right\rangle=\left\langle\Psi_{2}\left|\hat{H}_{2}\right| \Psi_{2}\right\rangle+\left\langle\Psi_{2}\left|\hat{H}_{1}-\hat{H}_{2}\right| \Psi_{2}\right\rangle= E_{2}+\int\left(V_{1}(\vec{r})-V_{2}(\vec{r})\right) \rho(\vec{r}) \mathrm{d}^{3} r
+$$
+Since potential $V_1$ and $V_2$ are treated on equal footing, the following inequality also satisfies:
+$$
+E_{2}<\left\langle\Psi_{1}\left|\hat{H}_{2}\right| \Psi_{1}\right\rangle= E_{1}+\int\left(V_{2}(\vec{r})-V_{1}(\vec{r})\right) \rho(\vec{r}) \mathrm{d}^{3} r
+$$
+Adding these two inequalities gives:
+$$
+E_{1}+E_{2}<E_{1}+E_{2}
+$$
+which means the second potential $V_2$ could not exist.
+
+Thus
+$$
+\Psi_{0}=\Psi[\rho_{0}]
+$$
+and
+$$
+E_{0}=E[\rho_{0}]=\left\langle\Psi[\rho_{0}]|\hat{T}+\hat{V}+\hat{U}| \Psi[\rho_{0}]\right\rangle
+$$
+or
+$$
+E_{s}[\rho]=\left\langle\Psi_{\mathrm{s}}[\rho]\left|\hat{T}+\hat{V}_{\mathrm{s}}\right| \Psi_{\mathrm{s}}[\rho]\right\rangle
+$$
+
+Thus the Schrodinger equation is 
+$$
+\left[-\frac{\hbar^{2}}{2 m} \nabla^{2}+V_{\mathrm{s}}(\vec{r})\right] \varphi_{i}(\vec{r})=\varepsilon_{i} \varphi_{i}(\vec{r})
+$$
+where there exist a unique functional $V_s$
+$$
+V_{\mathrm{s}}(\vec{r})=V(\vec{r})+\int \frac{e^{2} \rho_{\mathrm{s}}\left(\vec{r}^{\prime}\right)}{\left|\vec{r}-\vec{r}^{\prime}\right|} \mathrm{d}^{3} r^{\prime}+V_{\mathrm{XC}}\left[\rho_{\mathrm{s}}(\vec{r})\right]
+$$
+that can give correct ground state density and energy.
+Here the $V_{\mathrm{XC}}$ is called the exchange-correlation potential, which includes all the many-body interactions.
+Since the Hartree term and $V_{\mathrm{XC}}$ depend on $\rho{\vec{r}}$, the problem of solving the Kohn–Sham equation has to be done in a self-consistent iterative way.
+
+However, for most of the systems except free electron gas \cite{homogeneous}, the exact expression for exchange-correlation functional is unknown.
+Thus, approximations and fittings are needed to determine exchange-correlation functional.
+Some famous exchange-correlation functional types includes local density approximation (LDA)
+$$
+E_{\mathrm{XC}}^{\mathrm{LDA}}[n]=\int \varepsilon_{\mathrm{XC}}(n) n(\vec{r}) \mathrm{d}^{3} r
+$$
+local spin density approximation (LSDA) 
+$$
+E_{\mathrm{XC}}^{\mathrm{LSDA}}\left[n_{\uparrow}, n_{\downarrow}\right]=\int \varepsilon_{\mathrm{XC}}\left(n_{\uparrow}, n_{\downarrow}\right) n(\vec{r}) \mathrm{d}^{3} r
+$$
+and generalized gradient approximation (GGA)
+$$
+E_{\mathrm{XC}}^{\mathrm{GGA}}\left[n_{\uparrow}, n_{\downarrow}\right]=\int \varepsilon_{\mathrm{XC}}\left(n_{\uparrow}, n_{\downarrow}, \nabla n_{\uparrow}, \nabla n_{\downarrow}\right) n(\vec{r}) \mathrm{d}^{3} r
+$$
+
+Difficulties in expressing the exchange part of the energy can be relieved by including a component of the exact exchange energy calculated from Hartree–Fock theory.
+Functionals of this type are known as hybrid functionals, including B3LYP \cite{b3lyp}, PBE0 \cite{pbe0} and HSE \cite{hse}.
+
+\section{Relativistic and Nonadiabatic Quantum Chemsitry}
+In all above discussion of Hartree-Fock, Post-Hartree-Fock and density functional theory, non-relativity and Born-Oppenheimer assumptions are made.
+However, there do exist cases that at least one of them break.
+
+Relativistic effects are also neglected in Hartree-Fock, which is fine in systems that all atoms are light atoms, but can cause problems when heavy atoms are included. \cite{relativ}
+Many methods have been suggested to partially or fully consider the relativistic effects, including relativistic density functional theory \cite{reladft}, Douglas-Kroll-Hess approximation \cite{dkh} and exact two component method \cite{x2c}.
+Pseudopotential is also usually used by approximating the relativistic effect as an additional potential. \cite{relaqchem}
+
+Although Born-Oppenheimer approximation behaves well in most of the cases, there are some cases that quantum nuclear effect plays a very important role, especially in molecules that hydrogen bond is important. \cite{tomqne}
+One of the most effective theoretical method to study quantum nuclear effect is path integral molecular dynamics. \cite{pimd}
+

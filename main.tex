@@ -2,32 +2,19 @@
 % !TeX program = xelatex
 % !TeX spellcheck = en_US
 
-\documentclass[doctor]{ustcthesis}
+\documentclass[bachelor, english]{ustcthesis}
 % doctor|master|bachelor [academic|professional] [chinese|english] [print|pdf]
 % [super|numebers|authoryear]
 
-\title{中国科学技术大学\\学位论文模板示例文档}
-\author{李泽平}
-\major{数学与应用数学}
-\supervisor{华罗庚\ 教授}
-\cosupervisor{钱学森\ 教授}
-% \date{二〇一七年五月一日} % 注释掉则为今日
-% \professionaltype{专业学位类型}
-% \secretlevel{秘密}        % 绝密|机密|秘密，注释本行则不保密
-% \secretyear{20}           % 保密年限
+\title{非戴森代数图构建理论与实现}
+\author{孙嘉策}
+\major{物理学}
+\supervisor{Andrew Dreuw教授}
+\entitle{Theory and Implementation of Nondyson Algebraic Diagrammatic Construction}
+\enauthor{Jiace Sun}
+\enmajor{Physics}
+\ensupervisor{Prof. Andrew Dreuw}
 
-\entitle{An example of thesis template for University of Science and Technology
-  of China}
-\enauthor{Zeping Li}
-\enmajor{Mathematics and Applied Mathematics}
-\ensupervisor{Prof. Luogeng Hua}
-\encosupervisor{Prof. Xuesen Qian}
-% \endate{May 1, 2017}      % Today if commented
-% \enprofessionaltype{Professional degree type}
-% \ensecretlevel{Secret}    % Top secret|Highly secret|Secret
-
-
-% 加载宏包和配置
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage{booktabs}
@@ -36,6 +23,10 @@
 \usepackage{siunitx}
 \usepackage{amsthm}
 \usepackage{hyperref}
+\usepackage{braket}
+
+
+
 
 \DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
 \newcommand\pkg{\textsf}
@@ -50,19 +41,6 @@
 
 \begin{document}
 
-% 研究生论文:
-%   封面，原创性声明和授权使用声明
-%   frontmatter: 摘要，目录，[图、表清单]，[符号说明]
-%   mainmatter: 正文章节，参考文献
-%   appendix: 附录
-%   backmatter: 致谢，已发表论文列表
-%
-% 本科生论文:
-%   封面
-%   frontmatter: 致谢，目录，摘要
-%   mainmatter: 正文章节，参考文献
-%   appendix: 附录
-
 \maketitle
 \makestatement
 
@@ -74,7 +52,8 @@
 \input{chapters/notation}
 
 \mainmatter
-\input{chapters/intro}
+\input{chapters/development}
+\input{chapters/theory}
 \input{chapters/floats}
 \input{chapters/math}
 \input{chapters/citations}
