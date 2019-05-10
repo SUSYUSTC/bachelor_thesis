@@ -1,5 +1,4 @@
 % !TeX root = ../main.tex
-
 \chapter{Development of Electronic Structure Theory}
 Electronic structure usually refers to the quantum state of electrons in electromagnetic field produced by nuclei and the electrons themselves.\cite{elecstruc}
 In principle, state of electrons and nuclei must be determined simultaneously by many-body Schrodinger equation.
@@ -109,7 +108,8 @@ $$
 \ket{\Psi_0}=(t_0+T_1+T_2+T_3 \dots)\ket{\Phi_0}
 $$
 where the $T$ here are convenient to be experssed as second quantization form:
-\begin{align*}
+$$
+\begin{aligned}
 	\hat{T}_{1} &=\sum_{i a} t_{i}^{a} \hat{c}_{a}^{\dagger} \hat{c}_{i}
 	\\
 	\hat{T}_{2} &=\frac{1}{4} \sum_{i j a b} t_{i j}^{a b} \hat{c}_{a}^{\dagger} \hat{c}_{b}^{\dagger} \hat{c}_{j} \hat{c}_{i}
@@ -117,7 +117,8 @@ where the $T$ here are convenient to be experssed as second quantization form:
 	&\dots
 	\\
 	\hat{T}_{n}&=\left(\frac{1}{n !}\right)^{2} \sum_{i j \ldots a b \ldots}^{n} t_{i j \ldots}^{a b \ldots} \hat{c}_{a}^{\dagger} \hat{c}_{b}^{\dagger} \ldots \hat{c}_{j} \hat{c}_{i}
-\end{align*}
+\end{aligned}
+$$
 with $\hat{c}^{\dagger}$ and $\hat{c}$ are creation operator and annihilation operation, respectively.
 
 We have seen this formulation will cause size inconsistency.
@@ -177,13 +178,15 @@ Standard quantum chemistry packages (GAMESS (US), NWChem, ACES II, etc.) solve t
 
 Unlike CI, CC is size consistent.
 To better understand it, we still use the previous two-level systems A and B, CIS doesn't allow the simultaneous excitation of A and B, but in CCS, it is allowed by writing the final wavefuntion as 
-\begin{align*}
+$$
+\begin{aligned}
 	\ket{\Psi_0}&=e^{T_A+T_B}\ket{\Phi_0}
 	\\
 	&=(1+T_A+T_B+\frac{1}{2}T_AT_B+\frac{1}{2}T_BT_A)\ket{\Phi_0}
 	\\
 	&=(1+T_A+T_B+T_AT_B)\ket{\Phi_0}
-\end{align*}
+\end{aligned}
+$$
 where $T_A$ and $T_B$ commutes since there is no interaction between A and B.
 
 \subsection{M{\o}ller–Plesset Perturbation Theory}
@@ -196,11 +199,13 @@ H=H_{0}+\lambda V
 $$
 
 Our goal is to express $E_n$ and $\ket{n}$  in terms of the energy levels and eigenstates of the old Hamiltonian:
-\begin{align*}
+$$
+\begin{aligned}
 	E_{n}&=E_{n}^{(0)}+\lambda E_{n}^{(1)}+\lambda^{2} E_{n}^{(2)}+\cdots
 	\\
 	| n \rangle&=| n^{(0)} \rangle+\lambda | n^{(1)} \rangle+\lambda^{2} | n^{(2)} \rangle+\cdots
-\end{align*}
+\end{aligned}
+$$
 where $H_0$ is the unperturbed Hamiltonian, while $V$ is the perturbed Hamiltonian.
 $\lambda$ is a dimensionless parameter that can take on values ranging continuously from 0 (no perturbation) to 1 (the full perturbation)
 
