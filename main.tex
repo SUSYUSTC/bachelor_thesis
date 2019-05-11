@@ -224,7 +224,7 @@ $$
 \begin{aligned} \hat{W} &=\int \mathrm{d} \xi \hat{w}(\xi) \hat{\psi}^{\dagger}(\xi) \hat{\psi}(\xi) \\ \hat{V} &=\frac{1}{2} \iint \mathrm{d} \xi \mathrm{d} \xi^{\prime} \hat{v}\left(\xi, \xi^{\prime}\right) \hat{\psi}^{\dagger}(\xi) \hat{\psi}^{\dagger}\left(\xi^{\prime}\right) \hat{\psi}\left(\xi^{\prime}\right) \hat{\psi}(\xi) \end{aligned}
 $$
 
-\subsection{Green Function}
+\subsection{Green Function} \label{mathrefs}
 
 In mathematics, a Green's function of an inhomogeneous linear differential operator defined on a domain with specified initial conditions or boundary conditions is its impulse response.
 Green function is a important concept in physics, since the expression of green function can easily give the result for an arbitary source or boundary condition.
@@ -273,9 +273,9 @@ c_{p}^{\dagger}[t]=e^{i \hat{H} t} c_{p}^{\dagger} e^{-i \hat{H} t}, \quad c_{p}
 $$
 
 The Green function or electron propagator is defined as
-$$
+\begin{equation} \label{eq:greendef}
 G_{p q}\left(t, t^{\prime}\right)=-i \theta\left(t-t^{\prime}\right)\left\langle\Psi_{0}\left|c_{p}[t] c_{q}^{\dagger}\left[t^{\prime}\right]\right| \Psi_{0}\right\rangle+ i \theta\left(t^{\prime}-t\right)\left\langle\Psi_{0}\left|c_{q}^{\dagger}\left[t^{\prime}\right] c_{p}[t]\right| \Psi_{0}\right\rangle
-$$
+\end{equation}
 where $\theta(t)$ is step function defined as
 $$
 \theta(t)=\left\{\begin{array}{ll}{1,} & {t>0} \\ {0,} & {t<0}\end{array}\right.
@@ -430,6 +430,267 @@ This contour integration can be done by residue theorem after we calculate ioniz
 Until now, we have not given any practical approaches to calculate Green function.
 We will later see that general Green function can be calculated by Feynman expansion, which is essentially a perturbation theory.
 Thus we need to first solve the unperturbed Green function, which is usually refered to as free Green function.
+$$
+\hat{H}_{0}=\sum \varepsilon_{r} c_{r}^{\dagger} c_{r}
+$$
+
+Then we calculate the time dependence of creation and annihilation operators:
+$$
+i \frac{\partial}{\partial t} c_{p}(t)=e^{i \hat{H}_{0} t}\left[c_{p}, \hat{H}_{0}\right] e^{-i \hat{H}_{0} t}=\varepsilon_{p} c_{p}(t)
+$$
+thus
+$$
+c_{p}(t)=e^{i \hat{H}_{0} t} c_{p} e^{-i \hat{H}_{0} t}=e^{-i \varepsilon_{p} t} c_{p}
+$$
+
+From the definition of Green function in Eq \ref{eq:greendef}, we have 
+$$
+G_{p q}^{0}\left(t, t^{\prime}\right)=-i e^{-i \varepsilon_{p}\left(t-t^{\prime}\right)} \delta_{p q}\left(\theta\left(t-t^{\prime}\right) \overline{n}_{p}-\theta\left(t^{\prime}-t\right) n_{p}\right)
+$$
+where
+$$
+n_{p}=
+\left\{
+\begin{array}{ll}
+	{1,} & {p \leq N}
+	\\
+	{0,} & {p>N}
+\end{array}
+\right.
+$$
+is occupation number of orbital $p$.
+
+The corresponding energy representation is
+$$
+G_{p q}^{0}(\omega)=\delta_{p q}\left(\frac{\overline{n}_{p}}{\omega-\varepsilon_{p}+i \eta}+\frac{n_{p}}{\omega-\varepsilon_{p}-i \eta}\right)
+$$
+
+\subsection{Perturbation Theory for Green Function}
+
+We discussed teh definition of Green function and how to derive important physical quantities from Green function in the previously part.
+In this part, we will give a perturbation scheme to expand Green function into different orders.
+
+We start from the introduction of M{\o}ller-Plesset partitioning:
+$$
+\hat{H}=\hat{T}+\hat{V}=\hat{H}_{0}+\hat{H}_{I}
+$$
+where
+$$
+\hat{H}_{0}=\sum \epsilon_{r} c_{r}^{\dagger} c_{r}
+$$
+is the Hartree-Fock Hamiltonian calculated from the solutions of Hartree-Fock equation in second quantization form:
+$$
+t_{r s}+\sum_{k} V_{r k[s k]} n_{k}=\epsilon_{r} \delta_{r s}
+$$
+which gives the form of $\hat{H}_I$:
+$$
+\hat{H}_I=\frac{1}{2} \sum V_{p q r s} c_{p}^{\dagger} c_{q}^{\dagger} c_{s} c_{r}-\sum_{k} V_{r k[s k]} n_{k} c_{r}^{\dagger} c_{s}
+$$
+
+For Hartree-Fock ground state:
+$$
+\hat{H}_{0} | \Phi_{0} \rangle=E_{0}^{(0)} | \Phi_{0} \rangle
+$$
+
+Before working on the perturbation theory, we need to transfer to interaction picture.
+The basic idea of interaction picture is to remove the rapidly fluctuating exponetial factor caused by the trivial unperturbed Hamiltonian before the quantum state:
+$$
+i \frac{\partial}{\partial t} | \Psi(t) \rangle=\hat{H}_{0}+\hat{H}_{1} | \Psi(t) \rangle
+$$
+
+By perturbation assumption, $\hat{H}_1$ is small compared with $\hat{H}_0$, thus the fluctuating factor $e^{-i \hat{H}_0 t}$ caused by unperturbed part dominates the time dependence of $\Psi$.
+Thus, the change to interaction picture will help us to focus on the perturbed part of Hamiltonian.
+
+In interaction picture, the quantum state is defined as
+$$
+| \Psi_{I}(t) \rangle=e^{i \hat{H}_{0} t} | \Psi_{S}(t) \rangle
+$$
+and thus the Schrodinger equation becomes:
+$$
+i \frac{\partial}{\partial t} | \Psi_{I}(t) \rangle=\hat{H}_{I}(t) | \Psi_{I}(t) \rangle
+$$
+where the $\hat{H}_I$ is the perturbation part of Hamiltonian in interaction picture:
+$$
+\hat{H}_{I}(t)=e^{i \hat{H}_{0} t} \hat{H}_{1}(t) e^{-i \hat{H}_{0} t}
+$$
+
+As is expected, the unperturbed part does not exist any more, thus the change of quantum state is slow under the small perturbation assumption.
+In fact, the time evolution of quantum state in interaction picture is:
+$$
+| \Psi_{I}(t) \rangle=\hat{U}\left(t, t_{0}\right) | \Psi_{I}\left(t_{0}\right) \rangle
+$$
+where
+$$
+\hat{U}\left(t, t_{0}\right)=e^{i \hat{H}_{0} t} e^{-i \hat{H}\left(t-t_{0}\right)} e^{-i \hat{H}_{0} t_{0}}
+$$
+is the time evolution opertator in interction picture.
+
+Equation of motion of the evolution operator itself is:
+$$
+i \frac{\partial}{\partial t} \hat{U}\left(t, t_{0}\right)=\hat{H}_{I}(t) U\left(t, t_{0}\right)
+$$
+
+Thus it is possible to expand the evolution operator in series:
+$$
+\hat{U}\left(t, t_{0}\right)=\hat{\mathbb{1}}-i \int_{t_{0}}^{t} \mathrm{d} t_{1} \hat{H}_{I}\left(t_{1}\right)+(-i)^{2} \int_{t_{0}}^{t} \mathrm{dt}_{1} \int_{t_{0}}^{t_{1}} \mathrm{d} t_{2} \hat{H}_{I}\left(t_{1}\right) \hat{H}_{I}\left(t_{2}\right)+\ldots
+$$
+and
+$$
+\hat{U}^{(n)}\left(t, t_{0}\right)=
+(-i)^{n} \int_{t_n<t_{n-1}<\dots<t_1<t_0<t} \mathrm{d} t_{1} \mathrm{d} t_{2} \ldots \mathrm{d} t_{n} \hat{H}_{I}\left(t_{1}\right) \hat{H}_{I}\left(t_{2}\right) \ldots \hat{H}_{I}\left(t_{n}\right)
+$$
+is the general expression for the $n$th order.
+
+Note that the perturbation part of Hamiltonians in interction picture do not commute for different time arguments, i.e.
+$$
+\left[\hat{H}_{I}(t), \hat{H}_{I}\left(t^{\prime}\right)\right] \neq 0 \text { for } t \neq t^{\prime}
+$$
+
+However, the time arguments themselves can be exchanged since they are intermediate variables.
+Thus,
+$$
+\begin{aligned}
+	\int_{t_n<t_{n-1}<\dots<t_1<t_0<t} &\mathrm{d} t_{1} \mathrm{d} t_{2} \ldots \mathrm{d} t_{n} \hat{H}_{I}\left(t_{1}\right) \hat{H}_{I}\left(t_{2}\right) \ldots \hat{H}_{I}\left(t_{n}\right)
+	\\
+	=\int_{t_{P_n}<t_{P_{n-1}}<\dots<t_{P_1}<t_{P_0}<t} &\mathrm{d} t_{1} \mathrm{d} t_{2} \ldots \mathrm{d} t_{n} \hat{H}_{I}\left(t_{P_1}\right) \hat{H}_{I}\left(t_{P_2}\right) \ldots \hat{H}_{I}\left(t_{P_n}\right)
+\end{aligned}
+$$
+where $P$ is any possible permuation.
+
+Thus each order of evolution operator can be written in the form of time ordering operator:
+$$
+\hat{U}^{(n)}\left(t, t_{0}\right)=\frac{(-i)^{n}}{n !} \int_{t_{0}}^{t} \mathrm{d} t_{1} \ldots \int_{t_{0}}^{t} \mathrm{d} t_{n} \hat{\boldsymbol{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right)\right]
+$$
+
+In a symbolic way, the evolution operator can be written as
+$$
+\hat{U}\left(t, t_{0}\right)=\hat{\mathcal{T}} e^{-i \int_{t_{0}}^{t} \mathrm{d} t^{\prime} \hat{H}_{I}\left(t^{\prime}\right)}
+$$
+
+Think about that at time $t=-\infty$, the Hamiltonian of a system is $\hat{H}_0$ and the system is in the ground state.
+Then the perturbed Hamiltonian $\hat{H}_1$ is gradually turned on exponetially, and at time $t=0$, the perturbed Hamiltonian is fully turned on:
+$$
+\hat{H}(t)=\hat{H}_{0}+e^{-\epsilon|t|} \hat{H}_{I}
+$$
+In the limit of $\epsilon \rightarrow 0$, which is refered to as adiabatic limit, it is expected that the system in the ground state of the total Hamiltonian at $t=0$.
+
+The time evolution operator associated with this process is
+$$
+\hat{U}_{\epsilon}\left(t, t_{0}\right)=\sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} \int_{t_{0}}^{t} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{t_{0}}^{t} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|} \hat{\mathcal{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right)\right]
+$$
+
+However, the situation is not that simple and the evolution operator actually does not converge when $\epsilon \rightarrow 0$.
+The divergent is caused by the phase factor of the quantum state, which is not physical.
+Thus, it is possible to cancel this unphysical divergence, which leads to the famous Gell-Mann and Low theorem:
+$$
+| \Psi_{0}^{\prime} \rangle=\lim _{\epsilon \rightarrow 0} \frac{\hat{U}_{\epsilon}(0,-\infty) | \Phi_{0} \rangle}{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle}
+$$
+is the ground state of $\hat{H}$ with the eigenvalue
+$$
+E_{0}=E_{0}^{(0)}+\lim _{\epsilon \rightarrow 0} \frac{\left\langle\Phi_{0}\left|\hat{H}_{I} \hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle}{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle}
+$$
+and the proof is given in the refernce \cite{gallmannlow}
+
+Since both the numerator and denominator diverges with $\epsilon \rightarrow 0$, the convergence holds only when one calculate contribution from each order separately and then add them up.
+In addition, the normalization rule for the final state $| \Psi_{0}^{\prime}\rangle$ is 
+$$
+\left\langle\Phi_{0} | \Psi_{0}^{\prime}\right\rangle= 1
+$$
+rather than
+$$
+\left\langle\Psi_{0}^{\prime} | \Psi_{0}^{\prime}\right\rangle= 1
+$$
+
+And it is also similar for the $t>0$ scheme:
+$$
+| \Psi_{0}^{\prime \prime} \rangle=\lim _{\epsilon \rightarrow 0} \frac{\hat{U}_{\epsilon}(0, \infty) | \Phi_{0} \rangle}{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0, \infty)\right| \Phi_{0}\right\rangle}=\lim _{\epsilon \rightarrow 0} \frac{\hat{U}_{\epsilon}(0,-\infty) | \Phi_{0} \rangle}{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle}=| \Psi_{0}^{\prime} \rangle
+$$
+
+Then we will calculate the expectation value of any operator $\hat{O}_H$:
+$$
+\begin{aligned}
+	\left\langle\Psi_{0}\left|\hat{O}_{H}(t)\right| \Psi_{0}\right\rangle 
+	&=\frac{\left\langle\Psi_{0}^{\prime}\left|\hat{O}_{H}(t)\right| \Psi_{0}^{\prime}\right\rangle}
+	{\left\langle\Psi_{0}^{\prime} | \Psi_{0}^{\prime}\right\rangle}
+	\\
+	&=\lim _{\epsilon \rightarrow 0} 
+	\frac{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty, 0)\hat{U}_{\epsilon}(0, t) \hat{O}_{I}(t) \hat{U}_{\epsilon}(0, t)\hat{U}_{\epsilon}(t,-\infty)\right| \Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle}
+	\\
+	&=\lim _{\epsilon \rightarrow 0} 
+	\frac{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty, t) \hat{O}_{I}(t) \hat{U}_{\epsilon}(t,-\infty)\right| \Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle}
+	\\
+	&=\lim _{\epsilon \rightarrow 0} \sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} \int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|}
+	\\
+	&\qquad \frac{\left\langle\Phi_{0}\left|
+	\hat{\mathcal{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) \hat{O}_{I}(t)\right]\right|
+	\Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle}
+\end{aligned}
+$$
+
+Similarly, for expectation of two opeartors with different time, we have
+$$
+\begin{aligned}
+	\left\langle\Psi_{0}\left|\hat{\mathcal{T}}\left[\hat{P}_{H}(t) \hat{Q}_{H}\left(t^{\prime}\right)\right]\right| \Psi_{0}\right\rangle
+	&=\lim _{\epsilon \rightarrow 0} \sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} \int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|}
+	\\
+	&\qquad =\frac{\left\langle\Phi_{0}\left|
+	\hat{\boldsymbol{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) \hat{P}_{I}(t) \hat{Q}_{I}\left(t^{\prime}\right)\right]\right|
+	\Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle}
+\end{aligned}
+$$
+
+Thus, it is possible for us to expand Green function to series, which is the orgial purpose:
+$$
+\begin{aligned}
+	i G_{p q}\left(t, t^{\prime}\right)
+	=&\left\langle\Psi_{0}\left|
+	\hat{\mathcal{T}}\left[c_{p}[t] c_{q}^{\dagger}\left[t^{\prime}\right]\right]\right|
+	\Psi_{0}\right\rangle
+	\\
+	=& \lim _{\epsilon \rightarrow 0} \sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} 
+	\int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|}
+	\\
+	& \frac{\left\langle\Phi_{0}\left|
+	\hat{\boldsymbol{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) c_{p}(t) c_{q}^{\dagger}\left(t^{\prime}\right)\right]\right|
+	\Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|
+	\hat{U}_{\epsilon}(\infty,-\infty)\right|
+	\Phi_{0}\right\rangle}
+\end{aligned}
+$$
+and the denominator as
+$$
+\begin{aligned}\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle=\sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} \int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|} \\\left\langle\Phi_{0}\left|\hat{\mathcal{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right)\right]\right| \Phi_{0}\right\rangle \end{aligned}
+$$
+
+As we have seen, field theory approach chooses a totally different way of perturbation expansion, which is using Gell-Mann and Low theorem.
+However, the result of perturbation has particular physical meaning, which is the asympotic behaviour of eigenvalues and eigenstates when magnitude of perturbed Hamiltonian changes.
+Thus, all perturbation theory should give the same result.
+
+Generally, M{\o}ller-Plesset
+$$
+| \Psi_{0} \rangle=| \Phi_{0} \rangle+\sum_{n=1}^{\infty}\left[\frac{\hat{Q}_{0}}{E_{0}^{(0)}-\hat{H}_{0}}\left(E_{0}^{(0)}-E_{0}+\hat{H}_{I}\right)\right]^{n} | \Phi_{0} \rangle
+$$
+which is proved in reference \cite{rsptproof}.
+
+In fact, we can also write the result from field theory approach into similar expression:
+\begin{equation} \label{expansion}
+\begin{array}{l}{\hat{U}_{\epsilon}(0,-\infty) | \Phi_{0} \rangle=} \\ { | \Phi_{0} \rangle+\sum_{n=1}^{\infty}(-i)^{n} \int_{-\infty}^{0} \mathrm{d} t_{1} \int_{-\infty}^{t_{1}} \mathrm{d} t_{2} \ldots \int_{-\infty}^{t_{n-1}} \mathrm{d} t_{n} e^{\epsilon\left(t_{1}+\cdots+t_{n}\right)} \hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) | \Phi_{0} \rangle}\end{array}
+\end{equation}
+
+Since
+\begin{equation} \label{I2H}
+\hat{H}_{I}\left(t_{j}\right)=e^{i \hat{H}_{0} t_{j}} \hat{H}_{I} e^{-i \hat{H}_{0} t_{j}}
+\end{equation}
+and 
+$$
+\hat{H}_{I}\left(t_{j}\right) \hat{H}_{I}\left(t_{j^{\prime}}\right)=e^{i \hat{H}_{0} t_{j}} \hat{H}_{I} e^{-i \hat{H}_{0}\left(t_{j}-t_{j}\right)} \hat{H}_{I} e^{-i \hat{H}_{0} t_{j^{\prime}}}
+$$
+, we can expect that there are a lot of terms like $e^{-i \hat{H}_{0}\left(t_{j}-t_{j}\right)}$ after we write every $\hat{H}_I(t_i)$ in Eq \ref{expansion} in terms of Eq \ref{I2H}.
 
 \input{chapters/floats}
 \input{chapters/math}
