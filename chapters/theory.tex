@@ -1,2 +1,645 @@
 % !TeX root = ../main.tex
+\section{Theoretical backgroud of ADC}
+
+\subsection{Identity particle and second quantization}
+Let $\ket{q}$ be a set of orthonomal one particle basis
+\begin{equation}
+\begin{aligned}
+\left\langle q | q^{\prime}\right\rangle &=\delta_{q q^{\prime}} \\ \sum_{q} | q \rangle\langle q |&=1
+\end{aligned}
+\end{equation}
+
+Define $| q_{1} \ldots q_{N} \rangle$ as the state of $| q_{1} \rangle \dots | q_{N} \rangle$ after antisymmetrization and normalization:
+\begin{equation}
+| q_{1} \ldots q_{N} \rangle =(N !)^{-\frac{1}{2}} \sum_{P}(-1)^{P} | q_{P(1)} \rangle \ldots | q_{P(N)} \rangle
+\end{equation}
+where $P$ is permutation of indexes.
+
+In field theory framework, the particle number is subjected to change.
+Thus we should consider Fock space rather than Hilbert space.
+Fock space is defined by
+\begin{equation}
+\mathcal{F}=\mathcal{H}_{0} \oplus \mathcal{H}_{1} \oplus \mathcal{H}_{2}^{A} \oplus \cdots
+\end{equation}
+where only antisymmetric states is included when $N>2$.
+
+Then we can define creation operators by 
+\begin{equation}
+c_{q}^{\dagger} | q_{1} \ldots q_{N} \rangle=| q_{1} \ldots q_{N} q \rangle
+\end{equation}
+and annihilation operator by its hermitian adjoint.
+
+Thus it's easy to calculate the annihilation operator as
+\begin{equation}
+\begin{aligned}
+	c_{q} | q_{1} \ldots q_{N} \rangle&=\sum_{N^{\prime}} \sum_{q_{1}^{\prime}<q_{2}^{\prime} \cdots<q_{N^{\prime}}^{\prime}} | q_{1}^{\prime} \ldots q_{N^{\prime}}^{\prime} \rangle\left\langle q_{1}^{\prime} \ldots q_{N^{\prime}}^{\prime}\left|c_{q}\right| q_{1} \ldots q_{N}\right\rangle
+	\\
+	&=\sum_{N^{\prime}} \sum_{q_{1}^{\prime}<q_{2}^{\prime} \cdots<q_{N^{\prime}}^{\prime}} | q_{1}^{\prime} \ldots q_{N^{\prime}}^{\prime} \rangle\left\langle q_{1} \ldots q_{N}\left|c_{q}^{\dagger}\right| q_{1}^{\prime} \ldots q_{N^{\prime}}^{\prime}\right\rangle^{*}
+\end{aligned}
+\end{equation}
+
+Creation operator and annihilation operator are related by anticommutation rule:
+\begin{equation}
+\begin{aligned}
+	&\left(c_{p} c_{q}^{\dagger}+c_{q}^{\dagger} c_{p}\right) | q_{1} \ldots q_{N} \rangle
+	\\
+	=&\delta_{p q} | q_{1} \ldots q_{N} \rangle-\delta_{p, q_{N}} | q_{1} \ldots q_{N-1} q \rangle+\ldots
+	\\
+	&+ \delta_{p, q_{N}} | q_{1} \ldots q_{N-1} q \rangle-\delta_{p, q_{N-1}} | q_{1} \ldots q_{N-2} q_{N} q \rangle+\ldots
+	\\
+	=&\delta_{p q} | q_{1} \ldots q_{N} \rangle
+\end{aligned}
+\end{equation}
+
+Thus 
+\begin{equation}
+\left\{c_{q}^{\dagger}, c_{p}\right\}=c_{p} c_{q}^{\dagger}+c_{q}^{\dagger} c_{p}=\delta_{p q}
+\end{equation}
+
+In the similar way,
+\begin{equation}
+\left\{c_{p}^{\dagger}, c_{q}^{\dagger}\right\}=0, \quad\left\{c_{p}, c_{q}\right\}=0
+\end{equation}
+
+In fact, the anticommutation rule comes from the fermion attribute of electron.
+For bosons, the anticommutation should be replaced by commutation rule.
+
+The advantage of creation and annihilation operator is obvious: we don't need to explictly antisymmetrize the N-body quantum state, which has a rather complicated expression.
+In fact, we change from the common coordinate or momentum representation to particle number representation.
+Since particles are identicle for either fermions and bosons, we can only tell the number of particles on each state instead of the state of each particle.
+Thus, particle number representation and introduction of creation and annihilation operator remove redundent information and generate the anticommutation rule for N-body states automatically.
+
+The introduction of creation and annihilation operators can not only help us with description of quantum states but also with operators.
+
+Generally, a one-particle operartor can be written as
+\begin{equation}
+\hat{W}^{\prime}=\sum_{p, q} w_{p q} c_{p}^{\dagger} c_{q}
+\end{equation}
+which no longer has a summation over all the particles like the case of quantum mechanics:
+\begin{equation}
+\hat{W}=\sum_{i=1}^{N} \hat{w}(i)
+\end{equation}
+
+Its expectation value on a N-body quantum state is:
+\begin{equation}
+\left\langle q_{1} \ldots q_{N}\left|\hat{W}^{\prime}\right| q_{1} \ldots q_{N}\right\rangle=\sum_{i=1}^{N} w_{q_{i} q_{i}}
+\end{equation}
+which is as expected
+
+Take the kinetic energy operator as example, since all the electrons are identical, the operator that acts on each single electron must be the same.
+Thus, the quantum mechanics approach of operator cause redundent information, which is removed by second quantization.
+
+Another important example of one-body operator is particle number operator
+\begin{equation}
+\hat{N}=\sum_{p} c_{p}^{\dagger} c_{p}, \quad \hat{N} | q_{1} \ldots q_{N} \rangle=N | q_{1} \ldots q_{N} \rangle
+\end{equation}
+
+
+The second quantization of two-body operator
+\begin{equation}
+\hat{V}=\sum_{i<j=1}^{N} \hat{v}(i, j)
+\end{equation}
+is
+\begin{equation}
+\hat{V}=\frac{1}{2} \sum_{p, q, r, s} V_{p q r s} c_{p}^{\dagger} c_{q}^{\dagger} c_{s} c_{r}
+\end{equation}
+
+Its expectation value is
+\begin{equation}
+\left\langle q_{1} \ldots q_{N}|\hat{V}| q_{1} \ldots q_{N}\right\rangle=\frac{1}{2} \sum_{q_{i}<q_{j}}\left(V_{q_{i} q_{j}\left[q_{i} q_{j}\right]}-V_{q_{j} q_{i}\left[q_{i} q_{j}\right]}\right)=\sum_{q_{i}<q_{j}} V_{q_{i} q_{j}\left[q_{i} q_{j}\right]}
+\end{equation}
+
+The change of basis will transform creation and annihilation operator just like normal operators:
+\begin{equation}
+\begin{aligned} 
+	b_{s}^{\dagger} | q_{1} \ldots q_{N} \rangle&= | q_{1} \ldots q_{N} \tilde{s} \rangle
+	\\
+	&= \sum_{q} | q_{1} \ldots q_{N} q \rangle\langle q | \tilde{s}\rangle
+	\\
+	&=\sum_{q}\langle q | \tilde{s}\rangle c_{q}^{\dagger} | q_{1} \ldots q_{N} \rangle
+\end{aligned}
+\end{equation}
+and thus
+\begin{equation}
+\begin{aligned}
+	b_{s}^{\dagger}&=\sum_{q}\langle q | \tilde{s}\rangle c_{q}^{\dagger}
+	\\
+	b_{s}&=\sum_{q}\langle\tilde{s} | q\rangle c_{q}
+\end{aligned}
+\end{equation}
+
+If the basis $\ket{q}$ contains both spacial part and spin part with spacical part $x$ and spin part $\sigma$, then it's convenient to define field operators:
+\begin{equation}
+\begin{aligned} \hat{\psi}^{\dagger}(\xi) &=\sum_{q} c_{q}^{\dagger} \psi_{q}^{*}(\xi) \\ \hat{\psi}(\xi) &=\sum_{q} c_{q} \psi_{q}(\xi) \end{aligned}
+\end{equation}
+where $\xi$ is a set of spacial and spin index.
+
+They also have anticommutation rules like creation and annihilation operators:
+\begin{equation}
+\begin{array}{c}{\left\{\hat{\psi}^{\dagger}(\xi), \hat{\psi}\left(\xi^{\prime}\right)\right\}=\delta\left(x-x^{\prime}\right) \delta_{\sigma \sigma^{\prime}}} \\ {\left\{\hat{\psi}(\xi), \hat{\psi}\left(\xi^{\prime}\right)\right\}=0, \quad\left\{\hat{\psi}^{\dagger}(\xi), \hat{\psi}^{\dagger}\left(\xi^{\prime}\right)\right\}=0}\end{array}
+\end{equation}
+
+In addition, normal operators mentioned early can also be written in the form of field operators:
+\begin{equation}
+\begin{aligned} \hat{W} &=\int \mathrm{d} \xi \hat{w}(\xi) \hat{\psi}^{\dagger}(\xi) \hat{\psi}(\xi) \\ \hat{V} &=\frac{1}{2} \iint \mathrm{d} \xi \mathrm{d} \xi^{\prime} \hat{v}\left(\xi, \xi^{\prime}\right) \hat{\psi}^{\dagger}(\xi) \hat{\psi}^{\dagger}\left(\xi^{\prime}\right) \hat{\psi}\left(\xi^{\prime}\right) \hat{\psi}(\xi) \end{aligned}
+\end{equation}
+
+\subsection{Green Function} \label{mathrefs}
+
+In mathematics, a Green's function of an inhomogeneous linear differential operator defined on a domain with specified initial conditions or boundary conditions is its impulse response.
+Green function is a important concept in physics, since the expression of green function can easily give the result for an arbitary source or boundary condition.
+
+Take electromagetic wave equation of electric potential in classical field theory as an example:
+\begin{equation}
+\left(\nabla^{2}-\frac{1}{c^2}\frac{\partial^{2}}{\partial t^{2}}\right) \phi(\mathbf{r},t)=-\rho(\mathbf{r},t)
+\end{equation}
+which give the following solution:
+\begin{equation}
+\phi(\mathbf{r}, t)=\int \frac{\delta\left(t^{\prime}+\frac{\left|\mathbf{r}-\mathbf{r}^{\prime}\right|}{c}-t\right)}{\left|\mathbf{r}-\mathbf{r}^{\prime}\right|} \rho\left(\mathbf{r}^{\prime}, t^{\prime}\right) d^{3} r^{\prime} d t^{\prime}
+\end{equation}
+
+It's easy to find that $\phi$ is propotional to $\rho$, thus if we define Green function as
+\begin{equation}
+\left(\nabla^{2}-\frac{1}{c^2}\frac{\partial^{2}}{\partial t^{2}}\right) G(\mathbf{r},t;\mathbf{r^{\prime}},t^{\prime})=-\delta(\mathbf{r}-\mathbf{r^\prime})\delta(t-t^{\prime})
+\end{equation}
+
+We should have
+\begin{equation}
+G(\mathbf{r},t;\mathbf{r^{\prime}},t^{\prime})=
+-\frac{\delta\left(t^{\prime}+\frac{\left|\mathbf{r}-\mathbf{r}^{\prime}\right|}{c}-t\right)}{\left|\mathbf{r}-\mathbf{r}^{\prime}\right|}
+\end{equation}
+and
+\begin{equation}
+\phi(\mathbf{r}, t)=
+\int G(\mathbf{r},t;\mathbf{r^{\prime}},t^{\prime}) \rho\left(\mathbf{r}^{\prime}, t^{\prime}\right) d^{3} r^{\prime} d t^{\prime}
+\end{equation}
+
+In many-body field theory, Green function also acts similar with that of classical field theory in the above example.
+While the formal definition looks rather abstract and even forbidding, the benefits afforded by an approach based on the electron propagator should become clear after the theory has been more fully described.
+
+The Hamiltonian in second quantization form is:
+\begin{equation}
+\hat{H}=\hat{T}+\hat{V}=\sum t_{p q} c_{p}^{\dagger} c_{q}+\frac{1}{2} \sum V_{p q r s} c_{p}^{\dagger} c_{q}^{\dagger} c_{s} c_{r}
+\end{equation}
+
+In many-body field theory, Heisenberg picture is the default picture used.
+Thus, the time dependence of operator should be
+\begin{equation}
+O[t]=e^{i \hat{H} (t-t_0)} O[t_0] e^{-i \hat{H} (t-t_0)}
+\end{equation}
+which also holds for creation and annihilation operators
+\begin{equation}
+c_{p}^{\dagger}[t]=e^{i \hat{H} t} c_{p}^{\dagger} e^{-i \hat{H} t}, \quad c_{p}[t]=e^{i \hat{H} t} c_{p} e^{-i \hat{H} t}
+\end{equation}
+
+The Green function or electron propagator is defined as
+\begin{equation} \label{eq:greendef}
+G_{p q}\left(t, t^{\prime}\right)=-i \theta\left(t-t^{\prime}\right)\left\langle\Psi_{0}\left|c_{p}[t] c_{q}^{\dagger}\left[t^{\prime}\right]\right| \Psi_{0}\right\rangle+ i \theta\left(t^{\prime}-t\right)\left\langle\Psi_{0}\left|c_{q}^{\dagger}\left[t^{\prime}\right] c_{p}[t]\right| \Psi_{0}\right\rangle
+\end{equation}
+where $\theta(t)$ is step function defined as
+\begin{equation}
+\theta(t)=\left\{\begin{array}{ll}{1,} & {t>0} \\ {0,} & {t<0}\end{array}\right.
+\end{equation}
+
+By defining time ordering operator $\hat{\mathcal{T}}$ as
+\begin{equation}
+\hat{\mathcal{T}}\left(c_{p}[t] c_{q}^{\dagger}\left[t^{\prime}\right]\right)=\left\{\begin{array}{cc}{c_{p}[t] c_{q}^{\dagger}\left[t^{\prime}\right],} & {t>t^{\prime}} \\ {-c_{q}^{\dagger}\left[t^{\prime}\right] c_{p}[t],} & {t<t^{\prime}}\end{array}\right.
+\end{equation}
+which put operators with larger times to the left of those with smaller times,
+we can write the Green function as
+\begin{equation}
+G_{p q}\left(t, t^{\prime}\right)=-i\left\langle\Psi_{0}\left|\hat{\mathcal{T}}\left(c_{p}[t] c_{q}^{\dagger}\left[t^{\prime}\right]\right)\right| \Psi_{0}\right\rangle
+\end{equation}
+
+The time ordering operator is necessary since operators with smaller times should be applied to states earlier than those with larger times.
+
+If creation operator is applied before annihilation operator, a middle state with $N+1$ electrons will be produced, otherwise a middle state with $N-1$ electrons will be produced.
+
+Thus It's convenient to divide the Green function to two parts:
+\begin{equation}
+\boldsymbol{G}\left(t, t^{\prime}\right)=\boldsymbol{G}^{+}\left(t, t^{\prime}\right)+\boldsymbol{G}^{-}\left(t, t^{\prime}\right)
+\end{equation}
+where $G^{+}$ represents the $N+1$ part and $G^{-}$ represents the $N-1$ part.
+
+In detail,
+\begin{equation}
+\begin{aligned}
+	G_{p q}^{+}\left(t, t^{\prime}\right) 
+	&=-i \theta\left(t-t^{\prime}\right)\left\langle\Psi_{0}\left|e^{i \hat{H} t} c_{p} e^{-i \hat{H} t} e^{i \hat{H} t^{\prime}} c_{q}^{\dagger} e^{-i \hat{H} t^{\prime}}\right| \Psi_{0}\right\rangle
+	\\
+	&=- i \theta\left(t-t^{\prime}\right) e^{i E_{0}\left(t-t^{\prime}\right)}\left\langle\Psi_{0}\left|c_{p} e^{-i \hat{H}(t-t)^{\prime}} c_{q}^{\dagger}\right| \Psi_{0}\right\rangle
+	\\
+	&=-i \theta\left(t-t^{\prime}\right) \sum_{n} e^{-i\left(E_{n}^{N+1}-E_{0}\right)\left(t-t^{\prime}\right)}\left\langle\Psi_{0}\left|c_{p}\right| \Psi_{n}^{N+1}\right\rangle\left\langle\Psi_{n}^{N+1}\left|c_{q}^{\dagger}\right| \Psi_{0}\right\rangle
+\end{aligned}
+\end{equation}
+where $\ket{\Psi_n^{N+1}}$ is the orthonomal set of eigenstates of Hamiltonian with $N+1$ electrons.
+
+It is similar for the $G^{-}$ part:
+\begin{equation}
+G_{p q}^{-}\left(t, t^{\prime}\right)=i \theta\left(t^{\prime}-t\right) \sum_{n} e^{i\left(E_{n}^{N-1}-E_{0}\right)\left(t-t^{\prime}\right)}\left\langle\Psi_{0}\left|c_{q}^{\dagger}\right| \Psi_{n}^{N-1}\right\rangle\left\langle\Psi_{n}^{N-1}\left|c_{p}\right| \Psi_{0}\right\rangle
+\end{equation}
+
+Note that the ionization potentials and electron affinities have appeared, which are exactly what we need:
+\begin{equation}
+\begin{array}{l}{A_{n}=E_{0}-E_{n}^{N+1}} \\ {I_{n}=E_{n}^{N-1}-E_{0}}\end{array}
+\end{equation}
+
+Until now, we are working on time representation, i.e. the parameters of Green function is time.
+However, it is useful to switch to energy(frequency) representation by fourier transformation:
+\begin{equation}
+G_{p q}(\omega)=\int_{-\infty}^{\infty} e^{i \omega\left(t-t^{\prime}\right)} G_{p q}\left(t, t^{\prime}\right) \mathrm{d}\left(t-t^{\prime}\right)
+\end{equation}
+
+However, there will be a problem of singularity during the integration.
+Take $G^{+}$ as example, the integration over time-dependent part of $G^{+}$ is
+\begin{equation}
+\begin{aligned} f_{n}^{+}(\omega) &=\int_{-\infty}^{\infty} e^{i \omega \tau}\left[-i \theta(\tau) e^{-i\left(E_{n}^{N+1}-E_{0}\right) \tau}\right] \mathrm{d} \tau \\ &=-i \int_{0}^{\infty} e^{i\left[\omega-E_{n}^{N+1}+E_{0}\right] \tau} \mathrm{d} \tau \end{aligned}
+\end{equation}
+which is ill-behaved at the upper limit of time.
+
+A common mathematical trick to solve this singularity problem is to add a infinitely small negative part to the exponent:
+\begin{equation}
+e^{i\left[\omega-E_{n}^{N+1}+E_{0}\right] \tau} \rightarrow e^{i\left[\omega-E_{n}^{N+1}+E_{0}+i\eta\right] \tau}
+\end{equation}
+which will give the result
+\begin{equation}
+f_{n}^{+}(\omega)=\frac{1}{\omega-E_{n}^{N+1}+E_{0}+i \eta}
+\end{equation}
+
+This trick works because all what we deal with now are intermediate results and are not any kind of observable.
+When we get to observable finally, it will be the time to let $\eta \rightarrow 0$ and will give normal physical quantities.
+
+On the other hand, when we perform inverse fourier transformation to get Green function back to time representation, residue theorem is used and the sign of $\eta$ will determine the direction of contour integration and thus the sign of time difference.
+
+Similarily, we can also apply the same trick to the $G^{-}$ part.
+By including the time-independent part, we obtain the Green function in energy representation:
+\begin{equation}
+G_{p q}(\omega)=\sum_{n} \frac{\left\langle\Psi_{0}\left|c_{p}\right| \Psi_{n}^{N+1}\right\rangle\left\langle\Psi_{n}^{N+1}\left|c_{q}^{\dagger}\right| \Psi_{0}\right\rangle}{\omega+E_{0}-E_{n}^{N+1}+i \eta}+\sum_{n} \frac{\left\langle\Psi_{0}\left|c_{q}^{\dagger}\right| \Psi_{n}^{N-1}\right\rangle\left\langle\Psi_{n}^{N-1}\left|c_{p}\right| \Psi_{0}\right\rangle}{\omega+E_{n}^{N-1}-E_{0}-i \eta}
+\end{equation}
+which is also refered as spectral representation or Lehmann representation.
+It is worthy noticing that all the energies that we need are located on the poles in complex plane, while ionization potentials on the upper half and electron affinities on the lower half.
+
+It is also convenient to define spectroscopic factors as:
+\begin{equation}
+\begin{array}{ll}{x_{p}^{(n)}=\left\langle\Psi_{0}\left|c_{p}\right| \Psi_{n}^{N+1}\right\rangle,} & { n \in\{N+1\}} \\ {x_{p}^{(n)}=\left\langle\Psi_{n}^{N-1}\left|c_{p}\right| \Psi_{0}\right\rangle,} & { n \in\{N-1\}}\end{array}
+\end{equation}
+
+The spectroscopic factor is closely related to photoioniation process.
+The photoioniation cross section is
+\begin{equation}
+\sigma_{n}(\epsilon) \sim \frac{2}{3} \varepsilon\left|\sum_{p}\langle\varepsilon|\hat{d}| p\rangle x_{p}^{(n)}\right|^{2}
+\end{equation}
+where the spectroscopic factors weight the participation of individual orbitals in the final ionic state.
+
+By using the anticommutation rule of creation and annihilation operators, the spectroscopic factors satisfy the following orthonomal relation:
+\begin{equation}
+\sum_{n \in\{N+1\}} x_{p}^{(n)} x_{q}^{(n) *}+\sum_{n \in\{N-1\}} x_{p}^{(n)} x_{q}^{(n) *}=\delta_{p q}
+\end{equation}
+
+The spectral representation can also be written in a more compact form as
+\begin{equation}
+\begin{aligned} G_{p q}^{+}(\omega) &=\left\langle\Psi_{0}\left|c_{p}\left(\omega-\hat{H}+E_{0}+i \eta\right)^{-1} c_{q}^{\dagger}\right| \Psi_{0}\right\rangle \\ G_{p q}^{-}(\omega) &=\left\langle\Psi_{0}\left|c_{q}^{\dagger}\left(\omega+\hat{H}-E_{0}-i \eta\right)^{-1} c_{p}\right| \Psi_{0}\right\rangle \end{aligned}
+\end{equation}
+
+From above discussions, we know that Green function can derive spectroscopic factors which can be used to determine photoioniation cross section.
+In addition, Green function can also derive ground state density matrix and thus energy.
+
+The ground state energy is
+\begin{equation}
+E_{0}=\left\langle\Psi_{0}|\hat{H}| \Psi_{0}\right\rangle=\sum t_{r s}\left\langle\Psi_{0}\left|c_{r}^{\dagger} c_{r}\right| \Psi_{0}\right\rangle+\frac{1}{2} \sum V_{r s u v}\left\langle\Psi_{0}\left|c_{r}^{\dagger} c_{s}^{\dagger} c_{v} c_{u}\right| \Psi_{0}\right\rangle
+\end{equation}
+
+Let us first consider the time derivative of the time-dependent annihilation operator:
+\begin{equation}
+\begin{aligned}
+	i \frac{\partial}{\partial t} c_{p}[t]&=i \frac{\partial}{\partial t}\left(e^{i \hat{H} t} c_{p} e^{-i \hat{H} t}\right)=e^{i \hat{H} t}\left[c_{p}, \hat{H}\right] e^{-i \hat{H} t}
+	\\
+	&=\sum_{s} t_{p s} c_{s}[t]+\sum_{s, u, v} V_{p s u v} c_{s}^{\dagger}[t] c_{v}[t] c_{u}[t]
+\end{aligned}
+\end{equation}
+
+Thus we can calculate the time derivative of Green function as
+\begin{equation}
+\begin{aligned} i \frac{\partial}{\partial t} G_{p q}\left(t, t^{\prime}\right)=& \delta\left(t-t^{\prime}\right)\left\langle\Psi_{0} \|\left\{c_{p}[t], c_{q}^{\dagger}\left[t^{\prime}\right]\right\}\right\} \Psi_{0} \\ &-i\left\langle\Psi_{0}\left|\hat{\mathcal{T}}\left[\left(i \frac{\partial}{\partial t} c_{p}[t]\right) c_{q}^{\dagger}\left[t^{\prime}\right]\right]\right| \Psi_{0}\right\rangle \\=& \delta_{p q} \delta\left(t-t^{\prime}\right)-i \sum_{s} t_{p s}\left\langle\Psi_{0}\left|\hat{\mathcal{T}}\left[c_{s}[t] c_{q}^{\dagger}\left[t^{\prime}\right]\right]\right| \Psi_{0}\right\rangle \\ &- i \sum_{s, u, v} V_{p s u v}\left\langle\Psi_{0}\left|\hat{\mathcal{T}}\left[c_{s}^{\dagger}[t] c_{v}[t] c_{u}[t] c_{q}^{\dagger}\left[t^{\prime}\right]\right]\right| \Psi_{0}\right\rangle \end{aligned}
+\end{equation}
+
+By approaching $t^{\prime}$ to $t^{+}$ and take the trace of the equation above, we obtain
+\begin{equation}
+\sum_{p} i \frac{\partial}{\partial t} G_{p p}\left(t, t^{+}\right)-i\left\langle\Psi_{0}|\hat{T}| \Psi_{0}\right\rangle= 2 i\left\langle\Psi_{0}|\hat{V}| \Psi_{0}\right\rangle
+\end{equation}
+
+By using residue theorem, the contour integration of $\omega G_{pq}(\omega)$ can be calculate as
+\begin{equation}
+\begin{aligned}
+	\frac{1}{2 \pi i} \oint \omega G_{p q}^{-}(\omega) \mathrm{d} \omega
+	&=-\sum_{n}\left(E_{n}^{N-1}-E_{0}\right)\left\langle\Psi_{0}\left|c_{q}^{\dagger}\right| \Psi_{n}^{N-1}\right\rangle\left\langle\Psi_{n}^{N-1}\left|c_{p}\right| \Psi_{0}\right\rangle
+\\ 
+&=\left\langle\Psi_{0}\left|c_{q}^{\dagger}\left[c_{p}, \hat{H}\right]\right| \Psi_{0}\right\rangle
+\\
+	&=\left\langle\Psi_{0}|\hat{T}| \Psi_{0}\right\rangle+ 2\left\langle\Psi_{0}|\hat{V}| \Psi_{0}\right\rangle
+\end{aligned}
+\end{equation}
+
+Thus the ground state enengy can be obtained as:
+\begin{equation}
+E_{0}=\frac{1}{4 \pi i} \oint \operatorname{Tr}[(\omega \mathbf{1}+\boldsymbol{T}) \boldsymbol{G}(\omega)] \mathrm{d} \omega=\frac{1}{4 \pi i} \oint \operatorname{Tr}\left[(\omega \mathbf{1}+\boldsymbol{T}) \boldsymbol{G}^{-}(\omega)\right] \mathrm{d} \omega
+\end{equation}
+
+This contour integration can be done by residue theorem after we calculate ionization potentials and electron affinities later.
+
+Until now, we have not given any practical approaches to calculate Green function.
+We will later see that general Green function can be calculated by Feynman expansion, which is essentially a perturbation theory.
+Thus we need to first solve the unperturbed Green function, which is usually refered to as free Green function.
+\begin{equation}
+\hat{H}_{0}=\sum \varepsilon_{r} c_{r}^{\dagger} c_{r}
+\end{equation}
+
+Then we calculate the time dependence of creation and annihilation operators:
+\begin{equation}
+i \frac{\partial}{\partial t} c_{p}(t)=e^{i \hat{H}_{0} t}\left[c_{p}, \hat{H}_{0}\right] e^{-i \hat{H}_{0} t}=\varepsilon_{p} c_{p}(t)
+\end{equation}
+thus
+\begin{equation}
+c_{p}(t)=e^{i \hat{H}_{0} t} c_{p} e^{-i \hat{H}_{0} t}=e^{-i \varepsilon_{p} t} c_{p}
+\end{equation}
+
+From the definition of Green function in Eq \ref{eq:greendef}, we have 
+\begin{equation}
+G_{p q}^{0}\left(t, t^{\prime}\right)=-i e^{-i \varepsilon_{p}\left(t-t^{\prime}\right)} \delta_{p q}\left(\theta\left(t-t^{\prime}\right) \overline{n}_{p}-\theta\left(t^{\prime}-t\right) n_{p}\right)
+\end{equation}
+where
+\begin{equation}
+n_{p}=
+\left\{
+\begin{array}{ll}
+	{1,} & {p \leq N}
+	\\
+	{0,} & {p>N}
+\end{array}
+\right.
+\end{equation}
+is occupation number of orbital $p$.
+
+The corresponding energy representation is
+\begin{equation}
+G_{p q}^{0}(\omega)=\delta_{p q}\left(\frac{\overline{n}_{p}}{\omega-\varepsilon_{p}+i \eta}+\frac{n_{p}}{\omega-\varepsilon_{p}-i \eta}\right)
+\end{equation}
+
+\subsection{Perturbation Theory for Green Function}
+
+We discussed teh definition of Green function and how to derive important physical quantities from Green function in the previously part.
+In this part, we will give a perturbation scheme to expand Green function into different orders.
+
+We start from the introduction of M{\o}ller-Plesset partitioning:
+\begin{equation}
+\hat{H}=\hat{T}+\hat{V}=\hat{H}_{0}+\hat{H}_{I}
+\end{equation}
+where
+\begin{equation}
+\hat{H}_{0}=\sum \epsilon_{r} c_{r}^{\dagger} c_{r}
+\end{equation}
+is the Hartree-Fock Hamiltonian calculated from the solutions of Hartree-Fock equation in second quantization form:
+\begin{equation}
+t_{r s}+\sum_{k} V_{r k[s k]} n_{k}=\epsilon_{r} \delta_{r s}
+\end{equation}
+which gives the form of $\hat{H}_I$:
+\begin{equation}
+\hat{H}_I=\frac{1}{2} \sum V_{p q r s} c_{p}^{\dagger} c_{q}^{\dagger} c_{s} c_{r}-\sum_{k} V_{r k[s k]} n_{k} c_{r}^{\dagger} c_{s}
+\end{equation}
+
+For Hartree-Fock ground state:
+\begin{equation}
+\hat{H}_{0} | \Phi_{0} \rangle=E_{0}^{(0)} | \Phi_{0} \rangle
+\end{equation}
+
+Before working on the perturbation theory, we need to transfer to interaction picture.
+The basic idea of interaction picture is to remove the rapidly fluctuating exponetial factor caused by the trivial unperturbed Hamiltonian before the quantum state:
+\begin{equation}
+i \frac{\partial}{\partial t} | \Psi(t) \rangle=\hat{H}_{0}+\hat{H}_{1} | \Psi(t) \rangle
+\end{equation}
+
+By perturbation assumption, $\hat{H}_1$ is small compared with $\hat{H}_0$, thus the fluctuating factor $e^{-i \hat{H}_0 t}$ caused by unperturbed part dominates the time dependence of $\Psi$.
+Thus, the change to interaction picture will help us to focus on the perturbed part of Hamiltonian.
+
+In interaction picture, the quantum state is defined as
+\begin{equation}
+| \Psi_{I}(t) \rangle=e^{i \hat{H}_{0} t} | \Psi_{S}(t) \rangle
+\end{equation}
+and thus the Schrodinger equation becomes:
+\begin{equation}
+i \frac{\partial}{\partial t} | \Psi_{I}(t) \rangle=\hat{H}_{I}(t) | \Psi_{I}(t) \rangle
+\end{equation}
+where the $\hat{H}_I$ is the perturbation part of Hamiltonian in interaction picture:
+\begin{equation}
+\hat{H}_{I}(t)=e^{i \hat{H}_{0} t} \hat{H}_{1}(t) e^{-i \hat{H}_{0} t}
+\end{equation}
+
+As is expected, the unperturbed part does not exist any more, thus the change of quantum state is slow under the small perturbation assumption.
+In fact, the time evolution of quantum state in interaction picture is:
+\begin{equation}
+| \Psi_{I}(t) \rangle=\hat{U}\left(t, t_{0}\right) | \Psi_{I}\left(t_{0}\right) \rangle
+\end{equation}
+where
+\begin{equation}
+\hat{U}\left(t, t_{0}\right)=e^{i \hat{H}_{0} t} e^{-i \hat{H}\left(t-t_{0}\right)} e^{-i \hat{H}_{0} t_{0}}
+\end{equation}
+is the time evolution opertator in interction picture.
+
+Equation of motion of the evolution operator itself is:
+\begin{equation}
+i \frac{\partial}{\partial t} \hat{U}\left(t, t_{0}\right)=\hat{H}_{I}(t) U\left(t, t_{0}\right)
+\end{equation}
+
+Thus it is possible to expand the evolution operator in series:
+\begin{equation}
+\hat{U}\left(t, t_{0}\right)=\hat{\mathbb{1}}-i \int_{t_{0}}^{t} \mathrm{d} t_{1} \hat{H}_{I}\left(t_{1}\right)+(-i)^{2} \int_{t_{0}}^{t} \mathrm{dt}_{1} \int_{t_{0}}^{t_{1}} \mathrm{d} t_{2} \hat{H}_{I}\left(t_{1}\right) \hat{H}_{I}\left(t_{2}\right)+\ldots
+\end{equation}
+and
+\begin{equation}
+\hat{U}^{(n)}\left(t, t_{0}\right)=
+(-i)^{n} \int_{t_n<t_{n-1}<\dots<t_1<t_0<t} \mathrm{d} t_{1} \mathrm{d} t_{2} \ldots \mathrm{d} t_{n} \hat{H}_{I}\left(t_{1}\right) \hat{H}_{I}\left(t_{2}\right) \ldots \hat{H}_{I}\left(t_{n}\right)
+\end{equation}
+is the general expression for the $n$th order.
+
+Note that the perturbation part of Hamiltonians in interction picture do not commute for different time arguments, i.e.
+\begin{equation}
+\left[\hat{H}_{I}(t), \hat{H}_{I}\left(t^{\prime}\right)\right] \neq 0 \text { for } t \neq t^{\prime}
+\end{equation}
+
+However, the time arguments themselves can be exchanged since they are intermediate variables.
+Thus,
+\begin{equation}
+\begin{aligned}
+	\int_{t_n<t_{n-1}<\dots<t_1<t_0<t} &\mathrm{d} t_{1} \mathrm{d} t_{2} \ldots \mathrm{d} t_{n} \hat{H}_{I}\left(t_{1}\right) \hat{H}_{I}\left(t_{2}\right) \ldots \hat{H}_{I}\left(t_{n}\right)
+	\\
+	=\int_{t_{P_n}<t_{P_{n-1}}<\dots<t_{P_1}<t_{P_0}<t} &\mathrm{d} t_{1} \mathrm{d} t_{2} \ldots \mathrm{d} t_{n} \hat{H}_{I}\left(t_{P_1}\right) \hat{H}_{I}\left(t_{P_2}\right) \ldots \hat{H}_{I}\left(t_{P_n}\right)
+\end{aligned}
+\end{equation}
+where $P$ is any possible permuation.
+
+Thus each order of evolution operator can be written in the form of time ordering operator:
+\begin{equation}
+\hat{U}^{(n)}\left(t, t_{0}\right)=\frac{(-i)^{n}}{n !} \int_{t_{0}}^{t} \mathrm{d} t_{1} \ldots \int_{t_{0}}^{t} \mathrm{d} t_{n} \hat{\boldsymbol{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right)\right]
+\end{equation}
+
+In a symbolic way, the evolution operator can be written as
+\begin{equation}
+\hat{U}\left(t, t_{0}\right)=\hat{\mathcal{T}} e^{-i \int_{t_{0}}^{t} \mathrm{d} t^{\prime} \hat{H}_{I}\left(t^{\prime}\right)}
+\end{equation}
+
+Think about that at time $t=-\infty$, the Hamiltonian of a system is $\hat{H}_0$ and the system is in the ground state.
+Then the perturbed Hamiltonian $\hat{H}_1$ is gradually turned on exponetially, and at time $t=0$, the perturbed Hamiltonian is fully turned on:
+\begin{equation}
+\hat{H}(t)=\hat{H}_{0}+e^{-\epsilon|t|} \hat{H}_{I}
+\end{equation}
+In the limit of $\epsilon \rightarrow 0$, which is refered to as adiabatic limit, it is expected that the system in the ground state of the total Hamiltonian at $t=0$.
+
+The time evolution operator associated with this process is
+\begin{equation}
+\hat{U}_{\epsilon}\left(t, t_{0}\right)=\sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} \int_{t_{0}}^{t} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{t_{0}}^{t} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|} \hat{\mathcal{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right)\right]
+\end{equation}
+
+However, the situation is not that simple and the evolution operator actually does not converge when $\epsilon \rightarrow 0$.
+The divergent is caused by the phase factor of the quantum state, which is not physical.
+Thus, it is possible to cancel this unphysical divergence, which leads to the famous Gell-Mann and Low theorem:
+\begin{equation}
+| \Psi_{0}^{\prime} \rangle=\lim _{\epsilon \rightarrow 0} \frac{\hat{U}_{\epsilon}(0,-\infty) | \Phi_{0} \rangle}{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle}
+\end{equation}
+is the ground state of $\hat{H}$ with the eigenvalue
+\begin{equation}
+E_{0}=E_{0}^{(0)}+\lim _{\epsilon \rightarrow 0} \frac{\left\langle\Phi_{0}\left|\hat{H}_{I} \hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle}{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle}
+\end{equation}
+and the proof is given in the refernce \cite{gallmannlow}
+
+Since both the numerator and denominator diverges with $\epsilon \rightarrow 0$, the convergence holds only when one calculate contribution from each order separately and then add them up.
+In addition, the normalization rule for the final state $| \Psi_{0}^{\prime}\rangle$ is 
+\begin{equation}
+\left\langle\Phi_{0} | \Psi_{0}^{\prime}\right\rangle= 1
+\end{equation}
+rather than
+\begin{equation}
+\left\langle\Psi_{0}^{\prime} | \Psi_{0}^{\prime}\right\rangle= 1
+\end{equation}
+
+And it is also similar for the $t>0$ scheme:
+\begin{equation}
+| \Psi_{0}^{\prime \prime} \rangle=\lim _{\epsilon \rightarrow 0} \frac{\hat{U}_{\epsilon}(0, \infty) | \Phi_{0} \rangle}{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0, \infty)\right| \Phi_{0}\right\rangle}=\lim _{\epsilon \rightarrow 0} \frac{\hat{U}_{\epsilon}(0,-\infty) | \Phi_{0} \rangle}{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle}=| \Psi_{0}^{\prime} \rangle
+\end{equation}
+
+Then we will calculate the expectation value of any operator $\hat{O}_H$:
+\begin{equation}
+\begin{aligned}
+	\left\langle\Psi_{0}\left|\hat{O}_{H}(t)\right| \Psi_{0}\right\rangle 
+	&=\frac{\left\langle\Psi_{0}^{\prime}\left|\hat{O}_{H}(t)\right| \Psi_{0}^{\prime}\right\rangle}
+	{\left\langle\Psi_{0}^{\prime} | \Psi_{0}^{\prime}\right\rangle}
+	\\
+	&=\lim _{\epsilon \rightarrow 0} 
+	\frac{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty, 0)\hat{U}_{\epsilon}(0, t) \hat{O}_{I}(t) \hat{U}_{\epsilon}(0, t)\hat{U}_{\epsilon}(t,-\infty)\right| \Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle}
+	\\
+	&=\lim _{\epsilon \rightarrow 0} 
+	\frac{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty, t) \hat{O}_{I}(t) \hat{U}_{\epsilon}(t,-\infty)\right| \Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle}
+	\\
+	&=\lim _{\epsilon \rightarrow 0} \sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} \int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|}
+	\\
+	&\qquad \frac{\left\langle\Phi_{0}\left|
+	\hat{\mathcal{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) \hat{O}_{I}(t)\right]\right|
+	\Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle}
+\end{aligned}
+\end{equation}
+
+Similarly, for expectation of two opeartors with different time, we have
+\begin{equation}
+\begin{aligned}
+	\left\langle\Psi_{0}\left|\hat{\mathcal{T}}\left[\hat{P}_{H}(t) \hat{Q}_{H}\left(t^{\prime}\right)\right]\right| \Psi_{0}\right\rangle
+	&=\lim _{\epsilon \rightarrow 0} \sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} \int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|}
+	\\
+	&\qquad =\frac{\left\langle\Phi_{0}\left|
+	\hat{\boldsymbol{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) \hat{P}_{I}(t) \hat{Q}_{I}\left(t^{\prime}\right)\right]\right|
+	\Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle}
+\end{aligned}
+\end{equation}
+
+Thus, it is possible for us to expand Green function to series, which is the original purpose:
+\begin{equation} \label{greenexp}
+\begin{aligned}
+	i G_{p q}\left(t, t^{\prime}\right)
+	=&\left\langle\Psi_{0}\left|
+	\hat{\mathcal{T}}\left[c_{p}[t] c_{q}^{\dagger}\left[t^{\prime}\right]\right]\right|
+	\Psi_{0}\right\rangle
+	\\
+	=& \lim _{\epsilon \rightarrow 0} \sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} 
+	\int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|}
+	\\
+	& \frac{\left\langle\Phi_{0}\left|
+	\hat{\boldsymbol{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) c_{p}(t) c_{q}^{\dagger}\left(t^{\prime}\right)\right]\right|
+	\Phi_{0}\right\rangle}
+	{\left\langle\Phi_{0}\left|
+	\hat{U}_{\epsilon}(\infty,-\infty)\right|
+	\Phi_{0}\right\rangle}
+\end{aligned}
+\end{equation}
+and the denominator as
+\begin{equation}
+\begin{aligned}\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(\infty,-\infty)\right| \Phi_{0}\right\rangle=\sum_{n=0}^{\infty} \frac{(-i)^{n}}{n !} \int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|} \\\left\langle\Phi_{0}\left|\hat{\mathcal{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right)\right]\right| \Phi_{0}\right\rangle \end{aligned}
+\end{equation}
+
+As we have seen, field theory approach chooses a totally different way of perturbation expansion, which is using Gell-Mann and Low theorem.
+However, the result of perturbation has particular physical meaning, which is the asympotic behaviour of eigenvalues and eigenstates when magnitude of perturbed Hamiltonian changes.
+Thus, all perturbation theory should give the same result.
+
+Generally, M{\o}ller-Plesset perturbation theory gives
+\begin{equation} \label{rspt}
+| \Psi_{0} \rangle=| \Phi_{0} \rangle+\sum_{n=1}^{\infty}\left[\frac{\hat{Q}_{0}}{E_{0}^{(0)}-\hat{H}_{0}}\left(E_{0}^{(0)}-E_{0}+\hat{H}_{I}\right)\right]^{n} | \Phi_{0} \rangle
+\end{equation}
+which is proved in reference \cite{rsptproof}.
+
+In fact, we can also write the result from field theory approach into similar expression.
+The numerator is:
+\begin{equation} \label{expansion}
+\begin{array}{l}{\hat{U}_{\epsilon}(0,-\infty) | \Phi_{0} \rangle=} \\ { | \Phi_{0} \rangle+\sum_{n=1}^{\infty}(-i)^{n} \int_{-\infty}^{0} \mathrm{d} t_{1} \int_{-\infty}^{t_{1}} \mathrm{d} t_{2} \ldots \int_{-\infty}^{t_{n-1}} \mathrm{d} t_{n} e^{\epsilon\left(t_{1}+\cdots+t_{n}\right)} \hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) | \Phi_{0} \rangle}\end{array}
+\end{equation}
+
+Since
+\begin{equation} \label{I2H}
+\hat{H}_{I}\left(t_{j}\right)=e^{i \hat{H}_{0} t_{j}} \hat{H}_{I} e^{-i \hat{H}_{0} t_{j}}
+\end{equation}
+and 
+\begin{equation}
+\hat{H}_{I}\left(t_{j}\right) \hat{H}_{I}\left(t_{j^{\prime}}\right)=e^{i \hat{H}_{0} t_{j}} \hat{H}_{I} e^{-i \hat{H}_{0}\left(t_{j}-t_{j}\right)} \hat{H}_{I} e^{-i \hat{H}_{0} t_{j^{\prime}}}
+\end{equation}
+, we can expect that there are a lot of terms like $e^{-i \hat{H}_{0}\left(t_{j}-t_{j}\right)}$ after we write every $\hat{H}_I(t_i)$ in Eq \ref{expansion} in terms of Eq \ref{I2H}.
+
+Thus, we change integration variable from $t$ to the following $x$:
+\begin{equation}
+	\begin{aligned} x_{1} &=t_{1} \\ x_{2} &=t_{2}-t_{1} \\ x_{3} &=t_{3}-t_{2} \\ & \vdots \\ x_{n} &=t_{n}-t_{n-1} \end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+	\begin{aligned}
+		\hat{U}_{\epsilon}^{(n)}(0,-\infty) | \Phi_{0} \rangle&=(-i)^{n} \int_{-\infty}^{0} \mathrm{d} x_{1} e^{n \epsilon x_{1}} e^{i\left(\hat{H}_{0}-E_{0}^{(0)}\right) x_{1}} \hat{H}_{I}
+		\\ 
+		&\qquad {\int_{-\infty}^{0} \mathrm{d} x_{2} e^{(n-1) \epsilon x_{2}} e^{i\left(\hat{H}_{0}-E_{0}^{(0)}\right) x_{2}} \hat{H}_{I} \ldots \int_{-\infty}^{0} \mathrm{d} x_{n} e^{\epsilon x_{n}} e^{i\left(\hat{H}_{0}-E_{0}^{(0)}\right) x_{n}} \hat{H}_{I} | \Phi_{0} \rangle}
+		\\
+		&={\frac{1}{E_{0}^{(0)}-\hat{H}_{0}+n i \epsilon} \hat{H}_{I}}
+		{\frac{1}{E_{0}^{(0)}-\hat{H}_{0}+(n-1) i \epsilon} \hat{H}_{I}} \cdots
+		\\
+		&\qquad \frac{1}{E_{0}^{(0)}-\hat{H}_{0}+i \epsilon} \hat{H}_{I} | \Phi_{0} \rangle
+	\end{aligned}
+\end{equation}
+
+However, compared with Eq \ref{rspt}, the expression here misses the important term $Q_0$, which prevent the divergence when $\epsilon \rightarrow 0$.
+This is expected, since we have mentioned that the divergent terms appearing in numerator will be canceled out in the denominator.
+
+The denominator is:
+\begin{equation}
+	\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle= 1+\left\langle\Phi_{0}\left|\frac{1}{E_{0}^{(0)}-\hat{H}_{0}+i \epsilon} \hat{H}_{I}\right| \Phi_{0}\right\rangle+\cdots
+\end{equation}
+
+Although it is not easy to prove for all the orders, but it is easy to see that the first order of the total expression gives the same result with M{\o}ller-Plesset perturbation theory.
+
 
