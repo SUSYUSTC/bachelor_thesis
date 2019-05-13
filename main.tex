@@ -10,7 +10,7 @@
 \author{孙嘉策}
 \major{物理学}
 \supervisor{Andrew Dreuw教授}
-\entitle{Theory and Implementation of Nondyson Algebraic Diagrammatic Construction}
+\entitle{Theory and Implementation of Non-dyson Algebraic Diagrammatic Construction}
 \enauthor{Jiace Sun}
 \enmajor{Physics}
 \ensupervisor{Prof. Andrew Dreuw}
@@ -25,10 +25,7 @@
 \usepackage{hyperref}
 \usepackage{braket}
 \usepackage{simpler-wick}
-\usepackage{savesym}
-\savesymbol{text}
-\usepackage{feynman}
-\restoresymbol{TXF}{text}
+\usepackage{subcaption}
 
 
 
@@ -81,10 +78,163 @@ However, we didn't give a formal definition for the notations we give.
 
 Thus, in this chapter, we will firstly formally introduce second quantization, Green function and Feynman diagram.
 Then we will discuss how these concepts are applied to ADC and to calculate the three kinds of energies mentioned above.
-Finally, we will discuss the concept intermediate state and its relation with size consistency, and prove that ADC is both a canonical and size consistent method.
+Finally, we will discuss the concept intermediate state and its relation with size consistency and compactness, and prove that ADC is both a canonical and size consistent method.
 
 \input{chapters/theory}
 \input{chapters/propagator}
+\input{chapters/ADC}
+
+\section{Intermediate State Representation}
+
+In Non-dyson ADC method, the eigenvalues of ADC secular matrix $\boldsymbol{K}+\boldsymbol{C}$ are exactly the ionization potentials, which behaves similar to Hamiltonian.
+This feature suggests that $\boldsymbol{K}+\boldsymbol{C}$ is essentially a representation of Hamiltonian in some particular basis.
+The surprising answer is that ADC secular equations can be deduced by a wavefunction approach, and the basis are refered to intermediate-state representation (ISR).
+In addition, ISR approach allows us to analyze the origin of the compactness and size consistency of ADC.
+
+We start from the so-called correlated excited (CE) states, which is defined by
+\begin{equation}
+	| \Psi_{J}^{0} \rangle=\hat{C}_{J} | \Psi_{0} \rangle
+\end{equation}
+where
+\begin{equation}
+	\left\{\hat{C}_{J}\right\}=\left\{c_{k} ; c_{a}^{\dagger} c_{k} c_{l}, k<l ; c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{l} c_{l}, a<b, j<k<l ; \ldots\right\}
+\end{equation}
+
+Obviously, CE states are not orthogonal:
+\begin{equation}
+	S_{I J}=\left\langle\Psi_{I}^{0} | \Psi_{J}^{0}\right\rangle=\left\langle\Psi_{0}\left|\hat{C}_{I}^{\dagger} \hat{C}_{J}\right| \Psi_{0}\right\rangle \neq \delta_{I, J}
+\end{equation}
+
+Instead of the most obvious symmetric orthonormalization choice, which is 
+\begin{equation}
+	| \overline{\Psi}_{J} \rangle=\sum_{I} | \Psi_{I}^{0} \rangle\left(S^{-1 / 2}\right)_{I J}
+\end{equation}
+, we orthogonalize them by excitation class orthogonalization (ECO) procedure which states as follows:
+
+\begin{itemize}
+	\item First we construct intermediate states $\ket{\Psi^{#}_K}$ by class. For states in class 1, we leave them unchanged, i.e.
+		\begin{equation}
+			\ket{\Psi^{\#}_i}=\ket{\Psi^0_i}
+		\end{equation}
+		Assuming intermediate states of classes 1, ..., $\nu-1$ have been constructed, then we orthogonalize $\ket{\tilde{\Psi}_J}$ in class $\nu$ by
+		\begin{equation}
+			| \Psi_{J}^{\#} \rangle=| \Psi_{J}^{0} \rangle-\sum_{[K]<\nu} | \Psi^{\#}_{K} \rangle\left\langle\Psi^{\#}_{K} | \Psi_{J}^{0}\right\rangle
+		\end{equation}
+	\item Orthogonalize states in each class by symmetric orthogonalization:
+		\begin{equation}
+			| \tilde{\Psi}_{J} \rangle=\sum_{[I]=\nu} | \Psi_{I}^{\#} \rangle\left(S_{\nu}^{-1 / 2}\right)_{I J}
+		\end{equation}
+\end{itemize}
+where intermediate normalization is chosen.
+\begin{equation}
+	\left\langle\Psi_{0} | \Phi_{0}\right\rangle= 1
+\end{equation}
+
+Define ISR secular matrix $M$ by
+\begin{equation}
+	M_{I J}=\left\langle\tilde{\Psi}_{I}\left|\hat{H}-E_{0}\right| \tilde{\Psi}_{J}\right\rangle
+\end{equation}
+and 
+\begin{equation}
+	| \Psi_{n}^{N-1} \rangle=\sum_{I} X_{I n} | \tilde{\Psi}_{I} \rangle
+\end{equation}
+
+In matrix notation, the ISR secular equations take on the form
+\begin{equation}
+	\boldsymbol{M X}=\boldsymbol{X} \boldsymbol{\Omega}, \boldsymbol{X}^{\dagger} \boldsymbol{X}=\mathbf{1}
+\end{equation}
+
+Define ISR transition amplitudes as
+\begin{equation}
+	\tilde{f}_{I p}=\left\langle\tilde{\Psi}_{I}\left|c_{p}\right| \Psi_{0}\right\rangle
+\end{equation}
+with its relation to spectroscopic factor as
+\begin{equation}
+	x_{p}^{(n)}=\sum_{I} X_{I n}^{*} \tilde{f}_{I p}
+\end{equation}
+
+It can be proved that the ADC and ECO-ISR secular matrices are to be identified according to
+\begin{equation}
+	\begin{aligned} \boldsymbol{K}+\boldsymbol{C} & \equiv-\boldsymbol{M} \\ \boldsymbol{f} & \equiv \tilde{\boldsymbol{f}} \end{aligned}
+\end{equation}
+
+Although it is difficult to prove, one can check the second order of $M$ to verify it.
+The verification is done in \cite{main}.
+
+The equivalence of Non-dyson ADC and ISR approach results in two important features of ADC.
+One is the compactness of matrix structure, which is the consequence of the so-called canonical perturnbation theory order structure.
+Compactness reduces the complexity of algorithm by reducing the size of total configuration space
+The other is self consistency, which is guranteed by the separability of ISR.
+As is previously mentioned, self consistency ensures results of many important chemical processes calculation much more reliable.
+
+Through out the calculation of $C$ and $f$ in each order, we find that they do not always begin from the zeroth order.
+In fact, the leading order is dependent on the distance of the classes of two  indexes.
+This rule states as follows:
+\begin{equation}
+	M_{I J} \sim O( | [I]-[J] | )
+\end{equation}
+which is also refered to as canonical order relations (COR).
+
+For example, in CI matrix, the matrix element of class 1 and class 3 is in the first order, which breaks COR:
+\begin{equation}
+	H_{i, a b j k l}=\left\langle\Phi_{i}\left|\hat{H}_{I}\right| \Phi_{a b j k l}\right\rangle=-\delta_{i j} V_{k l[a b]}+\delta_{i k} V_{j I l[a b]}-\delta_{i l} V_{j k[a b]}
+\end{equation}
+while in the case of ISR,
+\begin{equation}
+	\begin{aligned} M_{i, a b j k l}^{(1)} &=\left\langle\tilde{\Psi}_{i}\left|\hat{H}-E_{0}\right| \tilde{\Psi}_{a b j k l}\right\rangle^{(1)} \\ &=H_{i, a b j k l}+\left\langle\tilde{\Psi}_{i}^{(1)}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \Phi_{a b j k l}\right\rangle+\left\langle\Phi_{i}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle \end{aligned}
+\end{equation}
+
+According to ECO procedure,
+\begin{equation}
+	| \tilde{\Psi}_{i}^{(1)} \rangle=c_{i} | \Psi_{0}^{(1)} \rangle
+\end{equation}
+and
+\begin{equation}
+	\begin{aligned} | \tilde{\Psi}_{a b j k l}^{(1)} \rangle &=c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{k} c_{l} | \Psi_{0}^{(1)} \rangle-| \Phi_{j} \rangle\left\langle\tilde{\Psi}_{j}^{(1)} | \Phi_{a b j k l}\right\rangle-| \Phi_{k} \rangle\left\langle\tilde{\Psi}_{k}^{(1)} | \Phi_{a b j k l}\right\rangle-| \Phi_{l} \rangle\left\langle\tilde{\Psi}_{l}^{(1)} | \Phi_{a b j k l}\right\rangle \\ &= c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{k} c_{l} | \Psi_{0}^{(1)} \rangle-| \Phi_{j} \rangle v_{a b k l}^{*}+| \Phi_{k} \rangle_{a b j l}^{*}-| \Phi_{l} \rangle v_{a b j k}^{*} \end{aligned}
+\end{equation}
+where there are no first-order contributions from the orthogonalization with
+respect to 2h-1p states.
+
+Thus
+\begin{equation}
+	\left\langle\Phi_{i}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle=-\epsilon_{i}\left\langle\Phi_{i} | \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle=\epsilon_{i}\left(\delta_{i j} v_{a b k l}^{*}-\delta_{i k} v_{a b j l}^{*}+\delta_{i l} v_{a b j k}^{*}\right)
+\end{equation}
+and
+\begin{equation}
+	\left\langle\tilde{\Psi}_{i}^{(1)}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \Phi_{a b j k l}\right\rangle=\left(\delta_{i j} v_{a b k l}^{*}-\delta_{i k} v_{a b j l}^{*}+\delta_{i l} v_{a b j k}^{*}\right)\left(\epsilon_{a}+\epsilon_{b}-\epsilon_{j}-\epsilon_{k}-\epsilon_{l}\right)
+\end{equation}
+
+Adding these three up gives:
+\begin{equation}
+	M_{i, a b j k l}^{(1)}=0
+\end{equation}
+
+The general proof of COR for ADC is given in refernce \cite{main}.
+
+Thus, if configuration space from class 1 to class $\nu$ is fully included, the truncation error order (TEO) of energies in 1h class is
+\begin{equation}
+	O_{T E}^{[n]}(\mu)=2\mu
+\end{equation}
+where TEO means the leading order of error.
+
+While the CI case, 
+\begin{equation}
+H_{IJ}=\left\{ 
+\begin{array}{ll}
+	O(0), & \text{ } I=J
+	\\
+	O(1), & \text{ } |I-J|=1 \text{ or } 2
+	\\
+	0,    & \text{ } |I-J|>2
+\end{array}
+\right.
+\end{equation}
+which gives the TEO as
+\begin{equation}
+	O_{T E}(\mu)=\left\{\begin{array}{ll}{\mu,} & {\mu \text { even }} \\ {\mu+1,} & {\mu \text { odd }}\end{array}\right.
+\end{equation}
+which is a much larger error than ADC case.
+
 \input{chapters/floats}
 \input{chapters/math}
 \input{chapters/citations}

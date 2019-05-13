@@ -273,7 +273,7 @@ On the other hand, when we perform inverse fourier transformation to get Green f
 
 Similarily, we can also apply the same trick to the $G^{-}$ part.
 By including the time-independent part, we obtain the Green function in energy representation:
-\begin{equation}
+\begin{equation} \label{spectralrepresentation}
 G_{p q}(\omega)=\sum_{n} \frac{\left\langle\Psi_{0}\left|c_{p}\right| \Psi_{n}^{N+1}\right\rangle\left\langle\Psi_{n}^{N+1}\left|c_{q}^{\dagger}\right| \Psi_{0}\right\rangle}{\omega+E_{0}-E_{n}^{N+1}+i \eta}+\sum_{n} \frac{\left\langle\Psi_{0}\left|c_{q}^{\dagger}\right| \Psi_{n}^{N-1}\right\rangle\left\langle\Psi_{n}^{N-1}\left|c_{p}\right| \Psi_{0}\right\rangle}{\omega+E_{n}^{N-1}-E_{0}-i \eta}
 \end{equation}
 which is also refered as spectral representation or Lehmann representation.
@@ -341,7 +341,7 @@ By using residue theorem, the contour integration of $\omega G_{pq}(\omega)$ can
 \end{equation}
 
 Thus the ground state enengy can be obtained as:
-\begin{equation}
+\begin{equation} \label{greenenergy}
 E_{0}=\frac{1}{4 \pi i} \oint \operatorname{Tr}[(\omega \mathbf{1}+\boldsymbol{T}) \boldsymbol{G}(\omega)] \mathrm{d} \omega=\frac{1}{4 \pi i} \oint \operatorname{Tr}\left[(\omega \mathbf{1}+\boldsymbol{T}) \boldsymbol{G}^{-}(\omega)\right] \mathrm{d} \omega
 \end{equation}
 

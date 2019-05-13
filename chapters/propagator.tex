@@ -152,43 +152,29 @@ In expression A, free Green function first propagate from time $t$ to $t_1$, and
 In expression B, one free Green function propagates from $t$ to $t^{\prime}$, which corresponds to a line, while the other propagates from $t_1$ to itself, which corresponds to a loop (a curve ends at the starting vertex).
 The case C and D are also similar, except that $t_1$ has four indexes, which means it should be connected to four lines or curves.
 
-\begin{table}
+\begin{figure}[ht]
 	\centering
-\begin{tabular}{c@{\hspace{1cm}}|c@{\hspace{1cm}}|c@{\hspace{1cm}}|c}
-	\begin{feynman} 
-		\fermion[]{4.40, 4.00}{4.00, 5.20}
-		\fermion[]{4.00, 5.20}{4.00, 5.20}
-		\fermion[]{4.00, 5.20}{4.40, 6.40}
-	\end{feynman}
-	&
-	\begin{feynman} 
-		\fermion[]{4.00, 4.00}{4.00, 6.40}
-		\parton{3.20,5.20}{0.40}
-	\end{feynman}
-	&
-	\begin{feynman} 
-		\fermion[]{4.40, 4.00}{4.00, 5.20}
-		\fermion[]{4.00, 5.20}{4.00, 5.20}
-		\fermion[]{4.00, 5.20}{4.40, 6.40}
-		\parton{3.60,5.20}{0.40}
-	\end{feynman}
-	&
-	\begin{feynman} 
-		\fermion[]{4.00, 5.20}{4.00, 5.20}
-		\fermion[]{4.80, 4.00}{4.80, 6.40}
-		\parton{4.00,4.80}{0.40}
-		\parton{4.00,5.60}{0.40}
-	\end{feynman}
-	\\
-	Diagram A
-	&
-	Diagram B
-	&
-	Diagram C
-	&
-	Diagram D
-\end{tabular}
-\end{table}
+	\begin{subfigure}{0.2\textwidth}
+		\centering
+		\includegraphics[height=3cm]{figures/diagramA.png}
+		\caption{Diagram A}
+	\end{subfigure}
+	\begin{subfigure}{0.2\textwidth}
+		\centering
+		\includegraphics[height=3cm]{figures/diagramB.png}
+		\caption{Diagram B}
+	\end{subfigure}
+	\begin{subfigure}{0.2\textwidth}
+		\centering
+		\includegraphics[height=3cm]{figures/diagramC.png}
+		\caption{Diagram C}
+	\end{subfigure}
+	\begin{subfigure}{0.2\textwidth}
+		\centering
+		\includegraphics[height=3cm]{figures/diagramD.png}
+		\caption{Diagram D}
+	\end{subfigure}
+\end{figure}
 
 Additionally, we find that in the $w_{rs}$ case (A and B), there is always one incoming line and one outcoming line for each intermediate vertex, which is because of one creation operator and one annihilation operator in the expression $W=w_{rs} c_r^{\dagger} c_s$.
 In the $V_{uvrs}$ case (C and D), there are always two incoming lines and two outcoming lines for rach intermediate vertex, which is because of two creation operators and two annihilation operators in the expression $V=\frac{1}{2}V_{uvrs} c_u^{\dagger} c_v^{\dagger} c_s c_r$.
@@ -201,22 +187,14 @@ Then we will derive the rules:
 For each vertex, we assign $w_{rs}$ or $V_{uv[rs]}$ depending on whether it's a $w$ vertex or a $V$ vertex:
 
 \hspace{0.2\textwidth}
-\begin{minipage}{0.1\textwidth}
-\begin{feynman} 
-    \fermion[]{4.00, 4.00}{4.40, 4.40}
-    \fermion[]{4.40, 4.40}{4.00, 4.80}
-\end{feynman}
+\begin{minipage}{0.08\textwidth}
+	\includegraphics[height=3cm]{figures/vertexW.png}
 \end{minipage}
 \begin{minipage}{0.2\textwidth}
 	$=w_{rs}$
 \end{minipage}
-\begin{minipage}{0.16\textwidth}
-\begin{feynman} 
-    \fermion[]{4.80, 4.00}{4.40, 4.40}
-    \fermion[]{4.40, 4.40}{4.80, 4.80}
-    \fermion[]{4.00, 4.00}{4.40, 4.40}
-    \fermion[]{4.40, 4.40}{4.00, 4.80}
-\end{feynman}
+\begin{minipage}{0.18\textwidth}
+	\includegraphics[height=3cm]{figures/vertexV.png}
 \end{minipage}
 \begin{minipage}{0.1\textwidth}
 	$=V_{uv[rs]}$
@@ -342,7 +320,7 @@ Thus, any diagram contain $V_{pr[qr]}n_r$ will automatically contain $r_{pq}$.
 This result means that we can skip all diagrams with $W$ vertex and that cantain free Green function line starting and ending with the same $V$ vertex at the same time.
 Thus, we will not consider $W$ vertex in the following.
 
-We summarize the Feynman rules for Abrikosov diagram as the end of this section:
+Then we summarize the Feynman rules for Abrikosov diagram:
 \begin{itemize}
 	\item Draw all topologically distinct connected diagrams with $n$ interaction dots and $2n + 1$ directed (solid) free Green’s function starting at the outer vertex $(p, t)$ and ending at the outer vertex $(q, t^{\prime})$.
 		At each interaction dot, two Green function start and two end; assign a time argument to each interaction dot.
@@ -353,5 +331,34 @@ We summarize the Feynman rules for Abrikosov diagram as the end of this section:
 	\item Apply a factor of $\frac{1}{2}$ for each pair of (topologically) equivalent free Green function lines to compensate for double counting of Feynman diagrams. Double counting may arise for other reasons at fourth and higher order, and this possibility must be checked at the level of Feynman diagrams.
 \end{itemize}
 
+We calculate the second order Green function as the end of this section:
+According to the Feynman diagram, we first draw all possible topologically inequvalent diagrams.
+In the case of second order Green function, there is only one diagram:
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=4cm]{figures/order2.png}
+	\caption{Diagram of second order Green function}
+\end{figure}
 
+Note that the two curves are identical ( start and end with the same vertexs).
+Thus, according the Feynman rules, we can easily determine the second order Green function up to a overall sign:
+\begin{equation} \label{order2}
+	\begin{aligned} 
+	G_{p q}^{(2)}\left(t, t^{\prime}\right)=\pm \frac{1}{2} \sum_{r, u, v_{-\infty}} & \int_{-\infty}^{\infty} \mathrm{d} t_{1} \int_{-\infty}^{\infty} \mathrm{d} t_{2} V_{p r[u v]} V_{u v[q r]} 
+	\\ 
+	& G_{p}^{0}\left(t, t_{1}\right) G_{u}^{0}\left(t_{1}, t_{2}\right) G_{v}^{0}\left(t_{1}, t_{2}\right) G_{r}^{0}\left(t_{2}, t_{1}\right) G_{q}^{0}\left(t_{2}, t^{\prime}\right) 
+	\end{aligned}
+\end{equation}
+
+To determine the overall sign, we only need to consider the case
+\begin{equation}
+	\left\langle\Phi_{0}\left|
+	\hat{\mathcal{T}}\left[
+		\wick{\c4 c_{u}^{\dagger}\left(t_{1}\right) \c3 c_{v}^{\dagger}\left(t_{1}\right) \c2 c_{s}\left(t_{1}\right) \c1 c_{r}\left(t_{1}\right) \c1 c_{i}^{\dagger}\left(t_{2}\right) \c2 c_{j}^{\dagger}\left(t_{2}\right) \c3 c_{l}\left(t_{2}\right) \c1 c_{k}\left(t_{2}\right) \c4 c_{p}(t) \c1 c_{q}^{\dagger}\left(t^{\prime}\right)}
+		\right]
+		\right| \Phi_{0}\right\rangle
+\end{equation}
+which gives an overall sign of $-1$, which is canceled with the factor $(-i)^2$.
+
+Thus the overall sign of expression Eq \ref{order2} should be positive.
 
