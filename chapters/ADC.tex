@@ -207,6 +207,10 @@ then
 where the $11$ subscript means taking the upper left diagonal block.
 
 Thus the energies interested, which are poles of $G$, are also poles of Dyson secular matrix $A$.
+Then we can diagonalize the matrix A to determine the values of poles and thus the energies and eigenstates, which are transition amplitudes, i.e.
+\begin{equation}
+	\boldsymbol{A} \boldsymbol{X}=\boldsymbol{X} \boldsymbol{E}, \quad \boldsymbol{X}^{\dagger} \boldsymbol{X}=1
+\end{equation}
 
 from Eq \ref{selforder2}, we can also determine the leading terms of $m$ and $\Omega$.
 Since 
@@ -311,6 +315,10 @@ and
 \begin{equation}
 	\boldsymbol{G}(\omega)=\left.(\omega \mathbf{1}-\boldsymbol{B})^{-1}\right|_{11}
 \end{equation}
+and thus diagonalization as
+\begin{equation}
+	\boldsymbol{B} \boldsymbol{X}=\boldsymbol{X} \boldsymbol{E}, \quad \boldsymbol{X}^{\dagger} \boldsymbol{X}=1
+\end{equation}
 
 The struture of Dyson-ADC(3) matrix is:
 \begin{table}
@@ -358,6 +366,10 @@ By transposing, we obtain
 Then we introduce ADC representation just like Dyson approach:
 \begin{equation}
 	\tilde{\boldsymbol{G}}(\omega)=\boldsymbol{f}^{\dagger}(\omega-\boldsymbol{K}-\boldsymbol{C})^{-1} \boldsymbol{f}
+\end{equation}
+and diagonalization as
+\begin{equation} \label{KCeigen}
+	(\boldsymbol{K}+\boldsymbol{C}) \boldsymbol{X}=\boldsymbol{X} \boldsymbol{E}, \quad \boldsymbol{X}^{\dagger} \boldsymbol{X}=1
 \end{equation}
 
 Just like Dyson approach, we still expand $\boldsymbol{C}$ and $\boldsymbol{g}$ to series:

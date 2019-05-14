@@ -26,6 +26,8 @@
 \usepackage{braket}
 \usepackage{simpler-wick}
 \usepackage{subcaption}
+\usepackage{listings}
+\lstset{basicstyle=\small, commentstyle=\color{red}}
 
 
 
@@ -83,157 +85,255 @@ Finally, we will discuss the concept intermediate state and its relation with si
 \input{chapters/theory}
 \input{chapters/propagator}
 \input{chapters/ADC}
+\input{chapters/ISR}
 
-\section{Intermediate State Representation}
-
-In Non-dyson ADC method, the eigenvalues of ADC secular matrix $\boldsymbol{K}+\boldsymbol{C}$ are exactly the ionization potentials, which behaves similar to Hamiltonian.
-This feature suggests that $\boldsymbol{K}+\boldsymbol{C}$ is essentially a representation of Hamiltonian in some particular basis.
-The surprising answer is that ADC secular equations can be deduced by a wavefunction approach, and the basis are refered to intermediate-state representation (ISR).
-In addition, ISR approach allows us to analyze the origin of the compactness and size consistency of ADC.
-
-We start from the so-called correlated excited (CE) states, which is defined by
-\begin{equation}
-	| \Psi_{J}^{0} \rangle=\hat{C}_{J} | \Psi_{0} \rangle
-\end{equation}
-where
-\begin{equation}
-	\left\{\hat{C}_{J}\right\}=\left\{c_{k} ; c_{a}^{\dagger} c_{k} c_{l}, k<l ; c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{l} c_{l}, a<b, j<k<l ; \ldots\right\}
-\end{equation}
-
-Obviously, CE states are not orthogonal:
-\begin{equation}
-	S_{I J}=\left\langle\Psi_{I}^{0} | \Psi_{J}^{0}\right\rangle=\left\langle\Psi_{0}\left|\hat{C}_{I}^{\dagger} \hat{C}_{J}\right| \Psi_{0}\right\rangle \neq \delta_{I, J}
-\end{equation}
-
-Instead of the most obvious symmetric orthonormalization choice, which is 
-\begin{equation}
-	| \overline{\Psi}_{J} \rangle=\sum_{I} | \Psi_{I}^{0} \rangle\left(S^{-1 / 2}\right)_{I J}
-\end{equation}
-, we orthogonalize them by excitation class orthogonalization (ECO) procedure which states as follows:
-
+\chapter{Implementation of Non-dyson ADC}
+In this chapter I describe the implementation of second order Non-dyson ADC of restricted Electron Affinity calculation in development version of \emph{adcman}.
+\emph{Adcman} is a part of \emph{Q-Chem} package, which is a general-purpose electronic structure package based on C++ and Fortran.
+It contains a variety of established and new methods implemented using innovative algorithms that enable fast calculations of large systems.
+It's features include:
 \begin{itemize}
-	\item First we construct intermediate states $\ket{\Psi^{#}_K}$ by class. For states in class 1, we leave them unchanged, i.e.
-		\begin{equation}
-			\ket{\Psi^{\#}_i}=\ket{\Psi^0_i}
-		\end{equation}
-		Assuming intermediate states of classes 1, ..., $\nu-1$ have been constructed, then we orthogonalize $\ket{\tilde{\Psi}_J}$ in class $\nu$ by
-		\begin{equation}
-			| \Psi_{J}^{\#} \rangle=| \Psi_{J}^{0} \rangle-\sum_{[K]<\nu} | \Psi^{\#}_{K} \rangle\left\langle\Psi^{\#}_{K} | \Psi_{J}^{0}\right\rangle
-		\end{equation}
-	\item Orthogonalize states in each class by symmetric orthogonalization:
-		\begin{equation}
-			| \tilde{\Psi}_{J} \rangle=\sum_{[I]=\nu} | \Psi_{I}^{\#} \rangle\left(S_{\nu}^{-1 / 2}\right)_{I J}
-		\end{equation}
+	\item Variety of local, GGA, mGGA, hybrid, double-hybrid, dispersion-corrected, range separated functionals for DFT calculation.
+	\item TDDFT and spin-flip-TDDFT
+	\item Continuous Fast Multipole Method in HF and DFT
+	\item Linear-scaling HF-exchange method
+	\item Fourier transform Coulomb method
+	\item Fast numerical integration of exchange-correlation with multiresolution exchange-correlation (mrXC)
+	\item MP2
+	\item SCS and SOS MP2
+	\item CCD, QCISD, CCSD, OOCCD, VOOCCD
+	\item EOM-XX-CCSD methods for open-shell and electronically excited species
+	\item ADC methods
+	\item CIS, TDDFT, CIS(D), and SOS-CIS(D) methods for excited states
 \end{itemize}
-where intermediate normalization is chosen.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{./figures/adcman.png}
+	\caption{Overview of implementation of ADC methods in \emph{Q-Chem}}
+\end{figure}
+
+Then I will explain the overall code structure and then focus on my implementaion part.
+
+\section{Code Overview and Structure}
+The overview of implementation of ADC methods is in Fig. 3.1
+All modules are written in the object-oriented C++ programming language. 
+The adcman module contains all top-level routines and methods necessary for an ADC calculation. 
+It coordinates the calculation process, sets up the solver and writes the results into an output file.
+I implemented restricted calculation of electron affinity part in adcman.
+
+The next sub-level contains electronic structure related libraries and utilities.
+\emph{liblegacy} is the gateway between the ADC code and the Q-Chem interface.
+These routines help to import data from other Q-Chem modules, for example all SCF results and MOs, which are needed for the ADC calculation.
+The \emph{libmo} module contains routines to set up the MO spaces, integrals and symmetry using the information imported from Q-Chem via the \emph{liblegacy} interface.
+Hence, both \emph{libmo} and \emph{liblegacy} are important for ADC calculations, because all integrals and Fock-matrix elements are indexed and created corresponding to the additional restriction of the core space.
+In the \emph{libadc} module, all ADC equations are implemented explicitly.
+I also implemented restricted calculation of electron affinity part in \emph{libadc}.
+
+Furthermore, \emph{libmo} transforms the imported data in a format being compatible to the \emph{libtensor} \cite{libtensor} interface, which can be called the heart of the albegraic computation, since it contains all numerical routines to perform tensor algebra, which is the most time-consuming part all most of the quantum chemistry calculations.
+\emph{libtensor} is specially designed for Post-Hartree-Fock electronic structure methods by including consideration of symmetries in the tensor structure.
+These symmetries include Abelian point group symmetry, spin symmetry and other inner symmetry like that of two-electron integrals.
 \begin{equation}
-	\left\langle\Psi_{0} | \Phi_{0}\right\rangle= 1
+	\langle i j| | a b\rangle=-\langle j i| | a b\rangle=-\langle i j \| b a\rangle=\langle j i| | b a\rangle
+\end{equation}
+Thus, tensors of arbitrary order and size are stored in a blockwise manner to different kinds of symmetry to limit the amount of required memory and decrease the time needed.
+The tensor operations in \emph{libtensor} are fully parallelized and efficiently implemented.
+
+The second important numerical library is \emph{libsolve}, which contains all routines of
+generic solvers, e.g the Davidson algorithm, which are called from the top-level adcman
+routines. \emph{libsolve} is also based on the \emph{libtensor} interface. At last, there are low-level
+routines, which are responsible for support and operations in the background. The libvmm
+routines manage the virtual memory, while \emph{libctx} is a context manager based on key-value
+mapping of data objects. All imported or generated objects, e.g. integrals, keywords,
+tensors, vectors, etc., are stored in the context and can be easily accessed by other routines.
+The libutil library contains further low-level machine-dependent routines.
+
+The procedual of ADC calculation states as follows:
+\begin{enumerate}
+	\item A HF calculation is performed, and all information including one-electron integrals, two-electron integrals, MOs, eigenvalues, Overlap matrix, Fock matrix and point group symmetr are imported through \emph{libledacy} interface.
+	\item All tensors calculated in the previous step are transformed from atomic orbital (AO) basis to MO basis by \emph{libmo} module.
+	\item MP2 calculation is performed and results are printed.
+	\item ADC secular matrix is constructed from the tensors in MO basis.
+	\item Guess vectors which are required by Davidson algorithm are set up with correct symmetry.
+	\item Davidson solver is started.
+	\item When convergence requirements are met, ADC energies and transition amplitudes are printed.
+	\item Other information required by adcman are printed.
+\end{enumerate}
+
+\section{Implementation of Non-dyson ADC}
+
+\subsection{Implementation of ADC secular matrix}
+
+We have illustrated the \emph{libtensor} library which can efficiently and conveniently realize tensor algebra.
+From Eq \ref{KCeigen}, our final purpose is to calcualte the eigenvalues and eigenvectors of ADC secular matrix.
+However, usually we do not ask for all the eigenvalues and eigenvectors.
+Instead, people are only interested in the few states with lowest energies.
+Thus, full diagonalization will waste much effort on eigenstates that we are not interested in.
+To solve this problem, we can use Davidson algorithm, which can determine eigenstates one by one with lower algorithmic complexity.
+Since Davidson algorithm works by performing matrix vector product rather than direct access to matrix elements, we can rewrite the ADC secular matrix to matrix vector product form, i.e. calculate the result $W$ of matrix vector product when a vector $Y$ is given.
+
+Before writing down the ADC secular matrix, we introduce some symbols:
+\begin{equation}
+	\begin{aligned}
+		\langle pq \| rs \rangle&=V_{pq[rs]}
+		\\
+		\mathrm{t}_{\text { ijab }}&=\frac{\langle i j| | a b\rangle}{\varepsilon_{a}+\varepsilon_{\mathrm{b}}-\varepsilon_{i}-\varepsilon_{j}}
+	\end{aligned}
 \end{equation}
 
-Define ISR secular matrix $M$ by
+Up to second order, ADC secular matrix of ionization potential calculation is
 \begin{equation}
-	M_{I J}=\left\langle\tilde{\Psi}_{I}\left|\hat{H}-E_{0}\right| \tilde{\Psi}_{J}\right\rangle
+	\mathrm{W}_{i}=\sum_{j} \mathrm{I}_{i j}^{(1)} \mathrm{Y}_{j}-\frac{1}{\sqrt{2}} \sum_{j k b}\langle j k| | b i\rangle Y_{j k b}
 \end{equation}
-and 
+for 1h part, where
 \begin{equation}
-	| \Psi_{n}^{N-1} \rangle=\sum_{I} X_{I n} | \tilde{\Psi}_{I} \rangle
-\end{equation}
-
-In matrix notation, the ISR secular equations take on the form
-\begin{equation}
-	\boldsymbol{M X}=\boldsymbol{X} \boldsymbol{\Omega}, \boldsymbol{X}^{\dagger} \boldsymbol{X}=\mathbf{1}
-\end{equation}
-
-Define ISR transition amplitudes as
-\begin{equation}
-	\tilde{f}_{I p}=\left\langle\tilde{\Psi}_{I}\left|c_{p}\right| \Psi_{0}\right\rangle
-\end{equation}
-with its relation to spectroscopic factor as
-\begin{equation}
-	x_{p}^{(n)}=\sum_{I} X_{I n}^{*} \tilde{f}_{I p}
-\end{equation}
-
-It can be proved that the ADC and ECO-ISR secular matrices are to be identified according to
-\begin{equation}
-	\begin{aligned} \boldsymbol{K}+\boldsymbol{C} & \equiv-\boldsymbol{M} \\ \boldsymbol{f} & \equiv \tilde{\boldsymbol{f}} \end{aligned}
-\end{equation}
-
-Although it is difficult to prove, one can check the second order of $M$ to verify it.
-The verification is done in \cite{main}.
-
-The equivalence of Non-dyson ADC and ISR approach results in two important features of ADC.
-One is the compactness of matrix structure, which is the consequence of the so-called canonical perturnbation theory order structure.
-Compactness reduces the complexity of algorithm by reducing the size of total configuration space
-The other is self consistency, which is guranteed by the separability of ISR.
-As is previously mentioned, self consistency ensures results of many important chemical processes calculation much more reliable.
-
-Through out the calculation of $C$ and $f$ in each order, we find that they do not always begin from the zeroth order.
-In fact, the leading order is dependent on the distance of the classes of two  indexes.
-This rule states as follows:
-\begin{equation}
-	M_{I J} \sim O( | [I]-[J] | )
-\end{equation}
-which is also refered to as canonical order relations (COR).
-
-For example, in CI matrix, the matrix element of class 1 and class 3 is in the first order, which breaks COR:
-\begin{equation}
-	H_{i, a b j k l}=\left\langle\Phi_{i}\left|\hat{H}_{I}\right| \Phi_{a b j k l}\right\rangle=-\delta_{i j} V_{k l[a b]}+\delta_{i k} V_{j I l[a b]}-\delta_{i l} V_{j k[a b]}
-\end{equation}
-while in the case of ISR,
-\begin{equation}
-	\begin{aligned} M_{i, a b j k l}^{(1)} &=\left\langle\tilde{\Psi}_{i}\left|\hat{H}-E_{0}\right| \tilde{\Psi}_{a b j k l}\right\rangle^{(1)} \\ &=H_{i, a b j k l}+\left\langle\tilde{\Psi}_{i}^{(1)}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \Phi_{a b j k l}\right\rangle+\left\langle\Phi_{i}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle \end{aligned}
-\end{equation}
-
-According to ECO procedure,
-\begin{equation}
-	| \tilde{\Psi}_{i}^{(1)} \rangle=c_{i} | \Psi_{0}^{(1)} \rangle
+\mathrm{I}_{i j}^{(1)}=-f_{i j}+\frac{1}{4}\left(1+\hat{\mathrm{P}}_{i j}\right) \sum_{a b k} t_{i k a b}\langle j k \| a b\rangle
 \end{equation}
 and
 \begin{equation}
-	\begin{aligned} | \tilde{\Psi}_{a b j k l}^{(1)} \rangle &=c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{k} c_{l} | \Psi_{0}^{(1)} \rangle-| \Phi_{j} \rangle\left\langle\tilde{\Psi}_{j}^{(1)} | \Phi_{a b j k l}\right\rangle-| \Phi_{k} \rangle\left\langle\tilde{\Psi}_{k}^{(1)} | \Phi_{a b j k l}\right\rangle-| \Phi_{l} \rangle\left\langle\tilde{\Psi}_{l}^{(1)} | \Phi_{a b j k l}\right\rangle \\ &= c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{k} c_{l} | \Psi_{0}^{(1)} \rangle-| \Phi_{j} \rangle v_{a b k l}^{*}+| \Phi_{k} \rangle_{a b j l}^{*}-| \Phi_{l} \rangle v_{a b j k}^{*} \end{aligned}
+	\mathrm{W}_{i j a}=\sum_{\mathrm{b}} f_{a b} Y_{i j b}-\left(1-\hat{\mathrm{P}}_{i j}\right) \sum_{k} f_{i k} \mathrm{Y}_{k j a}+\frac{1}{\sqrt{2}} \sum_{k}\langle i j| | k a\rangle \mathrm{Y}_{k}
 \end{equation}
-where there are no first-order contributions from the orthogonalization with
-respect to 2h-1p states.
+for 1p-2h part.
 
-Thus
+Up to second order, ADC secular matrix of electron affinity calculation is
 \begin{equation}
-	\left\langle\Phi_{i}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle=-\epsilon_{i}\left\langle\Phi_{i} | \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle=\epsilon_{i}\left(\delta_{i j} v_{a b k l}^{*}-\delta_{i k} v_{a b j l}^{*}+\delta_{i l} v_{a b j k}^{*}\right)
+	\mathrm{W}_{a}=\sum_{b} \mathrm{I}_{a b}^{(1)} \mathrm{Y}_{b}+\frac{1}{\sqrt{2}} \sum_{b c j}\langle b c| | j a\rangle Y_{b c j}
+\end{equation}
+for 1p part, where
+\begin{equation}
+\mathrm{I}_{a b}^{(1)}=-f_{a b}-\frac{1}{4}\left(1+\hat{\mathrm{P}}_{a b}\right) \sum_{i j c} t_{i j a c}\langle b c \| i j\rangle
 \end{equation}
 and
 \begin{equation}
-	\left\langle\tilde{\Psi}_{i}^{(1)}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \Phi_{a b j k l}\right\rangle=\left(\delta_{i j} v_{a b k l}^{*}-\delta_{i k} v_{a b j l}^{*}+\delta_{i l} v_{a b j k}^{*}\right)\left(\epsilon_{a}+\epsilon_{b}-\epsilon_{j}-\epsilon_{k}-\epsilon_{l}\right)
+	\mathrm{W}_{a b i}=\sum_{\mathrm{b}} f_{i j} Y_{a b j}-\left(1-\hat{\mathrm{P}}_{a b}\right) \sum_{c} f_{a c} \mathrm{Y}_{c b i}-\frac{1}{\sqrt{2}} \sum_{c}\langle a b| | c i\rangle \mathrm{Y}_{c}
+\end{equation}
+for 1h-2p part.
+
+The implementation of ADC secular matrix is by a class \emph{adc2\_matrix}:
+
+\lstinputlisting[language=C++]{./code/adc2matrix.h}
+
+\subsection{Implementation of setting up guess vectors}
+
+Before the Davidson algorithm starts, guess vectors need to be set up for the first matrix vector product.
+Usually, the setting up of guess vectors should be subjected to some principles: computationally cheap and close to the final eigenvectors.
+A simple idea is to use eigenvectors of some simple approximation of the ADC secular matrix.
+In the implementation in Q-Chem, the approximation of second order ADC secular matrix is chosen to be the diagonal elements.
+Since people usually care about the states with lowest enegies, the guess vectors should be chosen to be those with smallest diagonal elements.
+Mathmatically, if $d_a=K_{aa}+C_{aa}$, and the $n$ smallest elements are $d_{k_1}<d_{k_2}< \dots <d_{k_n}$, then the $m$th guess vector should be 
+\begin{equation}
+	v^m_p=\delta_{p, k_m}
 \end{equation}
 
-Adding these three up gives:
+Of course, we will get correct results if we set up guess vectors in the above way.
+However, since Hamiltonian is commutable with total spin operator $S^2$, it is often required the diagonalization of Hamiltonian also diagonalizes $S^2$.
+Thus, it is required that the initial guess vectors should have correct spin symmetry.
+In addition, the 1h-2p guess vectors themselves has permutation symmetry
 \begin{equation}
-	M_{i, a b j k l}^{(1)}=0
+	V_{abi}=-V_{bai}
+\end{equation}
+, which is easy to deal with. Thus we will focus on spin symmetry of guess vectors.
+
+For restricted calculation, electrons in ground state are always paired, thus the electron affinity does not depend on whether alpha or beta electron is affinitized, thus we can always choose it to be alpha electron.
+Thus, the final state will be restricted to $m_s=\frac{1}{2}$.
+
+For 1p guess vectors, there is no choice for spin since the affinitized electron must be spin spin, and thus
+\begin{equation}
+	v^m_{a s}=\delta_{a, k_m} \delta_{s, \alpha}
+\end{equation}
+where $s$ is the spin of orbital a.
+
+For 1h-2p guess vectors, there are two options:
+\begin{itemize}
+	\item One particle is alpha, one particle is beta, and the hole is beta.
+	\item All two particles and the hole are alpha.
+\end{itemize}
+
+Thus there are totally three configurations (two for the first case and one for the second case).
+To correcctly set up spin symmetry of guess vectors, we need to form linear combinations of these three configurations that are diagonal under $S^2$.
+In fact, the coefficients of the linear combinations are refered as Clebsch-Gordan coefficients.
+By refering to table of Clebsch-Gordan coefficients, the three final spin states reads:
+\begin{equation}
+	\begin{array}{|l|l|}
+		\hline
+		S=\frac{1}{2} & \sqrt{\frac{1}{2}} \ket{\alpha_p \beta_p \beta_h} - \sqrt{\frac{1}{2}} \ket{\beta_p \alpha_p \beta_h}
+		\\
+		\hline
+		S=\frac{1}{2} & \sqrt{\frac{2}{3}} \ket{\alpha_p \alpha_p \alpha_h} - \sqrt{\frac{1}{6}} \ket{\alpha_p \beta_p \beta_h} - \sqrt{\frac{1}{6}} \ket{\beta_p \alpha_p \beta_h}
+		\\
+		\hline
+		S=\frac{3}{2} & \sqrt{\frac{1}{3}} \ket{\alpha_p \alpha_p \alpha_h} + \sqrt{\frac{1}{3}} \ket{\alpha_p \beta_p \beta_h} + \sqrt{\frac{1}{3}} \ket{\beta_p \alpha_p \beta_h}
+		\\
+		\hline
+	\end{array}
 \end{equation}
 
-The general proof of COR for ADC is given in refernce \cite{main}.
+The above tables works when the spacial orbital of two particles are different, otherwise they must have different spins, which means the second case is not allowed.
+In such situation, the two paricles are paired, and will not contribute to the total spin.
+Thus it reduces to the 1p case.
 
-Thus, if configuration space from class 1 to class $\nu$ is fully included, the truncation error order (TEO) of energies in 1h class is
+To summarize, if $a \neq b$, the first guess vector for spin $\frac{1}{2}$ is
 \begin{equation}
-	O_{T E}^{[n]}(\mu)=2\mu
+	\begin{array}{ll}
+		V_{a \alpha, b \beta i \beta}=\frac{1}{2} & V_{b \beta, a \alpha i \beta}=-\frac{1}{2} 
+		\\
+		V_{a \beta, b \alpha i \beta}=-\frac{1}{2} & V_{b \alpha, a \beta i \beta}=\frac{1}{2} 
+	\end{array}
 \end{equation}
-where TEO means the leading order of error.
+the second guess vector for spin $\frac{1}{2}$ is 
+\begin{equation}
+	\begin{array}{ll}
+		V_{a \alpha b \alpha i \alpha}=\sqrt{\frac{1}{3}} & V_{b \alpha a \alpha i \beta}=-\sqrt{\frac{1}{3}} 
+		\\
+		V_{a \alpha b \beta i \beta}=-\sqrt{\frac{1}{12}} & V_{b \beta a \alpha i \beta}=\sqrt{\frac{1}{12}} 
+		\\
+		V_{a \beta b \alpha i \beta}=-\sqrt{\frac{1}{12}} & V_{b \alpha a \beta i \beta}=\sqrt{\frac{1}{12}} 
+	\end{array}
+\end{equation}
+the guess vector for spin $\frac{3}{2}$ is
+\begin{equation}
+	\begin{array}{ll}
+		V_{a \alpha b \alpha i \alpha}=\sqrt{\frac{1}{6}} & V_{b \alpha a \alpha i \beta}=-\sqrt{\frac{1}{6}} 
+		\\
+		V_{a \alpha b \beta i \beta}=\sqrt{\frac{1}{6}} & V_{b \beta a \alpha i \beta}=-\sqrt{\frac{1}{6}} 
+		\\
+		V_{a \beta b \alpha i \beta}=\sqrt{\frac{1}{6}} & V_{b \alpha a \beta i \beta}=-\sqrt{\frac{1}{6}} 
+	\end{array}
+\end{equation}
+if $a=b$, the first guess vector for spin $\frac{1}{2}$ is
+\begin{equation}
+	\begin{array}{ll}
+		V_{a \alpha, b \beta i \beta}=\frac{1}{2} & V_{b \beta, a \alpha i \beta}=-\frac{1}{2} 
+		\\
+		V_{a \beta, b \alpha i \beta}=-\frac{1}{2} & V_{b \alpha, a \beta i \beta}=\frac{1}{2} 
+	\end{array}
+\end{equation}
+the second guess vector for spin $\frac{1}{2}$ is 
+\begin{equation}
+	\begin{array}{ll}
+		V_{a \alpha, b \beta i \beta}=\frac{1}{2} & V_{b \beta, a \alpha i \beta}=\frac{1}{2} 
+		\\
+		V_{a \beta, b \alpha i \beta}=\frac{1}{2} & V_{b \alpha, a \beta i \beta}=\frac{1}{2} 
+	\end{array}
+\end{equation}
 
-While the CI case, 
+For unrestricted case, it is much more complicated.
+Although I do not implement it, it does not hurt to discuss a little about this.
+
+Consider the ground state of a system with $p$ net positive charge, in which $p_{\alpha}$ are spin alpha while $p_{\beta}$ are spin beta.
+After affinity of an electron, which could be either spin alpha or spin beta.
+Thus, the general question is the linear combination of $n_{\alpha}$ alpha spins and $n_{\beta}$ beta spins, where
 \begin{equation}
-H_{IJ}=\left\{ 
-\begin{array}{ll}
-	O(0), & \text{ } I=J
-	\\
-	O(1), & \text{ } |I-J|=1 \text{ or } 2
-	\\
-	0,    & \text{ } |I-J|>2
-\end{array}
-\right.
+	\begin{array}{lll}
+		n_{\alpha}=p_{\alpha} + 1, & n_{\beta}=p_{\beta} & \text{if affinitized alpha electron}
+		\\
+		n_{\alpha}=p_{\alpha}, & n_{\beta}=p_{\beta} + 1 & \text{if affinitized beta electron}
+	\end{array}
 \end{equation}
-which gives the TEO as
-\begin{equation}
-	O_{T E}(\mu)=\left\{\begin{array}{ll}{\mu,} & {\mu \text { even }} \\ {\mu+1,} & {\mu \text { odd }}\end{array}\right.
-\end{equation}
-which is a much larger error than ADC case.
+
+The $n=n_{\alpha} + n_{\beta}$ electrons will genrate $2^n$ configurations.
+However, Clebsch-Gordan coefficients only works for addition of two spins.
+Thus, an recursive approach is needed to deal with the $n$ spin case.
 
 \input{chapters/floats}
 \input{chapters/math}
