@@ -6,11 +6,11 @@
 % doctor|master|bachelor [academic|professional] [chinese|english] [print|pdf]
 % [super|numebers|authoryear]
 
-\title{非戴森代数图构建理论与实现}
+\title{代数图构建理论与\\电子亲和能计算的实现}
 \author{孙嘉策}
 \major{物理学}
 \supervisor{Andrew Dreuw教授}
-\entitle{Theory and Implementation of Non-dyson Algebraic Diagrammatic Construction}
+\entitle{Theory and Implementation of Electron Affinity Algebraic Diagrammatic Construction}
 \enauthor{Jiace Sun}
 \enmajor{Physics}
 \ensupervisor{Prof. Andrew Dreuw}
@@ -25,9 +25,11 @@
 \usepackage{hyperref}
 \usepackage{braket}
 \usepackage{simpler-wick}
+\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{listings}
 \lstset{basicstyle=\small, commentstyle=\color{red}}
+\usepackage{multirow}
 
 
 
@@ -49,301 +51,72 @@
 \makestatement
 
 \frontmatter
-\input{chapters/abstract}
+\input{chapters/acknowledgements}
 \tableofcontents
 % \listoffigures
 % \listoftables
-\input{chapters/notation}
+%\input{chapters/notation}
+\input{chapters/abstract}
 
 \mainmatter
+
+\input{chapters/introduction}
 \input{chapters/development}
-\chapter{Theory of Algebraic Diagrammatic Construction}
-
-Essentially, ADC is a kind of many-body perturbation theory, whose basic idea is to divide Hamiltonian to unperturbed part and perturbed part, and the sum over different orders of contribution.
-If the summation is over all the contributions from infinite orders, then the exact energy will be obtained.
-Obviously, numerically it is impossible to do so, thus a simple idea is to truncate the summation to some particular order.
-However, when the order increases, on one hand, the expression for a direct perturbation become very complicated, on the other hand, the size inconsistency problem appears again.
-Although it is shown that in the first few order all ill-behaved terms that break size consistency are canceled finally, a reason and proof is needed for higher orders.
-
-On the other hand, instead of designed for solving ground state like what all the methods we discussed previously does, ADC is designed for ionization potential, electron affinity or excited state.
-Interestingly, all these differnt purposes are based on a same theoretical framework, which is propagator, Green function and Feynman diagram.
-There similarity is that all these processes include gain and loss of electrons, which is obvious in the ionization potential and electron affinity case.
-In the excited state case, it can be viewed as gain of an electron with higher energy and loss with lower energy.
-Thus, number of electrons is never conserved in ADC, which is hard to deal with in the formal quantum mechanics framework, which means a new tool is needed.
-
-In order to finish these purposes, a many-body field theory approach is required, which originates from quantum field theory which is developed for a theoretical elementary particle physics.
-After quantum field theory is constructed, the idea of field theory is quickly transfered to many-body physics, which becomes the basis of many-body perturbation theory.
-
-In many-body field theory, a language of second quantization is used.
-We have used a little second quantization when discussing the Post-Hartree Fock part for convenience.
-However, we didn't give a formal definition for the notations we give.
-
-Thus, in this chapter, we will firstly formally introduce second quantization, Green function and Feynman diagram.
-Then we will discuss how these concepts are applied to ADC and to calculate the three kinds of energies mentioned above.
-Finally, we will discuss the concept intermediate state and its relation with size consistency and compactness, and prove that ADC is both a canonical and size consistent method.
-
 \input{chapters/theory}
+\input{chapters/background}
 \input{chapters/propagator}
 \input{chapters/ADC}
 \input{chapters/ISR}
+\input{chapters/implementation}
 
-\chapter{Implementation of Non-dyson ADC}
-In this chapter I describe the implementation of second order Non-dyson ADC of restricted Electron Affinity calculation in development version of \emph{adcman}.
-\emph{Adcman} is a part of \emph{Q-Chem} package, which is a general-purpose electronic structure package based on C++ and Fortran.
-It contains a variety of established and new methods implemented using innovative algorithms that enable fast calculations of large systems.
-It's features include:
-\begin{itemize}
-	\item Variety of local, GGA, mGGA, hybrid, double-hybrid, dispersion-corrected, range separated functionals for DFT calculation.
-	\item TDDFT and spin-flip-TDDFT
-	\item Continuous Fast Multipole Method in HF and DFT
-	\item Linear-scaling HF-exchange method
-	\item Fourier transform Coulomb method
-	\item Fast numerical integration of exchange-correlation with multiresolution exchange-correlation (mrXC)
-	\item MP2
-	\item SCS and SOS MP2
-	\item CCD, QCISD, CCSD, OOCCD, VOOCCD
-	\item EOM-XX-CCSD methods for open-shell and electronically excited species
-	\item ADC methods
-	\item CIS, TDDFT, CIS(D), and SOS-CIS(D) methods for excited states
-\end{itemize}
+\chapter{Conclusion}
+In this thesis, I first introduced history of development of electronic structure and important methods under Born-Oppenheimer and non-relativistic approximation.
+Hartree-Fock, as the lowest-level method among all of them, usually functions at the starting point, and both Post-Hartree-Fock methods and DFT are based on Hartree-Fock.
+Hartree-Fock also functions as a formal definition of MO, and all other corrections are refered to as electron correlation.
+Among Post-Hartree-Fock methods, CI is conceptually the simplest but is neither efficient nor give size consistency, which is a very important property for electronic structure methods to give self-consistent results for many important chemical processes.
+CC solve the problem of size consistency by introducing an exponential excitation operator, which also includes electron correlation by a more efficient way.
+However, the nonlinear equations that CC has to solve makes it computationally expensive.
+MP perturbation theory is also a kind of Post-Hartree-Fock methods, which views total Hamiltonian excluding Hartree-Fock Hamiltonian as perturbation and then expands it in series.
+In addition to Post-Hartree-Fock methods, DFT is also introduced, which uses an unknown functional to represent all electron correlation effects based on Hohenberg-Kohn theorem.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{./figures/adcman.png}
-	\caption{Overview of implementation of ADC methods in \emph{Q-Chem}}
-\end{figure}
+Then I introduced the theory of ADC, starting from important mathematical and physical backgrounds.
+Second quantization, which is the language used by many-body field theory, use creation and annihilation operators as basic elements and thus include particle identity automatically.
+Green function, which originally appears in classical field theory, is extended to quantum field theory.
+By creation and annihilation operators, the definition of Green function is given in the time ordering operator form and is then proves that all its poles are exactly ionization potentials and electron affinities by spectral representation, and can also relate to ground state energy.
+Free Green function was calculated as the zeroth order of Green function.
+Afterwards, by the introduction of interaction picture, Gell-Mann and Low theorem can be applied to expand Green function into perturbation series, which are represented by time ordered products.
+Then Wick's theorem is introduced, which presents an approach to calculate time ordered products.
+By taking advantage of the regularity of time ordered products calculation, Feynman diagram can be introduced to visualize all perturbation terms and can also restore analytical expressions from diagrams.
+From linked-cluster theorem, we know that only linked diagrams need to be included.
+Feynman rules are given for systematically construct any particular order of Green function.
 
-Then I will explain the overall code structure and then focus on my implementaion part.
+With the background of second quantization, Green function and Feynman diagram, ADC is then presented.
+The concept of self-energy is first defined, which gives an approach to perform a partial summation over infinite orders.
+Thus the problem of finding poles of Green functions is transformed to an eigenvalue problem of Dyson-ADC secular matrix, which can also be expanded into series.
+However, ionized part and anionized part are coupled in Dyson-ADC, making it difficult to solve.
+Thus, a Non-dyson approach is presented to solve this problem by directly expanding Green function to series after some mathematical transformation, which preserves the summation to infinite orders.
 
-\section{Code Overview and Structure}
-The overview of implementation of ADC methods is in Fig. 3.1
-All modules are written in the object-oriented C++ programming language. 
-The adcman module contains all top-level routines and methods necessary for an ADC calculation. 
-It coordinates the calculation process, sets up the solver and writes the results into an output file.
-I implemented restricted calculation of electron affinity part in adcman.
+To better understand the efficiency and size consistency of Non-dyson ADC, ISR is introduced as a special way to construct many-body basis.
+It is proved that Hamiltonian under ISR is exactly Non-dyson ADC secular matrix.
+From ISR approach, it can be proved that Non-dyson ADC follows canonical order relation, which guarantees its computational efficiency, and also separability, which then leads to its size consistency property.
 
-The next sub-level contains electronic structure related libraries and utilities.
-\emph{liblegacy} is the gateway between the ADC code and the Q-Chem interface.
-These routines help to import data from other Q-Chem modules, for example all SCF results and MOs, which are needed for the ADC calculation.
-The \emph{libmo} module contains routines to set up the MO spaces, integrals and symmetry using the information imported from Q-Chem via the \emph{liblegacy} interface.
-Hence, both \emph{libmo} and \emph{liblegacy} are important for ADC calculations, because all integrals and Fock-matrix elements are indexed and created corresponding to the additional restriction of the core space.
-In the \emph{libadc} module, all ADC equations are implemented explicitly.
-I also implemented restricted calculation of electron affinity part in \emph{libadc}.
+Then I described my implementation of Non-dyson EA-ADC(2) in \emph{adcman}.
+The code structure of \emph{adcman} is given and then the procedure is presented.
+For implementation, ADC secular matrix is given.
+It is illustrated that 1h-2p guess vectors must be set correctly to be subjected to correct spin symmetry.
 
-Furthermore, \emph{libmo} transforms the imported data in a format being compatible to the \emph{libtensor} \cite{libtensor} interface, which can be called the heart of the albegraic computation, since it contains all numerical routines to perform tensor algebra, which is the most time-consuming part all most of the quantum chemistry calculations.
-\emph{libtensor} is specially designed for Post-Hartree-Fock electronic structure methods by including consideration of symmetries in the tensor structure.
-These symmetries include Abelian point group symmetry, spin symmetry and other inner symmetry like that of two-electron integrals.
-\begin{equation}
-	\langle i j| | a b\rangle=-\langle j i| | a b\rangle=-\langle i j \| b a\rangle=\langle j i| | b a\rangle
-\end{equation}
-Thus, tensors of arbitrary order and size are stored in a blockwise manner to different kinds of symmetry to limit the amount of required memory and decrease the time needed.
-The tensor operations in \emph{libtensor} are fully parallelized and efficiently implemented.
+Finally, results of ADC benchmark calculation are performed and compared with HF, DFT (B3LYP) and CCSD.
+It is shown that for 1p states, ADC(2) matches well with CCSD, while HF and DFT give a very large error.
+However, for 1h-2p states, ADC(2) shows a large derivation with CCSD, which is caused by low-level description of 1h2p-1h2p in ADC(2) secular matrix, which can be solved in ADC(3).
 
-The second important numerical library is \emph{libsolve}, which contains all routines of
-generic solvers, e.g the Davidson algorithm, which are called from the top-level adcman
-routines. \emph{libsolve} is also based on the \emph{libtensor} interface. At last, there are low-level
-routines, which are responsible for support and operations in the background. The libvmm
-routines manage the virtual memory, while \emph{libctx} is a context manager based on key-value
-mapping of data objects. All imported or generated objects, e.g. integrals, keywords,
-tensors, vectors, etc., are stored in the context and can be easily accessed by other routines.
-The libutil library contains further low-level machine-dependent routines.
-
-The procedual of ADC calculation states as follows:
-\begin{enumerate}
-	\item A HF calculation is performed, and all information including one-electron integrals, two-electron integrals, MOs, eigenvalues, Overlap matrix, Fock matrix and point group symmetr are imported through \emph{libledacy} interface.
-	\item All tensors calculated in the previous step are transformed from atomic orbital (AO) basis to MO basis by \emph{libmo} module.
-	\item MP2 calculation is performed and results are printed.
-	\item ADC secular matrix is constructed from the tensors in MO basis.
-	\item Guess vectors which are required by Davidson algorithm are set up with correct symmetry.
-	\item Davidson solver is started.
-	\item When convergence requirements are met, ADC energies and transition amplitudes are printed.
-	\item Other information required by adcman are printed.
-\end{enumerate}
-
-\section{Implementation of Non-dyson ADC}
-
-\subsection{Implementation of ADC secular matrix}
-
-We have illustrated the \emph{libtensor} library which can efficiently and conveniently realize tensor algebra.
-From Eq \ref{KCeigen}, our final purpose is to calcualte the eigenvalues and eigenvectors of ADC secular matrix.
-However, usually we do not ask for all the eigenvalues and eigenvectors.
-Instead, people are only interested in the few states with lowest energies.
-Thus, full diagonalization will waste much effort on eigenstates that we are not interested in.
-To solve this problem, we can use Davidson algorithm, which can determine eigenstates one by one with lower algorithmic complexity.
-Since Davidson algorithm works by performing matrix vector product rather than direct access to matrix elements, we can rewrite the ADC secular matrix to matrix vector product form, i.e. calculate the result $W$ of matrix vector product when a vector $Y$ is given.
-
-Before writing down the ADC secular matrix, we introduce some symbols:
-\begin{equation}
-	\begin{aligned}
-		\langle pq \| rs \rangle&=V_{pq[rs]}
-		\\
-		\mathrm{t}_{\text { ijab }}&=\frac{\langle i j| | a b\rangle}{\varepsilon_{a}+\varepsilon_{\mathrm{b}}-\varepsilon_{i}-\varepsilon_{j}}
-	\end{aligned}
-\end{equation}
-
-Up to second order, ADC secular matrix of ionization potential calculation is
-\begin{equation}
-	\mathrm{W}_{i}=\sum_{j} \mathrm{I}_{i j}^{(1)} \mathrm{Y}_{j}-\frac{1}{\sqrt{2}} \sum_{j k b}\langle j k| | b i\rangle Y_{j k b}
-\end{equation}
-for 1h part, where
-\begin{equation}
-\mathrm{I}_{i j}^{(1)}=-f_{i j}+\frac{1}{4}\left(1+\hat{\mathrm{P}}_{i j}\right) \sum_{a b k} t_{i k a b}\langle j k \| a b\rangle
-\end{equation}
-and
-\begin{equation}
-	\mathrm{W}_{i j a}=\sum_{\mathrm{b}} f_{a b} Y_{i j b}-\left(1-\hat{\mathrm{P}}_{i j}\right) \sum_{k} f_{i k} \mathrm{Y}_{k j a}+\frac{1}{\sqrt{2}} \sum_{k}\langle i j| | k a\rangle \mathrm{Y}_{k}
-\end{equation}
-for 1p-2h part.
-
-Up to second order, ADC secular matrix of electron affinity calculation is
-\begin{equation}
-	\mathrm{W}_{a}=\sum_{b} \mathrm{I}_{a b}^{(1)} \mathrm{Y}_{b}+\frac{1}{\sqrt{2}} \sum_{b c j}\langle b c| | j a\rangle Y_{b c j}
-\end{equation}
-for 1p part, where
-\begin{equation}
-\mathrm{I}_{a b}^{(1)}=-f_{a b}-\frac{1}{4}\left(1+\hat{\mathrm{P}}_{a b}\right) \sum_{i j c} t_{i j a c}\langle b c \| i j\rangle
-\end{equation}
-and
-\begin{equation}
-	\mathrm{W}_{a b i}=\sum_{\mathrm{b}} f_{i j} Y_{a b j}-\left(1-\hat{\mathrm{P}}_{a b}\right) \sum_{c} f_{a c} \mathrm{Y}_{c b i}-\frac{1}{\sqrt{2}} \sum_{c}\langle a b| | c i\rangle \mathrm{Y}_{c}
-\end{equation}
-for 1h-2p part.
-
-The implementation of ADC secular matrix is by a class \emph{adc2\_matrix}:
-
-\lstinputlisting[language=C++]{./code/adc2matrix.h}
-
-\subsection{Implementation of setting up guess vectors}
-
-Before the Davidson algorithm starts, guess vectors need to be set up for the first matrix vector product.
-Usually, the setting up of guess vectors should be subjected to some principles: computationally cheap and close to the final eigenvectors.
-A simple idea is to use eigenvectors of some simple approximation of the ADC secular matrix.
-In the implementation in Q-Chem, the approximation of second order ADC secular matrix is chosen to be the diagonal elements.
-Since people usually care about the states with lowest enegies, the guess vectors should be chosen to be those with smallest diagonal elements.
-Mathmatically, if $d_a=K_{aa}+C_{aa}$, and the $n$ smallest elements are $d_{k_1}<d_{k_2}< \dots <d_{k_n}$, then the $m$th guess vector should be 
-\begin{equation}
-	v^m_p=\delta_{p, k_m}
-\end{equation}
-
-Of course, we will get correct results if we set up guess vectors in the above way.
-However, since Hamiltonian is commutable with total spin operator $S^2$, it is often required the diagonalization of Hamiltonian also diagonalizes $S^2$.
-Thus, it is required that the initial guess vectors should have correct spin symmetry.
-In addition, the 1h-2p guess vectors themselves has permutation symmetry
-\begin{equation}
-	V_{abi}=-V_{bai}
-\end{equation}
-, which is easy to deal with. Thus we will focus on spin symmetry of guess vectors.
-
-For restricted calculation, electrons in ground state are always paired, thus the electron affinity does not depend on whether alpha or beta electron is affinitized, thus we can always choose it to be alpha electron.
-Thus, the final state will be restricted to $m_s=\frac{1}{2}$.
-
-For 1p guess vectors, there is no choice for spin since the affinitized electron must be spin spin, and thus
-\begin{equation}
-	v^m_{a s}=\delta_{a, k_m} \delta_{s, \alpha}
-\end{equation}
-where $s$ is the spin of orbital a.
-
-For 1h-2p guess vectors, there are two options:
-\begin{itemize}
-	\item One particle is alpha, one particle is beta, and the hole is beta.
-	\item All two particles and the hole are alpha.
-\end{itemize}
-
-Thus there are totally three configurations (two for the first case and one for the second case).
-To correcctly set up spin symmetry of guess vectors, we need to form linear combinations of these three configurations that are diagonal under $S^2$.
-In fact, the coefficients of the linear combinations are refered as Clebsch-Gordan coefficients.
-By refering to table of Clebsch-Gordan coefficients, the three final spin states reads:
-\begin{equation}
-	\begin{array}{|l|l|}
-		\hline
-		S=\frac{1}{2} & \sqrt{\frac{1}{2}} \ket{\alpha_p \beta_p \beta_h} - \sqrt{\frac{1}{2}} \ket{\beta_p \alpha_p \beta_h}
-		\\
-		\hline
-		S=\frac{1}{2} & \sqrt{\frac{2}{3}} \ket{\alpha_p \alpha_p \alpha_h} - \sqrt{\frac{1}{6}} \ket{\alpha_p \beta_p \beta_h} - \sqrt{\frac{1}{6}} \ket{\beta_p \alpha_p \beta_h}
-		\\
-		\hline
-		S=\frac{3}{2} & \sqrt{\frac{1}{3}} \ket{\alpha_p \alpha_p \alpha_h} + \sqrt{\frac{1}{3}} \ket{\alpha_p \beta_p \beta_h} + \sqrt{\frac{1}{3}} \ket{\beta_p \alpha_p \beta_h}
-		\\
-		\hline
-	\end{array}
-\end{equation}
-
-The above tables works when the spacial orbital of two particles are different, otherwise they must have different spins, which means the second case is not allowed.
-In such situation, the two paricles are paired, and will not contribute to the total spin.
-Thus it reduces to the 1p case.
-
-To summarize, if $a \neq b$, the first guess vector for spin $\frac{1}{2}$ is
-\begin{equation}
-	\begin{array}{ll}
-		V_{a \alpha, b \beta i \beta}=\frac{1}{2} & V_{b \beta, a \alpha i \beta}=-\frac{1}{2} 
-		\\
-		V_{a \beta, b \alpha i \beta}=-\frac{1}{2} & V_{b \alpha, a \beta i \beta}=\frac{1}{2} 
-	\end{array}
-\end{equation}
-the second guess vector for spin $\frac{1}{2}$ is 
-\begin{equation}
-	\begin{array}{ll}
-		V_{a \alpha b \alpha i \alpha}=\sqrt{\frac{1}{3}} & V_{b \alpha a \alpha i \beta}=-\sqrt{\frac{1}{3}} 
-		\\
-		V_{a \alpha b \beta i \beta}=-\sqrt{\frac{1}{12}} & V_{b \beta a \alpha i \beta}=\sqrt{\frac{1}{12}} 
-		\\
-		V_{a \beta b \alpha i \beta}=-\sqrt{\frac{1}{12}} & V_{b \alpha a \beta i \beta}=\sqrt{\frac{1}{12}} 
-	\end{array}
-\end{equation}
-the guess vector for spin $\frac{3}{2}$ is
-\begin{equation}
-	\begin{array}{ll}
-		V_{a \alpha b \alpha i \alpha}=\sqrt{\frac{1}{6}} & V_{b \alpha a \alpha i \beta}=-\sqrt{\frac{1}{6}} 
-		\\
-		V_{a \alpha b \beta i \beta}=\sqrt{\frac{1}{6}} & V_{b \beta a \alpha i \beta}=-\sqrt{\frac{1}{6}} 
-		\\
-		V_{a \beta b \alpha i \beta}=\sqrt{\frac{1}{6}} & V_{b \alpha a \beta i \beta}=-\sqrt{\frac{1}{6}} 
-	\end{array}
-\end{equation}
-if $a=b$, the first guess vector for spin $\frac{1}{2}$ is
-\begin{equation}
-	\begin{array}{ll}
-		V_{a \alpha, b \beta i \beta}=\frac{1}{2} & V_{b \beta, a \alpha i \beta}=-\frac{1}{2} 
-		\\
-		V_{a \beta, b \alpha i \beta}=-\frac{1}{2} & V_{b \alpha, a \beta i \beta}=\frac{1}{2} 
-	\end{array}
-\end{equation}
-the second guess vector for spin $\frac{1}{2}$ is 
-\begin{equation}
-	\begin{array}{ll}
-		V_{a \alpha, b \beta i \beta}=\frac{1}{2} & V_{b \beta, a \alpha i \beta}=\frac{1}{2} 
-		\\
-		V_{a \beta, b \alpha i \beta}=\frac{1}{2} & V_{b \alpha, a \beta i \beta}=\frac{1}{2} 
-	\end{array}
-\end{equation}
-
-For unrestricted case, it is much more complicated.
-Although I do not implement it, it does not hurt to discuss a little about this.
-
-Consider the ground state of a system with $p$ net positive charge, in which $p_{\alpha}$ are spin alpha while $p_{\beta}$ are spin beta.
-After affinity of an electron, which could be either spin alpha or spin beta.
-Thus, the general question is the linear combination of $n_{\alpha}$ alpha spins and $n_{\beta}$ beta spins, where
-\begin{equation}
-	\begin{array}{lll}
-		n_{\alpha}=p_{\alpha} + 1, & n_{\beta}=p_{\beta} & \text{if affinitized alpha electron}
-		\\
-		n_{\alpha}=p_{\alpha}, & n_{\beta}=p_{\beta} + 1 & \text{if affinitized beta electron}
-	\end{array}
-\end{equation}
-
-The $n=n_{\alpha} + n_{\beta}$ electrons will genrate $2^n$ configurations.
-However, Clebsch-Gordan coefficients only works for addition of two spins.
-Thus, an recursive approach is needed to deal with the $n$ spin case.
-
-\input{chapters/floats}
-\input{chapters/math}
-\input{chapters/citations}
-\bibliography{bib/ustc}
-\appendix
-\input{chapters/complementary}
+%\input{chapters/floats}
+%\input{chapters/math}
+%\input{chapters/citations}
+\bibliography{bib/ustc.bib}
+%\appendix
+%\input{chapters/complementary}
 
 \backmatter
-\input{chapters/acknowledgements}
-\input{chapters/publications}
+%\input{chapters/publications}
 
 \end{document}

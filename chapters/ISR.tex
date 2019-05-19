@@ -16,7 +16,7 @@ where
 
 Obviously, CE states are not orthogonal:
 \begin{equation}
-	S_{I J}=\left\langle\Psi_{I}^{0} | \Psi_{J}^{0}\right\rangle=\left\langle\Psi_{0}\left|\hat{C}_{I}^{\dagger} \hat{C}_{J}\right| \Psi_{0}\right\rangle \neq \delta_{I, J}
+	S_{I J}=\langle\Psi_{I}^{0} | \Psi_{J}^{0}\rangle=\langle\Psi_{0}|\hat{C}_{I}^{\dagger} \hat{C}_{J}| \Psi_{0}\rangle \neq \delta_{I, J}
 \end{equation}
 
 Instead of the most obvious symmetric orthonormalization choice, which is 
@@ -32,7 +32,7 @@ Instead of the most obvious symmetric orthonormalization choice, which is
 		\end{equation}
 		Assuming intermediate states of classes 1, ..., $\nu-1$ have been constructed, then we orthogonalize $\ket{\tilde{\Psi}_J}$ in class $\nu$ by
 		\begin{equation}
-			| \Psi_{J}^{\#} \rangle=| \Psi_{J}^{0} \rangle-\sum_{[K]<\nu} | \Psi^{\#}_{K} \rangle\left\langle\Psi^{\#}_{K} | \Psi_{J}^{0}\right\rangle
+			| \Psi_{J}^{\#} \rangle=| \Psi_{J}^{0} \rangle-\sum_{[K]<\nu} | \Psi^{\#}_{K} \rangle\langle\Psi^{\#}_{K} | \Psi_{J}^{0}\rangle
 		\end{equation}
 	\item Orthogonalize states in each class by symmetric orthogonalization:
 		\begin{equation}
@@ -41,12 +41,12 @@ Instead of the most obvious symmetric orthonormalization choice, which is
 \end{itemize}
 where intermediate normalization is chosen.
 \begin{equation}
-	\left\langle\Psi_{0} | \Phi_{0}\right\rangle= 1
+	\langle\Psi_{0} | \Phi_{0}\rangle= 1
 \end{equation}
 
 Define ISR secular matrix $M$ by
 \begin{equation}
-	M_{I J}=\left\langle\tilde{\Psi}_{I}\left|\hat{H}-E_{0}\right| \tilde{\Psi}_{J}\right\rangle
+	M_{I J}=\langle\tilde{\Psi}_{I}|\hat{H}-E_{0}| \tilde{\Psi}_{J}\rangle
 \end{equation}
 and 
 \begin{equation}
@@ -60,7 +60,7 @@ In matrix notation, the ISR secular equations take on the form
 
 Define ISR transition amplitudes as
 \begin{equation}
-	\tilde{f}_{I p}=\left\langle\tilde{\Psi}_{I}\left|c_{p}\right| \Psi_{0}\right\rangle
+	\tilde{f}_{I p}=\langle\tilde{\Psi}_{I}|c_{p}| \Psi_{0}\rangle
 \end{equation}
 with its relation to spectroscopic factor as
 \begin{equation}
@@ -76,9 +76,9 @@ Although it is difficult to prove, one can check the second order of $M$ to veri
 The verification is done in \cite{main}.
 
 The equivalence of Non-dyson ADC and ISR approach results in two important features of ADC.
-One is the compactness of matrix structure, which is the consequence of the so-called canonical perturnbation theory order structure.
+One is the compactness of matrix structure, which is the consequence of the so-called canonical perturbation theory order structure.
 Compactness reduces the complexity of algorithm by reducing the size of total configuration space
-The other is self consistency, which is guranteed by the separability of ISR.
+The other is self consistency, which is guaranteed by the separability of ISR.
 As is previously mentioned, self consistency ensures results of many important chemical processes calculation much more reliable.
 
 Through out the calculation of $C$ and $f$ in each order, we find that they do not always begin from the zeroth order.
@@ -91,11 +91,11 @@ which is also refered to as canonical order relations (COR).
 
 For example, in CI matrix, the matrix element of class 1 and class 3 is in the first order, which breaks COR:
 \begin{equation}
-	H_{i, a b j k l}=\left\langle\Phi_{i}\left|\hat{H}_{I}\right| \Phi_{a b j k l}\right\rangle=-\delta_{i j} V_{k l[a b]}+\delta_{i k} V_{j I l[a b]}-\delta_{i l} V_{j k[a b]}
+	H_{i, a b j k l}=\langle\Phi_{i}|\hat{H}_{I}| \Phi_{a b j k l}\rangle=-\delta_{i j} V_{k l[a b]}+\delta_{i k} V_{j I l[a b]}-\delta_{i l} V_{j k[a b]}
 \end{equation}
 while in the case of ISR,
 \begin{equation}
-	\begin{aligned} M_{i, a b j k l}^{(1)} &=\left\langle\tilde{\Psi}_{i}\left|\hat{H}-E_{0}\right| \tilde{\Psi}_{a b j k l}\right\rangle^{(1)} \\ &=H_{i, a b j k l}+\left\langle\tilde{\Psi}_{i}^{(1)}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \Phi_{a b j k l}\right\rangle+\left\langle\Phi_{i}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle \end{aligned}
+	\begin{aligned} M_{i, a b j k l}^{(1)} &=\langle\tilde{\Psi}_{i}|\hat{H}-E_{0}| \tilde{\Psi}_{a b j k l}\rangle^{(1)} \\ &=H_{i, a b j k l}+\langle\tilde{\Psi}_{i}^{(1)}|\hat{H}_{0}-E_{0}^{(0)}| \Phi_{a b j k l}\rangle+\langle\Phi_{i}|\hat{H}_{0}-E_{0}^{(0)}| \tilde{\Psi}_{a b j k l}^{(1)}\rangle \end{aligned}
 \end{equation}
 
 According to ECO procedure,
@@ -104,18 +104,18 @@ According to ECO procedure,
 \end{equation}
 and
 \begin{equation}
-	\begin{aligned} | \tilde{\Psi}_{a b j k l}^{(1)} \rangle &=c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{k} c_{l} | \Psi_{0}^{(1)} \rangle-| \Phi_{j} \rangle\left\langle\tilde{\Psi}_{j}^{(1)} | \Phi_{a b j k l}\right\rangle-| \Phi_{k} \rangle\left\langle\tilde{\Psi}_{k}^{(1)} | \Phi_{a b j k l}\right\rangle-| \Phi_{l} \rangle\left\langle\tilde{\Psi}_{l}^{(1)} | \Phi_{a b j k l}\right\rangle \\ &= c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{k} c_{l} | \Psi_{0}^{(1)} \rangle-| \Phi_{j} \rangle v_{a b k l}^{*}+| \Phi_{k} \rangle_{a b j l}^{*}-| \Phi_{l} \rangle v_{a b j k}^{*} \end{aligned}
+	\begin{aligned} | \tilde{\Psi}_{a b j k l}^{(1)} \rangle &=c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{k} c_{l} | \Psi_{0}^{(1)} \rangle-| \Phi_{j} \rangle\langle\tilde{\Psi}_{j}^{(1)} | \Phi_{a b j k l}\rangle-| \Phi_{k} \rangle\langle\tilde{\Psi}_{k}^{(1)} | \Phi_{a b j k l}\rangle-| \Phi_{l} \rangle\langle\tilde{\Psi}_{l}^{(1)} | \Phi_{a b j k l}\rangle \\ &= c_{a}^{\dagger} c_{b}^{\dagger} c_{j} c_{k} c_{l} | \Psi_{0}^{(1)} \rangle-| \Phi_{j} \rangle v_{a b k l}^{*}+| \Phi_{k} \rangle_{a b j l}^{*}-| \Phi_{l} \rangle v_{a b j k}^{*} \end{aligned}
 \end{equation}
 where there are no first-order contributions from the orthogonalization with
 respect to 2h-1p states.
 
 Thus
 \begin{equation}
-	\left\langle\Phi_{i}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle=-\epsilon_{i}\left\langle\Phi_{i} | \tilde{\Psi}_{a b j k l}^{(1)}\right\rangle=\epsilon_{i}\left(\delta_{i j} v_{a b k l}^{*}-\delta_{i k} v_{a b j l}^{*}+\delta_{i l} v_{a b j k}^{*}\right)
+	\langle\Phi_{i}|\hat{H}_{0}-E_{0}^{(0)}| \tilde{\Psi}_{a b j k l}^{(1)}\rangle=-\epsilon_{i}\langle\Phi_{i} | \tilde{\Psi}_{a b j k l}^{(1)}\rangle=\epsilon_{i}\left(\delta_{i j} v_{a b k l}^{*}-\delta_{i k} v_{a b j l}^{*}+\delta_{i l} v_{a b j k}^{*}\right)
 \end{equation}
 and
 \begin{equation}
-	\left\langle\tilde{\Psi}_{i}^{(1)}\left|\hat{H}_{0}-E_{0}^{(0)}\right| \Phi_{a b j k l}\right\rangle=\left(\delta_{i j} v_{a b k l}^{*}-\delta_{i k} v_{a b j l}^{*}+\delta_{i l} v_{a b j k}^{*}\right)\left(\epsilon_{a}+\epsilon_{b}-\epsilon_{j}-\epsilon_{k}-\epsilon_{l}\right)
+	\langle\tilde{\Psi}_{i}^{(1)}|\hat{H}_{0}-E_{0}^{(0)}| \Phi_{a b j k l}\rangle=\left(\delta_{i j} v_{a b k l}^{*}-\delta_{i k} v_{a b j l}^{*}+\delta_{i l} v_{a b j k}^{*}\right)\left(\epsilon_{a}+\epsilon_{b}-\epsilon_{j}-\epsilon_{k}-\epsilon_{l}\right)
 \end{equation}
 
 Adding these three up gives:
@@ -130,6 +130,11 @@ Thus, if configuration space from class 1 to class $\mu$ is fully included, the 
 	O_{T E}^{[n]}(\mu)=2\mu
 \end{equation}
 where TEO means the leading order of error.
+
+A generalized form of this relation is TEO for in $n$th class is
+\begin{equation} \label{generalTEO}
+	O_{T E}^{[n]}(\mu)=2(\mu-n)
+\end{equation}
 
 While the CI case, 
 \begin{equation}
@@ -189,7 +194,7 @@ The corresponding CE state reads:
 
 The first step of ECO gives
 \begin{equation}
-	| \Psi_{a^{\prime} j^{\prime} k}^{\#} \rangle=| \Psi_{a^{\prime} j^{\prime} k}^{0} \rangle-\sum_{l} | \tilde{\Psi}_{l} \rangle\left\langle\tilde{\Psi}_{l} | \Psi_{a^{\prime} j^{\prime} k}^{0}\right\rangle
+	| \Psi_{a^{\prime} j^{\prime} k}^{\#} \rangle=| \Psi_{a^{\prime} j^{\prime} k}^{0} \rangle-\sum_{l} | \tilde{\Psi}_{l} \rangle\langle\tilde{\Psi}_{l} | \Psi_{a^{\prime} j^{\prime} k}^{0}\rangle
 \end{equation}
 where
 \begin{equation}
@@ -200,9 +205,9 @@ Thus
 \begin{equation}
 	\begin{aligned} 
 		| \Psi_{a^{\prime} j^{\prime} k}^{\#} \rangle 
-		&=c_{k} | \Psi_{0}^{A} \rangle c_{a^{\prime}}^{\dagger} c_{j^{\prime}} | \Psi_{0}^{B} \rangle-\sum_{l} | \tilde{\Psi}_{l}^{A} \rangle\left\langle\tilde{\Psi}_{l}^{A}\left|c_{k}\right| \Psi_{0}^{A}\right\rangle | \Psi_{0}^{B} \rangle\left\langle\Psi_{0}^{B}\left|c_{a^{\prime}}^{\dagger} c_{j^{\prime}}\right| \Psi_{0}^{B}\right\rangle 
+		&=c_{k} | \Psi_{0}^{A} \rangle c_{a^{\prime}}^{\dagger} c_{j^{\prime}} | \Psi_{0}^{B} \rangle-\sum_{l} | \tilde{\Psi}_{l}^{A} \rangle\langle\tilde{\Psi}_{l}^{A}|c_{k}| \Psi_{0}^{A}\rangle | \Psi_{0}^{B} \rangle\langle\Psi_{0}^{B}|c_{a^{\prime}}^{\dagger} c_{j^{\prime}}| \Psi_{0}^{B}\rangle 
 		\\ 
-		&= c_{k} | \Psi_{0}^{A} \rangle\left(c_{a^{\prime}}^{\dagger} c_{j^{\prime}} | \Psi_{0}^{B}\right\rangle-| \Psi_{0}^{B} \rangle\left\langle\Psi_{0}^{B}\left|c_{a^{\prime}}^{\dagger}\right| \Psi_{0}^{B}\right\rangle )
+		&= c_{k} | \Psi_{0}^{A} \rangle\left(c_{a^{\prime}}^{\dagger} c_{j^{\prime}} | \Psi_{0}^{B}\rangle-| \Psi_{0}^{B} \rangle\langle\Psi_{0}^{B}|c_{a^{\prime}}^{\dagger}| \Psi_{0}^{B}\rangle \right)
 		\\
 		&=| \Psi_{k}^{A \#} \rangle | \Psi_{a^{\prime} j^{\prime}}^{B \#} \rangle
 	\end{aligned}
@@ -216,14 +221,21 @@ Thus, after symmetric orthogonalization, the intermediate states of A+B will sti
 To prove the separability, we need to prove that $M_{I_A J_B}=0$, $M_{I_A, J_{AB}}=0$ and $M_{I_B J_{AB}}=0$.
 Since A and B are treated on equal footing, we only need to prove the first two.
 \begin{equation}
-	M_{I_{A}, J_{B}}=\left\langle\tilde{\Psi}_{I_{A}}|\hat{H}| \tilde{\Psi}_{J_{B}}\right\rangle=\left\langle\tilde{\Psi}_{I_{A}}^{A}\left|\left\langle\Psi_{0}^{B}\left|\left(\hat{H}_{A}+\hat{H}_{B}\right)\right| \tilde{\Psi}_{J_{B}}^{B}\right\rangle\right| \Psi_{0}^{A}\right\rangle= 0
+	M_{I_{A}, J_{B}}=\langle\tilde{\Psi}_{I_{A}}|\hat{H}| \tilde{\Psi}_{J_{B}}\rangle=\langle\tilde{\Psi}_{I_{A}}^{A}|\langle\Psi_{0}^{B}|\left(\hat{H}_{A}+\hat{H}_{B}\right)| \tilde{\Psi}_{J_{B}}^{B}\rangle| \Psi_{0}^{A}\rangle= 0
 \end{equation}
 \begin{equation}
-	\begin{aligned} M_{I_{A}, J_{A B}} &=\left\langle\tilde{\Psi}_{I_{A}}|\hat{H}| \tilde{\Psi}_{J_{A B}}\right\rangle \\ &=\left\langle\tilde{\Psi}_{I_{A}}^{A}\left|\left\langle\Psi_{0}^{B}\left|\left(\hat{H}_{A}+\hat{H}_{B}\right)\right| \tilde{\Psi}_{J_{A}}^{A}\right\rangle\right| \tilde{\Psi}_{J_{B}}^{B}\right\rangle \\ &=\left\langle\tilde{\Psi}_{I_{\Lambda}}^{A} |\left\langle\Psi_{A} | \tilde{\Psi}_{J_{A}}^{A}\right\rangle\left\langle\Psi_{0}^{B} | \tilde{\Psi}_{J_{B}}^{B}\right\rangle+\left\langle\tilde{\Psi}_{I_{A}}^{A} | \tilde{\Psi}_{J_{A}}^{A}\right\rangle\left\langle\Psi_{0}^{B}\left|\hat{H}_{B}\right| \tilde{\Psi}_{J_{B}}^{B}\right\rangle= 0\right.\end{aligned}
+	\begin{aligned}
+		M_{I_{A}, J_{A B}} &=\langle\tilde{\Psi}_{I_{A}}|\hat{H}| \tilde{\Psi}_{J_{A B}}\rangle 
+		\\
+		&=\langle\tilde{\Psi}_{I_{A}}^{A}|\langle\Psi_{0}^{B}|\left(\hat{H}_{A}+\hat{H}_{B}\right)| \tilde{\Psi}_{J_{A}}^{A}\rangle| \tilde{\Psi}_{J_{B}}^{B}\rangle 
+		\\
+		&=\langle\tilde{\Psi}_{I_{S}}^{A} | \hat{H}_A | \tilde{\Psi}_{J_{A}}^{A}\rangle \langle\Psi_{0}^{B} | \tilde{\Psi}_{J_{B}}^{B}\rangle
+		+\langle\tilde{\Psi}_{I_{A}}^{A} | \tilde{\Psi}_{J_{A}}^{A}\rangle \langle\Psi_{0}^{B}|\hat{H}_{B}| \tilde{\Psi}_{J_{B}}^{B}\rangle= 0
+	\end{aligned}
 \end{equation}
 
 Having proved factorization theorem and separability of Non-dyson ADC, we will the illustrate its size consistency.
-Size consistency requires that all eigenvalue of A should be reproduced by that of A+B, which requires Hamitonian of A should not be coupled with B, and Hamitonain of A in system of A should be equal to that of A+B.
+Size consistency requires that all eigenvalue of A should be reproduced by that of A+B, which requires Hamiltonian of A should not be coupled with B, and Hamiltonian of A in system of A should be equal to that of A+B.
 Using factorization theorem and separability, the first requirement is already fulfilled.
 The second requirement is equivalent to
 %The size consistency requires the eigenvalues and eigenstates of A+B should be exactly the direct sum of those of A and B, which means
@@ -233,13 +245,13 @@ The second requirement is equivalent to
 %
 %By factorization theorem, this requirement is equivalent to
 %\begin{equation}
-%	\left\langle \tilde{\Psi}_{I_A} \tilde{\Psi}_{K_B} \left| \hat{H}_A + \hat{H}_B \right| \tilde{\Psi}_{J_A} \tilde{\Psi}_{L_B} \right\rangle
-%	= \left\langle \tilde{\Psi}_{I_A} \left| \hat{H}_A \right| \tilde{\Psi}_{J_A} \right\rangle \left\langle \tilde{\Psi}_{K_B} | \tilde{\Psi}_{L_B} \right\rangle
-%	+ \left\langle \tilde{\Psi}_{K_B} \left| \hat{H}_B \right| \tilde{\Psi}_{L_B} \right\rangle \left\langle \tilde{\Psi}_{I_A} | \tilde{\Psi}_{J_A} \right\rangle
+%	\langle \tilde{\Psi}_{I_A} \tilde{\Psi}_{K_B} | \hat{H}_A + \hat{H}_B | \tilde{\Psi}_{J_A} \tilde{\Psi}_{L_B} \rangle
+%	= \langle \tilde{\Psi}_{I_A} | \hat{H}_A | \tilde{\Psi}_{J_A} \rangle \langle \tilde{\Psi}_{K_B} | \tilde{\Psi}_{L_B} \rangle
+%	+ \langle \tilde{\Psi}_{K_B} | \hat{H}_B | \tilde{\Psi}_{L_B} \rangle \langle \tilde{\Psi}_{I_A} | \tilde{\Psi}_{J_A} \rangle
 %\end{equation}
 \begin{equation}
-	\left\langle \tilde{\Psi}_{I_A} \tilde{\Psi}_0^B \left| \hat{H}_{A+B}\right| \tilde{\Psi}_{J_A} \tilde{\Psi}_0^B \right\rangle
-	= \left\langle \tilde{\Psi}_{I_A} \left| \hat{H}_A \right| \tilde{\Psi}_{J_A} \right\rangle
+	\langle \tilde{\Psi}_{I_A} \tilde{\Psi}_0^B | \hat{H}_{A+B}| \tilde{\Psi}_{J_A} \tilde{\Psi}_0^B \rangle
+	= \langle \tilde{\Psi}_{I_A} | \hat{H}_A | \tilde{\Psi}_{J_A} \rangle
 	+ E_0^B \delta_{IJ}
 \end{equation}
 which holds since $\ket{\tilde{\Psi}_{J_A} \tilde{\Psi}_0^B}$ is in the same excitation class with $\ket{\tilde{\Psi}_{J_A}}$. 

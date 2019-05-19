@@ -10,9 +10,9 @@ As David Kaiser writes, "since the middle of the 20th century, theoretical physi
 
 Before introducing Wick's theorem, let's first have an observation of the expression we want to calculate:
 \begin{equation}
-	\left\langle\Phi_{0}\left|
+	\langle\Phi_{0}|
 	\hat{\mathcal{T}} \left[ c_u^{\dagger} c_v^{\dagger} \ldots c_i c_j \ldots \right]
-	\right| \Phi_{0}\right\rangle
+	| \Phi_{0}\rangle
 \end{equation}
 
 Since creation operator add an electron while annihilation operator remove an electron, they must be paired somehow to get a nonzero final result.
@@ -59,9 +59,9 @@ A $\hat{\mathcal{T}}$ product of m fermion operators can be transformed into a s
 
 According to the property of the $\hat{\mathcal{N}}$ products, only the fully contracted terms contribute to the expectation value:
 \begin{equation}
-	\left\langle\Phi_{0}\left|
+	\langle\Phi_{0}|
 	\hat{\mathcal{T}}\left[O_{i} O_{j} O_{k} O_{l} \ldots O_{r} O_{s} O_{t}\right]
-	\right| \Phi_{0}\right\rangle
+	| \Phi_{0}\rangle
 	=\hat{\mathcal{N}}\left[\wick{\c3 O_{i} \c2 O_{j} \c1 O_{k} \ldots \c1  O_{r} \c2 O_{s} \c3 O_{t}}\right]+\ldots
 \end{equation}
 
@@ -76,19 +76,19 @@ First Order:
 	\begin{aligned}
 		&i \tilde{G}_{p q}^{(1)}\left(t, t^{\prime}\right)=
 		(-i) \frac{1}{2} \sum_{r, s} w_{r s} 
-		\int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|}
-		\left\langle\Phi_{0}\left|
+		\int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon|t_{1}|}
+		\langle\Phi_{0}|
 		\hat{\mathcal{T}}\left[
 			c_{r}^{\dagger}\left(t_{1}\right) 
 			c_{s}\left(t_{1}\right) 
 			c_{p}(t)
 			c_{q}^{\dagger}\left(t^{\prime}\right)
 			\right]
-		\right| \Phi_{0}\right\rangle
+		| \Phi_{0}\rangle
 	\\
 		&+(-i) \frac{1}{2} \sum_{u, v, r, s} V_{u v r s} 
-		\int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|}
-		\left\langle\Phi_{0}\left|
+		\int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon|t_{1}|}
+		\langle\Phi_{0}|
 		\hat{\mathcal{T}}\left[
 			c_{u}^{\dagger}\left(t_{1}\right) 
 			c_{v}^{\dagger}\left(t_{1}\right)
@@ -97,7 +97,7 @@ First Order:
 			c_{p}(t)
 			c_{q}^{\dagger}\left(t^{\prime}\right)
 		\right]
-		\right| \Phi_{0}\right\rangle
+		| \Phi_{0}\rangle
 	\end{aligned}
 \end{equation}
 
@@ -105,14 +105,14 @@ Then we calculate the time-ordered products:
 \begin{equation}
 	\begin{aligned}
 		&w_{rs}
-		\left\langle\Phi_{0}\left|
+		\langle\Phi_{0}|
 		\hat{\mathcal{T}}\left[
 			c_{r}^{\dagger}\left(t_{1}\right) 
 			c_{s}\left(t_{1}\right) 
 			c_{p}(t)
 			c_{q}^{\dagger}\left(t^{\prime}\right)
 			\right]
-		\right| \Phi_{0}\right\rangle
+		| \Phi_{0}\rangle
 		\\
 		=&w_{rs} (G^0_{pr}(t,t_1) G^0_{sq}(t_1,t^{\prime}) - G^0_{rs}(t_1,t_1) G^0_{pq}(t,t^{\prime}))
 		\\
@@ -126,7 +126,7 @@ where $G^0_{pq}(t,t^{\prime}) = \delta_{pq} G^0_{p}(t,t^{\prime})$ is used in th
 \begin{equation}
 	\begin{aligned}
 		&V_{uvrs}
-		\left\langle\Phi_{0}\left|
+		\langle\Phi_{0}|
 		\hat{\mathcal{T}}\left[
 			c_{u}^{\dagger}\left(t_{1}\right) 
 			c_{v}^{\dagger}\left(t_{1}\right)
@@ -135,7 +135,7 @@ where $G^0_{pq}(t,t^{\prime}) = \delta_{pq} G^0_{p}(t,t^{\prime})$ is used in th
 			c_{p}(t)
 			c_{q}^{\dagger}\left(t^{\prime}\right)
 		\right]
-		\right| \Phi_{0}\right\rangle
+		| \Phi_{0}\rangle
 		\\
 		=& -V_{pr[qr]} G^0_{p}(t,t_1) G^0_{r}(t_1,t_1) G^0_{q}(t_1,t^{\prime})
 		- V_{rs[rs]} G^0_r(t_1,t_1) G^0_s(t_1,t_1) \delta_{pq} G^0_p(t,t^{\prime})
@@ -145,7 +145,7 @@ where $G^0_{pq}(t,t^{\prime}) = \delta_{pq} G^0_{p}(t,t^{\prime})$ is used in th
 \end{equation}
 
 The idea of feynman diagram is to assign each expression (A, B, C, D) here to a diagram.
-The rule is to assign each time (including $t$, $t^{\prime}$ and time appearing as intergration variable) a vertex, to assign each free Green function a line or curve which connects the two vertexs correponding to the time variables of the Green function itself.
+The rule is to assign each time (including $t$, $t^{\prime}$ and time appearing as integration variable) a vertex, to assign each free Green function a line or curve which connects the two vertices corresponding to the time variables of the Green function itself.
 The starting time of the Green function in interest is always on the bottom while in end time is always on the top.
 
 In expression A, free Green function first propagate from time $t$ to $t_1$, and then from $t_1$ to $t^{\prime}$, which corresponds to a connected line as is shown in Diagram A.
@@ -177,7 +177,7 @@ The case C and D are also similar, except that $t_1$ has four indexes, which mea
 \end{figure}
 
 Additionally, we find that in the $w_{rs}$ case (A and B), there is always one incoming line and one outcoming line for each intermediate vertex, which is because of one creation operator and one annihilation operator in the expression $W=w_{rs} c_r^{\dagger} c_s$.
-In the $V_{uvrs}$ case (C and D), there are always two incoming lines and two outcoming lines for rach intermediate vertex, which is because of two creation operators and two annihilation operators in the expression $V=\frac{1}{2}V_{uvrs} c_u^{\dagger} c_v^{\dagger} c_s c_r$.
+In the $V_{uvrs}$ case (C and D), there are always two incoming lines and two outcoming lines for each intermediate vertex, which is because of two creation operators and two annihilation operators in the expression $V=\frac{1}{2}V_{uvrs} c_u^{\dagger} c_v^{\dagger} c_s c_r$.
 
 Compared with the expressions, the diagrams are very simple, which is one of its advantages.
 In fact, Feynman diagram can not only show the structure of expression, but can also restore all the algebraic details.
@@ -208,19 +208,19 @@ Thus, instead of $\frac{1}{2}V_{uvrs}$, the proper magnitude should be $\frac{1}
 However, it is not always the case, since sometimes we will meet double counting.
 For example in the double loop in Diagram D, which corresponds to algebraic expression
 \begin{equation}
-	\left\langle\Phi_{0}\left|
+	\langle\Phi_{0}|
 	\hat{\mathcal{T}}\left[
 		c_{u}^{\dagger}\left(t_{1}\right) 
 		c_{v}^{\dagger}\left(t_{1}\right)
 		c_{s}\left(t_{1}\right) 
 		c_{r}\left(t_{1}\right)
 	\right]
-	\right| \Phi_{0}\right\rangle
+	| \Phi_{0}\rangle
 \end{equation}
 
 Obviously, there is only two contraction schemes, i.e. $u$ with $s$, $v$ with $r$, or $u$ with $r$, $v$ with $s$. 
 Thus, we meet double counting here.
-Genrally, when two lines are equal, double counting happens.
+Generally, when two lines are equal, double counting happens.
 Thus, the final result should be divided by two for each pair of equal lines.
 
 
@@ -230,22 +230,22 @@ In the case of higher orders, the expression is
 \begin{aligned}
 	i \tilde{G}^n_{p q}\left(t, t^{\prime}\right)
 	=& \frac{(-i)^{n}}{n !} 
-	\int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon\left|t_{1}\right|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon\left|t_{n}\right|}
+	\int_{-\infty}^{\infty} \mathrm{d} t_{1} e^{-\epsilon|t_{1}|} \ldots \int_{-\infty}^{\infty} \mathrm{d} t_{n} e^{-\epsilon|t_{n}|}
 	\\
-	& \left\langle\Phi_{0}\left|
-	\hat{\boldsymbol{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) c_{p}(t) c_{q}^{\dagger}\left(t^{\prime}\right)\right]\right|
-	\Phi_{0}\right\rangle
+	& \langle\Phi_{0}|
+	\hat{\boldsymbol{T}}\left[\hat{H}_{I}\left(t_{1}\right) \ldots \hat{H}_{I}\left(t_{n}\right) c_{p}(t) c_{q}^{\dagger}\left(t^{\prime}\right)\right]|
+	\Phi_{0}\rangle
 \end{aligned}
 \end{equation}
 which has a factor of $\frac{(-i)^n}{n!}$.
 
-However, $t_1 \dots t_n$ are treated on each footing and can also be exchanged when calculting the time-ordered product, thus it will contribute a factor $n!$.
+However, $t_1 \dots t_n$ are treated on each footing and can also be exchanged when calculating the time-ordered product, thus it will contribute a factor $n!$.
 Thus the overall factor is $(-i)^n$.
 
 Last but not least, we need to determine the overall sign of the expression.
 Unfortunately, it is impossible to determine the sign just from diagram, thus one must go back to any one of the algebraic expressions and then count how many times one need to commute creation and annihilation operator in the expression of time-ordered product.
 
-Feynman diagram drawed by above rules is refered as Abrikosov diagram.
+Feynman diagram drawn by above rules is refered as Abrikosov diagram.
 
 Then we go back to the calculation of first order Green function.
 Let's first focus on expression B and D.
@@ -269,7 +269,7 @@ Up to the first order, Green function can be written as
 \end{equation}
 while the denominator is 
 \begin{equation}
-	\left\langle\Phi_{0}\left|\hat{U}_{\epsilon}(0,-\infty)\right| \Phi_{0}\right\rangle=1
+	\langle\Phi_{0}|\hat{U}_{\epsilon}(0,-\infty)| \Phi_{0}\rangle=1
 		- w_{rr} G^0_r(t_1,t_1)
 		- V_{rs[rs]} G^0_r(t_1,t_1) G^0_s(t_1,t_1)
 		+ O(2)
@@ -284,8 +284,8 @@ Thus up to the first order,  the overall Green function reads
 where all unlinked diagrams are canceled.
 
 As we mentioned before, both the numerator and denominator contains divergent terms, which will be canceled after division.
-In fact, the divergent parts are excatly the unlinked diagrams.
-Thus, linked-cluster theorem decreases the number of diagrams we need to calculate, and also gurantees the result is finite and thus physical.
+In fact, the divergent parts are exactly the unlinked diagrams.
+Thus, linked-cluster theorem decreases the number of diagrams we need to calculate, and also guarantees the result is finite and thus physical.
 
 Then we analyze the rest terms of first order Green function:
 \begin{equation}
@@ -305,19 +305,19 @@ where
 	\begin{aligned}
 		G^0_r(t_1,t_1)&=G^0_r(t_1,t_1^{+})
 		\\
-		&=- \left\langle\Phi_{0}\left|
+		&=- \langle\Phi_{0}|
 		c_r^{\dagger} c_r
-		\right| \Phi_{0}\right\rangle
+		| \Phi_{0}\rangle
 		\\
 		&=-n_r
 	\end{aligned}
 \end{equation}
 is used.
 
-In fact, the diagrams that contain $w$ vertex will always cancel with the diagrams that cantain free Green function line starting and ending with the same $V$ vertex.
+In fact, the diagrams that contain $w$ vertex will always cancel with the diagrams that contain free Green function line starting and ending with the same $V$ vertex.
 According to Eq \ref{greenexp}, $H_I$, which is $W$ and $V$ always appear together.
 Thus, any diagram contain $V_{pr[qr]}n_r$ will automatically contain $r_{pq}$.
-This result means that we can skip all diagrams with $W$ vertex and that cantain free Green function line starting and ending with the same $V$ vertex at the same time.
+This result means that we can skip all diagrams with $W$ vertex and that contain free Green function line starting and ending with the same $V$ vertex at the same time.
 Thus, we will not consider $W$ vertex in the following.
 
 Then we summarize the Feynman rules for Abrikosov diagram:
@@ -332,7 +332,7 @@ Then we summarize the Feynman rules for Abrikosov diagram:
 \end{itemize}
 
 We calculate the second order Green function as the end of this section:
-According to the Feynman diagram, we first draw all possible topologically inequvalent diagrams.
+According to the Feynman diagram, we first draw all possible topologically inequivalent diagrams.
 In the case of second order Green function, there is only one diagram:
 \begin{figure}[h]
 	\centering
@@ -340,7 +340,7 @@ In the case of second order Green function, there is only one diagram:
 	\caption{Diagram of second order Green function}
 \end{figure}
 
-Note that the two curves are identical ( start and end with the same vertexs).
+Note that the two curves are identical ( start and end with the same vertices).
 Thus, according the Feynman rules, we can easily determine the second order Green function up to a overall sign:
 \begin{equation} \label{order2}
 	\begin{aligned} 
@@ -352,11 +352,11 @@ Thus, according the Feynman rules, we can easily determine the second order Gree
 
 To determine the overall sign, we only need to consider the case
 \begin{equation}
-	\left\langle\Phi_{0}\left|
+	\langle\Phi_{0}|
 	\hat{\mathcal{T}}\left[
 		\wick{\c4 c_{u}^{\dagger}\left(t_{1}\right) \c3 c_{v}^{\dagger}\left(t_{1}\right) \c2 c_{s}\left(t_{1}\right) \c1 c_{r}\left(t_{1}\right) \c1 c_{i}^{\dagger}\left(t_{2}\right) \c2 c_{j}^{\dagger}\left(t_{2}\right) \c3 c_{l}\left(t_{2}\right) \c1 c_{k}\left(t_{2}\right) \c4 c_{p}(t) \c1 c_{q}^{\dagger}\left(t^{\prime}\right)}
 		\right]
-		\right| \Phi_{0}\right\rangle
+		| \Phi_{0}\rangle
 \end{equation}
 which gives an overall sign of $-1$, which is canceled with the factor $(-i)^2$.
 

@@ -1,0 +1,48 @@
+\chapter{Introduction}
+The energy difference between an uncharged species and its negative ion, referred to as an electron affinity (EA), is an important property of atoms and molecules. \cite{oldpaper}
+The application of EA spreads over many chemical areas including gas-phase ion chemistry \cite{gasion}, pure chemistry \cite{pure}, material science and environmental chemistry \cite{environment}. EA also plays an important role in silicon \cite{silicon} and quantum dot \cite{quantumdot} semiconductor chemistry and polymer photo-luminescence \cite{luminescence}.
+
+Experimentally, EA can be measured by a photon source of energy $h\nu$ to detach an electron from molecular anion $\text{A}^{-}$.
+By determining the minimum photon energy needed to detach an electron, one determines the EA.
+The most direct technique for determining negative EAs is to use electron transmission spectroscopy in which a beam of electrons having kinetic energy impinges on a neutral molecule.
+If the negative kinetic energy matches the (negative) EA of the molecule, one of the beam’s electrons can be captured into an empty orbital of the neutral to form the metastable anion, which can be detected either by measuring attenuation of the incident electron beam or by probing the electron ejected at right
+angles to this beam.
+
+However, theoretical study of EA is still important.
+First, many of chemical substances are constituents in many ionic compounds and materials, so their stability, spectra, sizes, and other chemical properties need to be characterized, and often it is difficult to study them experimentally.
+For example, the ubiquitous sulfate anion $\text{SO}_4^{2-}$ cannot be studied experimentally as an isolated species because it undergoes spontaneous electron loss within a very short time (less than $10^{-14}$ s), but it has been studied theoretically \cite{SO4} using special tools to handle its metastable character.
+
+In addition, anions bind their outermost electrons rather weakly , and hence their valence-range electron densities are diffuse.
+This causes them to interact strongly with their environment (e.g., in solution or in crystals), making their behavior strongly influenced by the surroundings and causing them to be excellent probes of their environment.
+
+However, theoretical study of EA is not a easy task compared with ground state energy.
+The reason is that EA is only a very small part of total ground state energy.
+Thus, the energies of neutron and anion must be determined to high orders.
+For example, EA usually lies between 0-5 eV, while the ground state energy of very small molecule like $\text{C}_2\text{H}_6$ is more than 2000 eV.
+
+In history, the early work of Pekeris obtained a theoretical EA for a single hydrogen atom, which matched really well with experiments. \cite{pekeris}
+However, a lot of difficulties have been met when it comes to EA of other atoms or molecules, ending up with many negative EA results.
+As is pointed out by Blondel \cite{blondel}, the existence of negative ions depends significantly upon the instantaneous correlation of the motions of electrons, which means Hartree-Fock will not give even qualitatively correct result.
+
+By far, the most popular method for EA is density functional theory (DFT) because of its wide application to many problems, high reliability and also because it is easy to use and computationally cheap.
+However, DFT does not give very good result compared with high-level electronic structure methods like Coupled Cluster (CC).
+CC explicitly include consideration of electron affinity and can thus give very impressive results.
+However, CC is a computationally very expensive method because nonlinear equations need to be solved.
+Thus, applications of CC are limited to medium sized systems with up to 60 atoms.
+
+Another prominent quantum chemistry method to study EA of small and medium-sized molecules is the algebraic diagrammatic construction scheme (ADC).. \cite{implementation, ADCpp}
+Due to its size-consistency and Hermitian structure, the ADC scheme is known to be an accurate and reliable approach for the calculation of anion states and their properties.
+Generally, the approach is based on a Green’s function formalism in combination with the typical M{\o}ller-Plesset (MP) partitioning of the Hamiltonian.
+I implemented restricted calculation of Non-dyson ADC algorithm into a developmental version of \emph{adcman}, which is a part of Q-Chem program package.
+The results match well with that of CC, while consuming less time.
+
+The thesis is organized as follows:
+
+In chapter 2, I will present important and popular quantum chemistry methods and give a comparison between them from computational complexity, size consistency and performance to include electron correlation.
+In chapter 3, I will introduce the theory of ADC from Green function and perturbation theory.
+I will discuss both Dyson approach and Non-dyson approach and give a comparison of both methods.
+I will also introduce intermediate state representation (ISR) for a better understanding of the efficiency and size consistency of ADC.
+In chapter 4, I will give an overview of Q-chem and how does \emph{adcman} work.
+I will also discuss my implementation of EA Non-dyson ADC to Q-Chem and the results of benchmark calculations.
+
+

@@ -5,7 +5,7 @@ In principle, state of electrons and nuclei must be determined simultaneously by
 However, the fact that nuclei are much heavier than electrons make the treatment of nuclei as stationary point charge a good approximation for ground state calculation of most quantum systems, which is the well-known Born-Oppenheimer approximation.\cite{sakurai}
 The many-body Hamiltonian of electrons under Born-Oppenheimer approximation is
 \begin{equation}
-H=\sum_{i=1}^{N}\left(\frac{\boldsymbol{p}_{i}^{2}}{2 m}-\frac{Z e^{2}}{r_{i}}\right)+\sum_{i>j} \frac{e^{2}}{\left|\boldsymbol{x}_{i}-\boldsymbol{x}_{j}\right|}
+H=\sum_{i=1}^{N}\left(\frac{\boldsymbol{p}_{i}^{2}}{2 m}-\frac{Z e^{2}}{r_{i}}\right)+\sum_{i>j} \frac{e^{2}}{|\boldsymbol{x}_{i}-\boldsymbol{x}_{j}|}
 \end{equation}
 which contains a one-body part and a two-body part.
 The two-body part couples all the electrons and make the exact solution of Schrodinger equation very difficult and almost impossible.
@@ -26,7 +26,7 @@ where
 \end{equation}
 is Fock matrix, 
 \begin{equation}
-\mathbf{S}_{j k}=\left\langle b_{j} | b_{k}\right\rangle=\int \Psi_{j}^{*} \Psi_{k} d \tau
+\mathbf{S}_{j k}=\langle b_{j} | b_{k}\rangle=\int \Psi_{j}^{*} \Psi_{k} d \tau
 \end{equation}
 is Overlap matrix,
 $\mathbf{C}$ is decomposition coefficients of molecular orbitals on atomic orbitals,
@@ -97,7 +97,7 @@ We further assume that both A and B are two-level systems.
 When A and B are considered separately, excitation is allowed in both A and B.
 However, when A and B is treated as a single system, excitation of A and B are not allowed to happen simultaneously, which will cause a difference in energy.
 
-Another example is non-interacting $\text{H}_2$ molecules, which is usually used to test the sizeconsistency of methods. \cite{h2problem}
+Another example is non-interacting $\text{H}_2$ molecules, which is usually used to test the size consistency of methods. \cite{h2problem}
 CI gives the result that the limiting behaviour of total energy $E$ as N $\rightarrow \infty$ is $E \sim N^{-\frac{1}{2}}$, which is completely unreasonable.
 
 In comparison, Coupled cluster and ADC are size consistent, thus are used much more than CI in calculations.
@@ -107,7 +107,7 @@ The CI N-body wavefuntion \ref{CIexcite} can be rewritten as
 \begin{equation}
 \ket{\Psi_0}=(t_0+T_1+T_2+T_3 \dots)\ket{\Phi_0}
 \end{equation}
-where the $T$ here are convenient to be experssed as second quantization form:
+where the $T$ here are convenient to be expressed as second quantization form:
 \begin{equation}
 \begin{aligned}
 	\hat{T}_{1} &=\sum_{i a} t_{i}^{a} \hat{c}_{a}^{\dagger} \hat{c}_{i}
@@ -148,9 +148,9 @@ where K instead of T is used as kinetic part to avoid mixing with the coefficien
 Thus
 \begin{equation}
 \begin{array}{l}
-{\left\langle\Phi_{0}\left|e^{-T} H e^{T}\right| \Phi_{0}\right\rangle= E\left\langle\Phi_{0} | \Phi_{0}\right\rangle= E}
+{\langle\Phi_{0}|e^{-T} H e^{T}| \Phi_{0}\rangle= E\langle\Phi_{0} | \Phi_{0}\rangle= E}
 \\
-{\left\langle\Phi^{*}\left|e^{-T} H e^{T}\right| \Phi_{0}\right\rangle= E\left\langle\Phi^{*} | \Phi_{0}\right\rangle= 0}
+{\langle\Phi^{*}|e^{-T} H e^{T}| \Phi_{0}\rangle= E\langle\Phi^{*} | \Phi_{0}\rangle= 0}
 \end{array}
 \end{equation}
 where $\ket{\Phi^{*}}$ is any single, double, etc Hartree-Fock excited state, which is orthogonal to the Hartree-Fock ground state.
@@ -166,7 +166,7 @@ Since the number of degree of freedom of $T_i$ is equal to that of $i$-tuple exc
 
 Although the expansion of $e^T$ is infinite, only the first few terms have contribution to the final result of 
 \begin{equation}
-\left\langle\Phi^{*}\left|e^{-T} H e^{T}\right| \Phi_{0}\right\rangle
+\langle\Phi^{*}|e^{-T} H e^{T}| \Phi_{0}\rangle
 \end{equation}
 
 This is because all orders of $T$ remove occupied electrons and add virtual electrons.
@@ -219,19 +219,19 @@ This kind of partition is called M{\o}ller–Plesset partition.
 
 Up to second order perturbation theory, the expressions for the energy is
 \begin{equation}
-E_{n}(\lambda)=E_{n}^{(0)}+\lambda\left\langle n^{(0)}|v| n^{(0)}\right\rangle+\lambda^{2} \sum_{k \neq n} \frac{\left|\left\langle k^{(0)}|v| n^{(0)}\right\rangle\right|^{2}}{E_{n}^{(0)}-E_{k}^{(0)}}+O\left(\lambda^{3}\right)
+E_{n}(\lambda)=E_{n}^{(0)}+\lambda\langle n^{(0)}|v| n^{(0)}\rangle+\lambda^{2} \sum_{k \neq n} \frac{|\langle k^{(0)}|v| n^{(0)}\rangle|^{2}}{E_{n}^{(0)}-E_{k}^{(0)}}+O\left(\lambda^{3}\right)
 \end{equation}
 where the state $k$ and $n$ here are N-body state.
 
 In fact, the first order contribution is zero:
 \begin{equation}
-\left\langle n^{(0)}|v| n^{(0)}\right\rangle=0
+\langle n^{(0)}|v| n^{(0)}\rangle=0
 \end{equation}
 which means Hartree-Fock energy is already accurate up to the first order, and MP2 is the leading term of the perturbation correction.
 
 By replacing N-body state by Hartree-Fock single states and taking the anticommutation of wavefunction into account, we obtain the expression of MP2:
 \begin{equation}
-E_{\mathrm{MP} 2}=2 \sum_{i, j, a, b} \frac{\left\langle\varphi_{i} \varphi_{j}|\hat{v}| \varphi_{a} \varphi_{b}\right\rangle\left\langle\varphi_{a} \varphi_{b}|\hat{v}| \varphi_{i} \varphi_{j}\right\rangle}{\varepsilon_{i}+\varepsilon_{j}-\varepsilon_{a}-\varepsilon_{b}}-\sum_{i, j, a, b} \frac{\left\langle\varphi_{i} \varphi_{j}|\hat{v}| \varphi_{a} \varphi_{b}\right\rangle\left\langle\varphi_{a} \varphi_{b}|\hat{v}| \varphi_{j} \varphi_{i}\right\rangle}{\varepsilon_{i}+\varepsilon_{j}-\varepsilon_{a}-\varepsilon_{b}}
+E_{\mathrm{MP} 2}=2 \sum_{i, j, a, b} \frac{\langle\varphi_{i} \varphi_{j}|\hat{v}| \varphi_{a} \varphi_{b}\rangle\langle\varphi_{a} \varphi_{b}|\hat{v}| \varphi_{i} \varphi_{j}\rangle}{\varepsilon_{i}+\varepsilon_{j}-\varepsilon_{a}-\varepsilon_{b}}-\sum_{i, j, a, b} \frac{\langle\varphi_{i} \varphi_{j}|\hat{v}| \varphi_{a} \varphi_{b}\rangle\langle\varphi_{a} \varphi_{b}|\hat{v}| \varphi_{j} \varphi_{i}\rangle}{\varepsilon_{i}+\varepsilon_{j}-\varepsilon_{a}-\varepsilon_{b}}
 \end{equation}
 
 Since both unperturbed and perturbed Hamiltonian have correct size scaling, MP2 is also a size consistent method.
@@ -245,17 +245,17 @@ The theorem states that for a given ground state electron density distribution $
 Proof:
 Assuming $\ket{\Psi_1}$ is the ground state of Hamiltonian $\hat{H}_1$ with external potential $V_1$, and $E_1$ is its energy.
 \begin{equation}
-E_{1}=\left\langle\Psi_{1}\left|\hat{H}_{1}\right| \Psi_{1}\right\rangle=\int V_{1}(\vec{r}) \rho(\vec{r})(\vec{r}) \mathrm{d}^{3} r+\left\langle\Psi_{1}|(\hat{T}+\hat{U})| \Psi_{1}\right\rangle
+E_{1}=\langle\Psi_{1}|\hat{H}_{1}| \Psi_{1}\rangle=\int V_{1}(\vec{r}) \rho(\vec{r})(\vec{r}) \mathrm{d}^{3} r+\langle\Psi_{1}|(\hat{T}+\hat{U})| \Psi_{1}\rangle
 \end{equation}
 where $\hat{T}$ is kinetic energy operator while $\hat{U}$ is coulomb operator.
 
 If there is a different potential $V_2$ that leads to different ground state $\ket{\Psi_2}$:
 \begin{equation}
-E_{1}<\left\langle\Psi_{2}\left|\hat{H}_{1}\right| \Psi_{2}\right\rangle=\left\langle\Psi_{2}\left|\hat{H}_{2}\right| \Psi_{2}\right\rangle+\left\langle\Psi_{2}\left|\hat{H}_{1}-\hat{H}_{2}\right| \Psi_{2}\right\rangle= E_{2}+\int\left(V_{1}(\vec{r})-V_{2}(\vec{r})\right) \rho(\vec{r}) \mathrm{d}^{3} r
+E_{1}<\langle\Psi_{2}|\hat{H}_{1}| \Psi_{2}\rangle=\langle\Psi_{2}|\hat{H}_{2}| \Psi_{2}\rangle+\langle\Psi_{2}|\hat{H}_{1}-\hat{H}_{2}| \Psi_{2}\rangle= E_{2}+\int\left(V_{1}(\vec{r})-V_{2}(\vec{r})\right) \rho(\vec{r}) \mathrm{d}^{3} r
 \end{equation}
 Since potential $V_1$ and $V_2$ are treated on equal footing, the following inequality also satisfies:
 \begin{equation}
-E_{2}<\left\langle\Psi_{1}\left|\hat{H}_{2}\right| \Psi_{1}\right\rangle= E_{1}+\int\left(V_{2}(\vec{r})-V_{1}(\vec{r})\right) \rho(\vec{r}) \mathrm{d}^{3} r
+E_{2}<\langle\Psi_{1}|\hat{H}_{2}| \Psi_{1}\rangle= E_{1}+\int\left(V_{2}(\vec{r})-V_{1}(\vec{r})\right) \rho(\vec{r}) \mathrm{d}^{3} r
 \end{equation}
 Adding these two inequalities gives:
 \begin{equation}
@@ -269,11 +269,11 @@ Thus
 \end{equation}
 and
 \begin{equation}
-E_{0}=E[\rho_{0}]=\left\langle\Psi[\rho_{0}]|\hat{T}+\hat{V}+\hat{U}| \Psi[\rho_{0}]\right\rangle
+E_{0}=E[\rho_{0}]=\langle\Psi[\rho_{0}]|\hat{T}+\hat{V}+\hat{U}| \Psi[\rho_{0}]\rangle
 \end{equation}
 or
 \begin{equation}
-E_{s}[\rho]=\left\langle\Psi_{\mathrm{s}}[\rho]\left|\hat{T}+\hat{V}_{\mathrm{s}}\right| \Psi_{\mathrm{s}}[\rho]\right\rangle
+E_{s}[\rho]=\langle\Psi_{\mathrm{s}}[\rho]|\hat{T}+\hat{V}_{\mathrm{s}}| \Psi_{\mathrm{s}}[\rho]\rangle
 \end{equation}
 
 Thus the Schrodinger equation is 
@@ -282,7 +282,7 @@ Thus the Schrodinger equation is
 \end{equation}
 where there exist a unique functional $V_s$
 \begin{equation}
-V_{\mathrm{s}}(\vec{r})=V(\vec{r})+\int \frac{e^{2} \rho_{\mathrm{s}}\left(\vec{r}^{\prime}\right)}{\left|\vec{r}-\vec{r}^{\prime}\right|} \mathrm{d}^{3} r^{\prime}+V_{\mathrm{XC}}\left[\rho_{\mathrm{s}}(\vec{r})\right]
+V_{\mathrm{s}}(\vec{r})=V(\vec{r})+\int \frac{e^{2} \rho_{\mathrm{s}}\left(\vec{r}^{\prime}\right)}{|\vec{r}-\vec{r}^{\prime}|} \mathrm{d}^{3} r^{\prime}+V_{\mathrm{XC}}\left[\rho_{\mathrm{s}}(\vec{r})\right]
 \end{equation}
 that can give correct ground state density and energy.
 Here the $V_{\mathrm{XC}}$ is called the exchange-correlation potential, which includes all the many-body interactions.
@@ -306,7 +306,7 @@ E_{\mathrm{XC}}^{\mathrm{GGA}}\left[n_{\uparrow}, n_{\downarrow}\right]=\int \va
 Difficulties in expressing the exchange part of the energy can be relieved by including a component of the exact exchange energy calculated from Hartree–Fock theory.
 Functionals of this type are known as hybrid functionals, including B3LYP \cite{b3lyp}, PBE0 \cite{pbe0} and HSE \cite{hse}.
 
-\section{Relativistic and Nonadiabatic Quantum Chemsitry}
+\section{Relativistic and Non-adiabatic Quantum Chemistry}
 In all above discussion of Hartree-Fock, Post-Hartree-Fock and density functional theory, non-relativity and Born-Oppenheimer assumptions are made.
 However, there do exist cases that at least one of them break.
 

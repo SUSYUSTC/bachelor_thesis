@@ -54,7 +54,7 @@ Thus, we can define improper self-energy part $\widetilde{\Sigma}_{p q}\left(t_{
 	\includegraphics[height=3cm]{./figures/newdyson.png}
 \end{minipage}
 
-Algebraicly, it reads:
+Algebraically, it reads:
 \begin{equation}
 	G_{p q}\left(t, t^{\prime}\right)=\delta_{p q} G_{p}^{0}\left(t, t^{\prime}\right)+\int \mathrm{d} t_{1} \int \mathrm{d} t_{1}^{\prime} G_{p}^{0}\left(t, t_{1}\right) \widetilde{\Sigma}_{p q}\left(t_{1}, t_{1}^{\prime}\right) G_{q}^{0}\left(t_{1}^{\prime}, t^{\prime}\right)
 \end{equation}
@@ -106,7 +106,7 @@ Obviously, improper self-energy and proper self-energy are related by:
 	+ \qquad \dots
 \end{minipage}
 
-or algebraicly by
+or algebraically by
 \begin{equation}
 	\tilde{\boldsymbol{\Sigma}}(\omega)=\boldsymbol{\Sigma}(\omega)+\boldsymbol{\Sigma}(\omega) \boldsymbol{G}^0(\omega) \tilde{\boldsymbol{\Sigma}}(\omega)
 \end{equation}
@@ -126,7 +126,7 @@ For example, the second order of proper self-energy is
 	\Sigma_{p q}^{(2)}(\omega)=\sum_{a, b, k} \frac{V_{p k[a b]} V_{a b[q k]}}{\omega+\epsilon_{k}-\epsilon_{a}-\epsilon_{b}+i \eta}+\sum_{a, k, l} \frac{V_{p a[k l]} V_{k l[q a]}}{\omega+\epsilon_{a}-\epsilon_{k}-\epsilon_{l}-i \eta}
 \end{equation}
 
-THe self-energy can be written in a general form:
+The self-energy can be written in a general form:
 \begin{equation}
 	\Sigma_{p q}(\omega)=\Sigma_{p q}(\infty)+M_{p q}(\omega)
 \end{equation}
@@ -247,9 +247,9 @@ This is because
 \end{equation}
 
 As is mentioned previously, a finite perturbation expansion of the electron propagator does not reproduce its correct analytical form.
-However, we are still useing finite perturbation expansion, i.e. determine each order of $m$, $\Omega$ and then calcuate the eigenvalues of Dyson secular matrix in Eq \ref{matrixA}.
+However, we are still using finite perturbation expansion, i.e. determine each order of $m$, $\Omega$ and then calculate the eigenvalues of Dyson secular matrix in Eq \ref{matrixA}.
 
-We will then begin introducing ADC to sum partially to infitity.
+We will then begin introducing ADC to sum partially to infinity.
 We will consider $M^{+}$ in the following since it is analogous for $M^{-}$.
 
 In ADC, equation 
@@ -320,39 +320,32 @@ and thus diagonalization as
 	\boldsymbol{B} \boldsymbol{X}=\boldsymbol{X} \boldsymbol{E}, \quad \boldsymbol{X}^{\dagger} \boldsymbol{X}=1
 \end{equation}
 
-The struture of Dyson-ADC(3) matrix is:
+The structure of Dyson-ADC(3) matrix is:
 \begin{table}
 	\centering
-	\begin{tabular}{c|c|c|c|}
-		   &   1h/1p  &   2h-1p &  2p-1
-		\\
-		\hline
-		1h/1p  &  $\boldsymbol{\epsilon}+\boldsymbol{\Sigma}(\infty)$ & $U^{-(1,2)\dagger}$ & $ U^{+(1,2)\dagger} $
-		\\
-		\hline
-		2h-1p &  $U^{-(1,2)\dagger}$ & $K^{-}+C^{-(1)}$ & 0
-		\\
-		\hline
-		2p-1h &  $U^{+(1,2)\dagger}$ & 0 & $K^{+}+C^{+(1)}$
-		\\
-		\hline
-	\end{tabular}
+	\caption{Structure of Dyson-ADC(3)}
+\begin{tabular}{cccc}
+                           & 1h/1p                                                                    & 2h-1p                                    & 2p-1h                                      \\ \cline{2-4} 
+\multicolumn{1}{c|}{1h/1p} & \multicolumn{1}{c|}{$\boldsymbol{\epsilon}+\boldsymbol{\Sigma}(\infty)$} & \multicolumn{1}{c|}{$U^{-(1,2)\dagger}$} & \multicolumn{1}{c|}{$ U^{+(1,2)\dagger} $} \\ \cline{2-4} 
+\multicolumn{1}{c|}{2h-1p} & \multicolumn{1}{c|}{$U^{-(1,2)}$}                                        & \multicolumn{1}{c|}{$K^{-}+C^{-(1)}$}    & \multicolumn{1}{c|}{0}                     \\ \cline{2-4} 
+\multicolumn{1}{c|}{2p-1h} & \multicolumn{1}{c|}{$U^{+(1,2)}$}                                        & \multicolumn{1}{c|}{0}                   & \multicolumn{1}{c|}{$K^{+}+C^{+(1)}$}      \\ \cline{2-4} 
+\end{tabular}
 \end{table}
 
-The summation to infitity ensures that Dyson-ADC is a size consistent method, which is an important advantage over CI.
-Another advatange is that configuration space of Dyson-ADC is smaller than CI.
-For example, The consis- tent treatment of 1h main states through second (and third order) requires the CI expansions to extend through the 3h-2p configurations.
+The summation to infinity ensures that Dyson-ADC is a size consistent method, which is an important advantage over CI.
+Another advantage is that configuration space of Dyson-ADC is smaller than CI.
+For example, The consistent treatment of 1h main states through second (and third order) requires the CI expansions to extend through the 3h-2p configurations.
 By contrast, the ADC(2) (and ADC(3)) configuration spaces are restricted to the 2h-1p configurations of $N−1$ particles, but also comprise the 2h-1p configurations of $N+1$ particles.
 
-\subsection{Non-dyson approach}
-The advantage of Dyson approach is the decrease the number of feyman diagrams one need to calculate by property of Dyson equation.
+\subsection{Non-dyson Approach}
+The advantage of Dyson approach is the decrease the number of Feynman diagrams one need to calculate by property of Dyson equation.
 However, the problem is that $N+1$ part and $N-1$ part are coupled, thus one has to diagonalize the full B matrix.
-Moreover, people usually care about the first few ionized or electron affinitized states, which lie in the middle of the energy spectrum.
+Moreover, people usually care about the first few ionized or anionized states, which lie in the middle of the energy spectrum.
 Algorithmically, it is difficult to determine eigenvalues in the middle part of an energy spectrum.
 Thus, we introduce Non-dyson approach, which solve this problem and make sure that all states interested are in the edge of energy spectrum
 Since Non-dyson ADC treat $N+1$ part and $N-1$ part separately, we will focus on $N-1$ part, and $N+1$ part is analogous.
 
-Related to $N-1$ part, Green funtion $G^{-}$ can be written as
+Related to $N-1$ part, Green function $G^{-}$ can be written as
 \begin{equation}
 	\boldsymbol{G}^{-}(\omega)=\boldsymbol{x}(\omega \mathbf{1}-\boldsymbol{\Omega})^{-1} \boldsymbol{x}^{\dagger}
 \end{equation}
@@ -383,7 +376,7 @@ where the expression for $\boldsymbol{K}$ is:
 
 Just like Dyson approach, we can also see that the expansion of $M$ is partially to infinite orders:
 \begin{equation}
-	\tilde{\boldsymbol{G}}(\omega)=\boldsymbol{f}^{\dagger}(\omega-\boldsymbol{K}-\boldsymbol{C})^{-1} \boldsymbol{f}=\boldsymbol{f}^{\dagger}(\omega-\boldsymbol{K})^{-1} \sum_{\nu=0}^{\infty}\left(\frac{\boldsymbol{C}}{\omega-\boldsymbol{K}}\right)^{\nu} f
+	\tilde{\boldsymbol{G}}(\omega)=\boldsymbol{f}^{\dagger}(\omega-\boldsymbol{K}-\boldsymbol{C})^{-1} \boldsymbol{f}=\boldsymbol{f}^{\dagger}(\omega-\boldsymbol{K})^{-1} \sum_{\nu=0}^{\infty}\left(\frac{\boldsymbol{C}}{\omega-\boldsymbol{K}}\right)^{\nu} \boldsymbol{f}
 \end{equation}
 
 The procedure of Non-dyson ADC is the same with Dyson-ADC.
@@ -395,7 +388,7 @@ By this procedure, we obtain the first few orders of $\boldsymbol{C}$ and $\bold
 		\\
 		f_{\mu}^{(0)}&=0, \text { for } \mu>1
 		\\
-		f_{1}^{(1)}&=\mathbf{0} \text { for } \mu>2
+		f_{1}^{(1)}&=0 \text { for } \mu>2
 		\\
 		f_{a k l, q}^{(1)}&=\frac{V_{q a[k] ]}}{\epsilon_{q}+\epsilon_{a}-\epsilon_{k}-\epsilon_{l}} \overline{n}_{q}
 		\\
@@ -411,18 +404,42 @@ By this procedure, we obtain the first few orders of $\boldsymbol{C}$ and $\bold
 	\end{aligned}
 \end{equation}
 
+The structure of Non-dyson ADC(2) matrix is:
+\begin{table}
+	\centering
+	\caption{Structure of Non-dyson ADC(2)}
+	\label{ADC2}
+	\begin{tabular}{ccc}
+						       &             1p                      &             1h-2p               \\ \cline{2-3} 
+	\multicolumn{1}{l|}{1p   } & \multicolumn{1}{l|}{$K_1+C^2_{11}$} & \multicolumn{1}{l|}{$C^1_{12}$} \\ \cline{2-3} 
+	\multicolumn{1}{l|}{1h-2p} & \multicolumn{1}{l|}{$C^1_{21}$}     & \multicolumn{1}{l|}{$K_2$}      \\ \cline{2-3} 
+	\end{tabular}
+\end{table}
+
+The structure of Non-dyson ADC(3) matrix is:
+\begin{table}
+	\centering
+	\caption{Structure of Non-dyson ADC(3)}
+	\label{ADC3}
+	\begin{tabular}{ccc}
+						           &                     1p                       &                     1h-2p                \\ \cline{2-3} 
+		\multicolumn{1}{l|}{1p   } & \multicolumn{1}{l|}{$K_1+C^2_{11}+C^3_{11}$} & \multicolumn{1}{l|}{$C^1_{12}+C^2_{12}$} \\ \cline{2-3} 
+		\multicolumn{1}{l|}{1h-2p} & \multicolumn{1}{l|}{$C^1_{21}+C^2_{12}$}     & \multicolumn{1}{l|}{$K_2+C^1_{22}$}      \\ \cline{2-3} 
+	\end{tabular}
+\end{table}
+
 We can also use \ref{greenenergy} to calculate ground state energy by Non-dyson ADC.
 \begin{equation}
 	\begin{aligned}
 		\boldsymbol{\rho}&=\frac{1}{2 \pi i} \oint \boldsymbol{G}^{-}(\omega) \mathrm{d} \omega
 		\\
-		&=\frac{1}{2 \pi i} \oint f^{\dagger}(\omega-K-C)^{-1} f \mathrm{d} \omega=f^{\dagger} f
+		&=\frac{1}{2 \pi i} \oint \boldsymbol{f}^{\dagger}(\omega-\boldsymbol{K}-\boldsymbol{C})^{-1} \boldsymbol{f} \mathrm{d} \omega=\boldsymbol{f}^{\dagger} \boldsymbol{f}
 	\end{aligned}
 \end{equation}
 
 Thus
 \begin{equation}
-	E_{0}=\frac{1}{2} \operatorname{Tr}\left(f^{\dagger}(\boldsymbol{K}+\boldsymbol{C}) \boldsymbol{f}+\boldsymbol{T}^{t} \boldsymbol{f}^{\dagger} \boldsymbol{f}\right)
+	E_{0}=\frac{1}{2} \operatorname{Tr}\left(\boldsymbol{f}^{\dagger}(\boldsymbol{K}+\boldsymbol{C}) \boldsymbol{f}+\boldsymbol{T}^{t} \boldsymbol{f}^{\dagger} \boldsymbol{f}\right)
 \end{equation}
 
 The complexity of Non-dyson ADC(2) is $m^4$ while ADC(3) is $m^5$, where $m$ is the number of one particle basis.
